@@ -49986,10 +49986,10 @@ index 000000000..d8426aabd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/launcher.cpp b/shell/ps4/launcher/launcher.cpp
 new file mode 100644
-index 000000000..f10907e1d
+index 000000000..c3615f341
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher.cpp
-@@ -0,0 +1,1117 @@
+@@ -0,0 +1,1152 @@
 +/*
 +	Resonance launcher core: the library, covers and colours, DualShock 4 input, theme switching
 +	and starting games. The themes draw; this file decides what they draw.
@@ -50471,7 +50471,34 @@ index 000000000..f10907e1d
 +{
 +	std::vector<u8> rgba;
 +	int w = 0, h = 0;
++	float leftBand = 0;		// the light strip down a US cover's left side, of the width
 +};
++
++// US Dreamcast covers have a light strip down the left (the swirl, SEGA): its width, so the disc
++// label can leave it out; 0 for other pictures (a disc scan, a dark edge). At most a tenth
++float measureLeftBand(const CoverPixels& px)
++{
++	const int limit = px.w * 15 / 100;
++	int band = 0;
++	for (int x = 0; x < limit; x++)
++	{
++		long bright = 0, sat = 0;
++		for (int y = 0; y < px.h; y++)
++		{
++			const u8 *p = &px.rgba[((size_t)y * px.w + x) * 4];
++			const int mx = std::max({ p[0], p[1], p[2] }), mn = std::min({ p[0], p[1], p[2] });
++			bright += (p[0] + p[1] + p[2]) / 3;
++			sat += mx - mn;
++		}
++		if (bright / px.h > 200 && sat / px.h < 40)
++			band = x + 1;
++		else
++			break;
++	}
++	if (band == 0)
++		return 0.f;
++	return std::min(.1f, (float)band / px.w + .01f);
++}
 +constexpr size_t COVER_CACHE_BYTES = 64u << 20;
 +constexpr int COVER_MAX_SIZE = 640;		// larger covers are scaled down
 +std::mutex gCoverMutex;
@@ -50518,6 +50545,7 @@ index 000000000..f10907e1d
 +				}
 +	}
 +	stbi_image_free(data);
++	px->leftBand = measureLeftBand(*px);
 +	return px;
 +}
 +
@@ -50554,6 +50582,13 @@ index 000000000..f10907e1d
 +	}
 +}
 +} // namespace
++
++float coverLeftBand(const Game& g)
++{
++	std::lock_guard<std::mutex> lock(gCoverMutex);
++	auto it = gCoverPixels.find(g.cover);
++	return it != gCoverPixels.end() && it->second ? it->second->leftBand : 0.f;
++}
 +
 +ImTextureID coverTexture(const Game& g)
 +{
@@ -51193,10 +51228,10 @@ index 000000000..8773750d6
 +void launcher_loading_draw(const char *label, float progress);
 diff --git a/shell/ps4/launcher/launcher_internal.h b/shell/ps4/launcher/launcher_internal.h
 new file mode 100644
-index 000000000..7f505b9ec
+index 000000000..03bdc3647
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher_internal.h
-@@ -0,0 +1,288 @@
+@@ -0,0 +1,289 @@
 +/*
 +	Resonance launcher internals: what the core (launcher.cpp) shares with the themes
 +	(theme_*.cpp), covers (covers.cpp) and sounds (sound.cpp).
@@ -51313,6 +51348,7 @@ index 000000000..7f505b9ec
 +ImFont *displayFont();	// Michroma
 +ImFont *bodyFont();		// Flycast's UI font (Roboto, with Font Awesome icons)
 +ImTextureID coverTexture(const Game& g);	// 0 while loading or without a cover
++float coverLeftBand(const Game& g);		// a US cover's light left strip, of its width (0: none or not read yet)
 +ImTextureID blobTexture();		// soft round light, white
 +ImTextureID discTexture();		// silver disc surface
 +ImTextureID noiseTexture();		// TV static
@@ -53334,10 +53370,10 @@ index 000000000..42d649490
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/theme_orbit.cpp b/shell/ps4/launcher/theme_orbit.cpp
 new file mode 100644
-index 000000000..6662c8dc9
+index 000000000..be1b8bbce
 --- /dev/null
 +++ b/shell/ps4/launcher/theme_orbit.cpp
-@@ -0,0 +1,314 @@
+@@ -0,0 +1,317 @@
 +/*
 +	Resonance launcher, theme "Orbit": the library as discs on a slowly turning ring. Each disc
 +	has its cover printed on the label and a silver rim that catches a fixed light as it spins;
@@ -53555,12 +53591,15 @@ index 000000000..6662c8dc9
 +				const float v = .78f + .5f * glint;
 +				return Color { v, v, v * 1.02f }.u32(fade(p));
 +			});
-+		// the label: the cover, printed on the disc and turning with it
++		// the label: the cover, printed on the disc and turning with it; the light strip down a US
++		// cover's left side is left out (the circle moves right and shrinks to fit)
++		const float band = coverLeftBand(g);
++		const float uc = .5f + band * .5f, ur = .5f - band * .5f;
 +		if (cover != ImTextureID())
 +			annulus(dl, cover, c, r, sy, hubR, labelR, 72,
 +				[&](float a, float fr) {
-+					const float u = fr / labelR * .5f;
-+					return ImVec2(.5f + u * std::cos(a - rot), .5f + u * std::sin(a - rot));
++					const float u = fr / labelR * ur;
++					return ImVec2(uc + u * std::cos(a - rot), .5f + u * std::sin(a - rot));
 +				},
 +				[&](float a, float fr, const ImVec2& p) {
 +					const float sheen = .9f + .18f * std::pow(std::fmax(0.f, std::cos(a - light)), 4.f);
