@@ -114,3 +114,9 @@ This memory card is empty
 %d blocks
 Change Disc
 Disc %d
+Cheats & Patches
+Patch Source
+60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches
+Patches folder only
+Put .cht or .txt files in /data/Resonance/cheats
+No cheats or patches yet

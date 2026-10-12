@@ -122,3 +122,9 @@
 2105	%d blocos
 2106	Trocar disco
 2107	Disco %d
+2108	Trapaças e patches
+2109	Origem dos patches
+2110	60 fps, tela widescreen e outros patches: da biblioteca de patches do Resonance, ou coloque arquivos .cht ou .txt em /data/Resonance/patches
+2111	Somente a pasta de patches
+2112	Coloque arquivos .cht ou .txt em /data/Resonance/cheats
+2113	Ainda sem trapaças ou patches

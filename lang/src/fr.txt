@@ -107,3 +107,9 @@
 2105	%d blocs
 2106	Changer de disque
 2107	Disque %d
+2108	Codes et correctifs
+2109	Source des correctifs
+2110	60 i/s, écran large et autres correctifs : depuis la bibliothèque de correctifs de Resonance, ou placez des fichiers .cht ou .txt dans /data/Resonance/patches
+2111	Dossier des correctifs uniquement
+2112	Placez des fichiers .cht ou .txt dans /data/Resonance/cheats
+2113	Aucun code ni correctif pour le moment

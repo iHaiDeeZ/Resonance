@@ -1,0 +1,1 @@
+# Resonance patch library: <file>	<product id>	<title>, one patch file per line (see README.md)

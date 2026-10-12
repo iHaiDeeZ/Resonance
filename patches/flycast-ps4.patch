@@ -1532,7 +1532,7 @@ index d2096c491..87f7b411b 100644
 +#endif
  };
 diff --git a/core/ui/gui.cpp b/core/ui/gui.cpp
-index 614739abc..11199923a 100644
+index 614739abc..5fa607e4a 100644
 --- a/core/ui/gui.cpp
 +++ b/core/ui/gui.cpp
 @@ -17,6 +17,7 @@
@@ -1727,7 +1727,7 @@ index 614739abc..11199923a 100644
  void gui_start_game(const std::string& path)
  {
  	const LockGuard lock(guiMutex);
-@@ -1233,8 +1404,57 @@ static bool checkUWPProtocolActivation()
+@@ -1233,8 +1404,58 @@ static bool checkUWPProtocolActivation()
  }
  #endif
  
@@ -1757,6 +1757,7 @@ index 614739abc..11199923a 100644
 +		{
 +			label = T("Starting...");
 +			progress = 1.f;
++			launcher_game_started();
 +			if (NetworkHandshake::instance != nullptr)
 +			{
 +				networkStatus = NetworkHandshake::instance->start();
@@ -1785,7 +1786,7 @@ index 614739abc..11199923a 100644
  	drawBoxartBackground();
  	centerNextWindow();
  	ImGui::SetNextWindowSize(ScaledVec2(330, 0));
-@@ -1345,6 +1565,9 @@ void gui_display_ui()
+@@ -1345,6 +1566,9 @@ void gui_display_ui()
  		}
  	}
  
@@ -1795,7 +1796,7 @@ index 614739abc..11199923a 100644
  	gui_newFrame();
  	ImGui::NewFrame();
  	error_msg_shown = false;
-@@ -1353,9 +1576,19 @@ void gui_display_ui()
+@@ -1353,9 +1577,19 @@ void gui_display_ui()
  	switch (gui_state)
  	{
  	case GuiState::Settings:
@@ -1815,7 +1816,7 @@ index 614739abc..11199923a 100644
  		gui_display_commands();
  		break;
  	case GuiState::Pause:
-@@ -1364,6 +1597,11 @@ void gui_display_ui()
+@@ -1364,6 +1598,11 @@ void gui_display_ui()
  		break;
  	case GuiState::Main:
  		//gui_display_demo();
@@ -1827,7 +1828,7 @@ index 614739abc..11199923a 100644
  		gui_display_content();
  		break;
  	case GuiState::Closed:
-@@ -1408,6 +1646,10 @@ void gui_display_ui()
+@@ -1408,6 +1647,10 @@ void gui_display_ui()
  		emu.start();
  }
  
@@ -1838,7 +1839,7 @@ index 614739abc..11199923a 100644
  static u64 LastFPSTime;
  static int lastFrameCount = 0;
  static float fps = -1;
-@@ -1422,6 +1664,25 @@ static std::string getFPSNotification()
+@@ -1422,6 +1665,25 @@ static std::string getFPSNotification()
  			LastFPSTime = now;
  			lastFrameCount = MainFrameCount;
  		}
@@ -1864,7 +1865,7 @@ index 614739abc..11199923a 100644
  		if (fps >= 0.f && fps < 9999.f) {
  			char text[32];
  			snprintf(text, sizeof(text), "F:%4.1f%s", fps, settings.input.fastForwardMode ? " >>" : "");
-@@ -1669,6 +1930,25 @@ void gui_runOnUiThread(std::function<void()> function) {
+@@ -1669,6 +1931,25 @@ void gui_runOnUiThread(std::function<void()> function) {
  	uiThreadRunner.runOnThread(function);
  }
  
@@ -1890,7 +1891,7 @@ index 614739abc..11199923a 100644
  void gui_takeScreenshot()
  {
  	if (!game_started)
-@@ -1705,3 +1985,141 @@ bool __cdecl Concurrency::details::_Task_impl_base::_IsNonBlockingThread() {
+@@ -1705,3 +1986,141 @@ bool __cdecl Concurrency::details::_Task_impl_base::_IsNonBlockingThread() {
  	return false;
  }
  #endif
@@ -2129,10 +2130,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..d300b2ab7
+index 000000000..0a7bbac89
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2454 @@
+@@ -0,0 +1,2472 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4587,11 +4588,29 @@ index 000000000..d300b2ab7
 +
 +msgid "Disc %d"
 +msgstr "القرص %d"
++
++msgid "Cheats & Patches"
++msgstr "الغش والتصحيحات"
++
++msgid "Patch Source"
++msgstr "مصدر التصحيحات"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 إطارًا في الثانية والشاشة العريضة وتصحيحات أخرى: من مكتبة تصحيحات Resonance، أو ضع ملفات .cht أو .txt في /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "مجلد التصحيحات فقط"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "ضع ملفات .cht أو .txt في /data/Resonance/cheats"
++
++msgid "No cheats or patches yet"
++msgstr "لا توجد رموز غش أو تصحيحات بعد"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..8f5152df6 100644
+index fb8203ba2..d34f810b6 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2450 @@
+@@ -1,2963 +1,2468 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8585,14 +8604,32 @@ index fb8203ba2..8f5152df6 100644
 +
 +msgid "Change Disc"
 +msgstr "Disc wechseln"
- 
++
 +msgid "Disc %d"
 +msgstr "Disc %d"
++
++msgid "Cheats & Patches"
++msgstr "Cheats & Patches"
++
++msgid "Patch Source"
++msgstr "Patch-Quelle"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 FPS, Breitbild und andere Patches: aus der Resonance-Patch-Bibliothek, oder lege .cht- oder .txt-Dateien in /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Nur Patch-Ordner"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Lege .cht- oder .txt-Dateien in /data/Resonance/cheats"
+ 
++msgid "No cheats or patches yet"
++msgstr "Noch keine Cheats oder Patches"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..7f58be788 100644
+index 2735f014b..4e7066e3d 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2450 @@
+@@ -1,2964 +1,2468 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -12581,14 +12618,32 @@ index 2735f014b..7f58be788 100644
 +
 +msgid "Change Disc"
 +msgstr "Cambiar disco"
- 
++
 +msgid "Disc %d"
 +msgstr "Disco %d"
++
++msgid "Cheats & Patches"
++msgstr "Trucos y parches"
++
++msgid "Patch Source"
++msgstr "Origen de los parches"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 fps, pantalla panorámica y otros parches: de la biblioteca de parches de Resonance, o pon archivos .cht o .txt en /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Solo la carpeta de parches"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Pon archivos .cht o .txt en /data/Resonance/cheats"
+ 
++msgid "No cheats or patches yet"
++msgstr "Aún no hay trucos ni parches"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..062c22f2f 100644
+index f3754825e..f0a7b70c3 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2450 @@
+@@ -1,2967 +1,2468 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -15887,11 +15942,29 @@ index f3754825e..062c22f2f 100644
 +
 +msgid "Disc %d"
 +msgstr "Disque %d"
++
++msgid "Cheats & Patches"
++msgstr "Codes et correctifs"
++
++msgid "Patch Source"
++msgstr "Source des correctifs"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 i/s, écran large et autres correctifs : depuis la bibliothèque de correctifs de Resonance, ou placez des fichiers .cht ou .txt dans /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Dossier des correctifs uniquement"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Placez des fichiers .cht ou .txt dans /data/Resonance/cheats"
++
++msgid "No cheats or patches yet"
++msgstr "Aucun code ni correctif pour le moment"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..b9e57fdaf 100644
+index ee92eb28e..f937d2b2b 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2450 @@
+@@ -1,2963 +1,2468 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -19885,14 +19958,32 @@ index ee92eb28e..b9e57fdaf 100644
 +
 +msgid "Change Disc"
 +msgstr "Cambia disco"
- 
++
 +msgid "Disc %d"
 +msgstr "Disco %d"
++
++msgid "Cheats & Patches"
++msgstr "Trucchi e patch"
++
++msgid "Patch Source"
++msgstr "Origine delle patch"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 fps, widescreen e altre patch: dalla libreria di patch di Resonance, oppure metti file .cht o .txt in /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Solo cartella delle patch"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Metti file .cht o .txt in /data/Resonance/cheats"
+ 
++msgid "No cheats or patches yet"
++msgstr "Ancora nessun trucco o patch"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..89edd2b9c 100644
+index a79c6a14b..65df11aa5 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2449 @@
+@@ -1,2966 +1,2467 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -23190,11 +23281,29 @@ index a79c6a14b..89edd2b9c 100644
 +
 +msgid "Disc %d"
 +msgstr "ディスク %d"
++
++msgid "Cheats & Patches"
++msgstr "チート＆パッチ"
++
++msgid "Patch Source"
++msgstr "パッチの入手先"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60fps、ワイド画面などのパッチ：Resonance パッチライブラリから、または .cht / .txt ファイルを /data/Resonance/patches に置く"
++
++msgid "Patches folder only"
++msgstr "パッチフォルダーのみ"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr ".cht / .txt ファイルを /data/Resonance/cheats に置いてください"
++
++msgid "No cheats or patches yet"
++msgstr "チートもパッチもまだありません"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..4845c46aa 100644
+index a5e70db54..3c8dce793 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2449 @@
+@@ -1,2962 +1,2467 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -27186,15 +27295,33 @@ index a5e70db54..4845c46aa 100644
 +
 +msgid "Change Disc"
 +msgstr "디스크 교체"
- 
++
 +msgid "Disc %d"
 +msgstr "디스크 %d"
++
++msgid "Cheats & Patches"
++msgstr "치트 및 패치"
++
++msgid "Patch Source"
++msgstr "패치 출처"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60fps, 와이드스크린 등 패치: Resonance 패치 라이브러리에서 받거나 .cht 또는 .txt 파일을 /data/Resonance/patches에 넣으세요"
++
++msgid "Patches folder only"
++msgstr "패치 폴더만"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr ".cht 또는 .txt 파일을 /data/Resonance/cheats에 넣으세요"
+ 
++msgid "No cheats or patches yet"
++msgstr "아직 치트나 패치가 없습니다"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..38a281d0e
+index 000000000..56fed9c3f
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2450 @@
+@@ -0,0 +1,2468 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -29645,11 +29772,29 @@ index 000000000..38a281d0e
 +
 +msgid "Disc %d"
 +msgstr "Disc %d"
++
++msgid "Cheats & Patches"
++msgstr "Cheats en patches"
++
++msgid "Patch Source"
++msgstr "Patchbron"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 fps, breedbeeld en andere patches: uit de patchbibliotheek van Resonance, of zet .cht- of .txt-bestanden in /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Alleen patchmap"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Zet .cht- of .txt-bestanden in /data/Resonance/cheats"
++
++msgid "No cheats or patches yet"
++msgstr "Nog geen cheats of patches"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..df7bec0c5 100644
+index 548cbb44d..87d59c4ca 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2451 @@
+@@ -1,2965 +1,2469 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -33647,14 +33792,32 @@ index 548cbb44d..df7bec0c5 100644
 +
 +msgid "Change Disc"
 +msgstr "Zmień płytę"
- 
++
 +msgid "Disc %d"
 +msgstr "Płyta %d"
++
++msgid "Cheats & Patches"
++msgstr "Kody i łatki"
++
++msgid "Patch Source"
++msgstr "Źródło łatek"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 kl./s, szeroki ekran i inne łatki: z biblioteki łatek Resonance albo umieść pliki .cht lub .txt w /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Tylko folder łatek"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Umieść pliki .cht lub .txt w /data/Resonance/cheats"
+ 
++msgid "No cheats or patches yet"
++msgstr "Brak kodów i łatek"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..ee2737818 100644
+index 6ec100a1e..378160304 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2450 @@
+@@ -1,2966 +1,2468 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -36967,12 +37130,30 @@ index 6ec100a1e..ee2737818 100644
 +
 +msgid "Disc %d"
 +msgstr "Disco %d"
++
++msgid "Cheats & Patches"
++msgstr "Trapaças e patches"
++
++msgid "Patch Source"
++msgstr "Origem dos patches"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 fps, tela widescreen e outros patches: da biblioteca de patches do Resonance, ou coloque arquivos .cht ou .txt em /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Somente a pasta de patches"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Coloque arquivos .cht ou .txt em /data/Resonance/cheats"
++
++msgid "No cheats or patches yet"
++msgstr "Ainda sem trapaças ou patches"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..27affd0b4
+index 000000000..840c598ee
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2451 @@
+@@ -0,0 +1,2469 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -39424,11 +39605,29 @@ index 000000000..27affd0b4
 +
 +msgid "Disc %d"
 +msgstr "Диск %d"
++
++msgid "Cheats & Patches"
++msgstr "Читы и патчи"
++
++msgid "Patch Source"
++msgstr "Источник патчей"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 FPS, широкий экран и другие патчи: из библиотеки патчей Resonance, или поместите файлы .cht или .txt в /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "Только папка патчей"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "Поместите файлы .cht или .txt в /data/Resonance/cheats"
++
++msgid "No cheats or patches yet"
++msgstr "Пока нет читов и патчей"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..ecee7586f 100644
+index 8c8d8bc08..a41cc19e7 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2450 @@
+@@ -1,2965 +1,2468 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -43127,14 +43326,32 @@ index 8c8d8bc08..ecee7586f 100644
 +
 +msgid "Change Disc"
 +msgstr "Diski değiştir"
- 
++
 +msgid "Disc %d"
 +msgstr "Disk %d"
++
++msgid "Cheats & Patches"
++msgstr "Hileler ve yamalar"
++
++msgid "Patch Source"
++msgstr "Yama kaynağı"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 FPS, geniş ekran ve diğer yamalar: Resonance yama kütüphanesinden ya da .cht veya .txt dosyalarını /data/Resonance/patches klasörüne koyarak"
++
++msgid "Patches folder only"
++msgstr "Yalnızca yama klasörü"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr ".cht veya .txt dosyalarını /data/Resonance/cheats klasörüne koyun"
+ 
++msgid "No cheats or patches yet"
++msgstr "Henüz hile veya yama yok"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..233dc3f54 100644
+index 3ecabd349..0309903e0 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2449 @@
+@@ -1,2962 +1,2467 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -47126,9 +47343,27 @@ index 3ecabd349..233dc3f54 100644
 +
 +msgid "Change Disc"
 +msgstr "更换光盘"
- 
++
 +msgid "Disc %d"
 +msgstr "光盘 %d"
++
++msgid "Cheats & Patches"
++msgstr "金手指与补丁"
++
++msgid "Patch Source"
++msgstr "补丁来源"
++
++msgid "60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"
++msgstr "60 帧、宽屏等补丁：来自 Resonance 补丁库，或将 .cht 或 .txt 文件放入 /data/Resonance/patches"
++
++msgid "Patches folder only"
++msgstr "仅补丁文件夹"
++
++msgid "Put .cht or .txt files in /data/Resonance/cheats"
++msgstr "请将 .cht 或 .txt 文件放入 /data/Resonance/cheats"
+ 
++msgid "No cheats or patches yet"
++msgstr "还没有金手指或补丁"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -47153,10 +47388,10 @@ index 9bf4830a7..1ed162421 100644
 +endif()
 diff --git a/shell/ps4/CMakeLists.txt b/shell/ps4/CMakeLists.txt
 new file mode 100644
-index 000000000..522b3aff5
+index 000000000..6110bc868
 --- /dev/null
 +++ b/shell/ps4/CMakeLists.txt
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,54 @@
 +# Resonance: Flycast on PS4 homebrew. Built with the Resonance toolchain (toolchain/ps4-decast.cmake,
 +# ps4-love-style.cmake: PS4_RUNTIME_SOURCES, ps4_link_mesa, ps4_add_eboot).
 +target_sources(${PROJECT_NAME} PRIVATE
@@ -47178,6 +47413,7 @@ index 000000000..522b3aff5
 +	launcher/covers.cpp
 +	launcher/cheats_db.cpp
 +	launcher/cheats_menu.cpp
++	launcher/game_codes.cpp
 +	launcher/intro.cpp
 +	launcher/keyboard.cpp
 +	launcher/quick_menu.cpp
@@ -47414,10 +47650,10 @@ index 000000000..c970bb9f7
 +static PS4AudioBackend ps4AudioBackend;
 diff --git a/shell/ps4/launcher/cheats_db.cpp b/shell/ps4/launcher/cheats_db.cpp
 new file mode 100644
-index 000000000..3030fcb38
+index 000000000..f09f5ff58
 --- /dev/null
 +++ b/shell/ps4/launcher/cheats_db.cpp
-@@ -0,0 +1,246 @@
+@@ -0,0 +1,253 @@
 +/*
 +	Resonance cheats: RetroArch .cht files, from libretro's cheat database (libretro-database,
 +	cht/Sega - Dreamcast) or from /data/Resonance/cheats. The database's file names are loose titles
@@ -47579,24 +47815,19 @@ index 000000000..3030fcb38
 +}
 +} // namespace
 +
-+std::vector<CheatCandidate> cheatCandidates(const std::string& title, std::string& error)
++float titleScore(const std::string& title, const std::string& name)
 +{
-+	std::vector<CheatCandidate> out;
-+	const std::vector<std::string> want = words(title);
-+	if (want.empty())
-+		return out;
-+	for (const std::string& name : index(error))
++	const std::vector<std::string> want = words(title), have = words(name);
++	if (want.empty() || have.empty())
++		return 0.f;
 +	{
-+		const std::vector<std::string> have = words(name.substr(0, name.size() - 4));
-+		if (have.empty())
-+			continue;
 +		int common = 0;
 +		for (const std::string& w : want)
 +			common += std::count(have.begin(), have.end(), w) > 0;
 +		// the same title written differently ("Soulcalibur", "Soul Calibur")
 +		const bool same = joined(want) == joined(have);
 +		if (common == 0 && !same)
-+			continue;
++			return 0.f;
 +		// every word of the title found, few extra words: near 1
 +		float score = same ? 1.f : (float)common / want.size() - .08f * std::max(0, (int)have.size() - common);
 +		// numbers must agree ("Crazy Taxi" vs "Crazy Taxi 2")
@@ -47615,6 +47846,18 @@ index 000000000..3030fcb38
 +			lowerName += (char)tolower((unsigned char)c);
 +		if (lowerName.find("japan") != std::string::npos || lowerName.find("europe") != std::string::npos)
 +			score -= .3f;
++		return score;
++	}
++}
++
++std::vector<CheatCandidate> cheatCandidates(const std::string& title, std::string& error)
++{
++	std::vector<CheatCandidate> out;
++	if (words(title).empty())
++		return out;
++	for (const std::string& name : index(error))
++	{
++		const float score = titleScore(title, name.substr(0, name.size() - 4));
 +		if (score > .3f)
 +			out.push_back({ name, score });
 +	}
@@ -47666,10 +47909,10 @@ index 000000000..3030fcb38
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/cheats_menu.cpp b/shell/ps4/launcher/cheats_menu.cpp
 new file mode 100644
-index 000000000..307456d43
+index 000000000..15c2a9648
 --- /dev/null
 +++ b/shell/ps4/launcher/cheats_menu.cpp
-@@ -0,0 +1,283 @@
+@@ -0,0 +1,288 @@
 +/*
 +	Resonance's cheats in the quick menu: the game's cheats, each On/Off, and "Get Cheats": a list of
 +	matching files from libretro's cheat database (by the game's title) and the files in
@@ -47695,6 +47938,7 @@ index 000000000..307456d43
 +#include "launcher_internal.h"
 +#include "cheats.h"
 +#include "emulator.h"
++#include "cfg/cfg.h"
 +#include "ui/IconsFontAwesome6.h"
 +
 +#include <future>
@@ -47757,7 +48001,7 @@ index 000000000..307456d43
 +
 +void load(const std::string& path, const std::string& label)
 +{
-+	cheatManager.loadCheatFile(path);
++	codesPickCheatFile(path);
 +	char buf[256];
 +	snprintf(buf, sizeof(buf), T("Cheats loaded: %s"), label.c_str());
 +	say(buf, false);
@@ -47821,7 +48065,7 @@ index 000000000..307456d43
 +				say(buf, true);
 +			}
 +			else
-+				say(cheatsAutomatic() ? T("No cheats found for this game") : T("Put .cht files in /data/Resonance/cheats"), false);
++				say(cheatsAutomatic() ? T("No cheats found for this game") : T("Put .cht or .txt files in /data/Resonance/cheats"), false);
 +			return;
 +		}
 +		gStatus.clear();
@@ -47852,7 +48096,8 @@ index 000000000..307456d43
 +	gSel = 0;
 +	gPos = 0;
 +	gStatus.clear();
-+	if (cheatManager.cheatCount() == 0 && cheatsAutomatic())
++	// nothing picked for the game yet: the best match by itself
++	if (config::loadStr("cheats", settings.content.gameId).empty() && cheatsAutomatic())
 +		startSearch(true);
 +}
 +
@@ -47860,7 +48105,8 @@ index 000000000..307456d43
 +{
 +	gNow = t;
 +	poll();
-+	const int n = gView == View::LIST ? (int)cheatManager.cheatCount() + 1 : (int)gSources.size();
++	const std::vector<CodeRow> codes = codeRows();
++	const int n = gView == View::LIST ? (int)codes.size() + 1 : (int)gSources.size();
 +	if (in.dy != 0 && n > 0)
 +	{
 +		gSel = std::clamp(gSel + in.dy, 0, n - 1);
@@ -47886,10 +48132,10 @@ index 000000000..307456d43
 +			playSound(Sound::Confirm);
 +			startSearch(false);
 +		}
-+		else
++		else if (gSel - 1 < (int)codes.size())
 +		{
-+			const size_t i = gSel - 1;
-+			cheatManager.enableCheat(i, !cheatManager.cheatEnabled(i));
++			// remembered for the game; a GameShark code's lines go together
++			codeToggle(codes[gSel - 1].name);
 +			playSound(Sound::Move);
 +		}
 +	}
@@ -47911,15 +48157,17 @@ index 000000000..307456d43
 +	const Color tone = xmbTone();
 +	dl->AddRectFilled(ImVec2(x0, top - f.h * .08f), ImVec2(x1, f.h * .9f), IM_COL32(6, 10, 20, (int)(200 * alpha)), 10.f);
 +	xmbText(dl, bodyFont(), f.h * .032f, ImVec2(x0 + f.w * .015f, top - f.h * .065f), alpha,
-+			std::string(ICON_FA_MASK "  ") + (gView == View::LIST ? T("Cheats") : T("Get Cheats")));
++			std::string(ICON_FA_MASK "  ") + (gView == View::LIST ? T("Cheats & Patches") : T("Get Cheats")));
 +
 +	struct Line { std::string label, value; };
 +	std::vector<Line> lines;
++	const std::vector<CodeRow> codes = gView == View::LIST ? codeRows() : std::vector<CodeRow>();
 +	if (gView == View::LIST)
 +	{
 +		lines.push_back({ std::string(ICON_FA_DOWNLOAD "  ") + T("Get Cheats"), "" });
-+		for (size_t i = 0; i < cheatManager.cheatCount(); i++)
-+			lines.push_back({ cheatManager.cheatDescription(i), cheatManager.cheatEnabled(i) ? T("On") : T("Off") });
++		// patches (a wrench) above cheats
++		for (const CodeRow& c : codes)
++			lines.push_back({ std::string(c.patch ? ICON_FA_WRENCH "  " : ICON_FA_MASK "  ") + c.name, c.on ? T("On") : T("Off") });
 +	}
 +	else
 +		for (const Source& s : gSources)
@@ -47944,8 +48192,8 @@ index 000000000..307456d43
 +			xmbText(dl, bodyFont(), ts * .92f, ImVec2(x1 - f.w * .015f, ty), a, lines[i].value, 1.f);
 +	}
 +	dl->PopClipRect();
-+	if (gView == View::LIST && cheatManager.cheatCount() == 0 && gStatus.empty())
-+		xmbText(dl, bodyFont(), ts * .9f, ImVec2(x0 + f.w * .015f, top + rowH * 1.6f), alpha * .8f, T("No cheats yet"));
++	if (gView == View::LIST && codes.empty() && gStatus.empty())
++		xmbText(dl, bodyFont(), ts * .9f, ImVec2(x0 + f.w * .015f, top + rowH * 1.6f), alpha * .8f, T("No cheats or patches yet"));
 +	const bool busy = gSearch.valid() || gDownload.valid();
 +	if (!gStatus.empty() && (busy || gNow - gStatusAt < 8.f))
 +		xmbText(dl, bodyFont(), f.h * .023f, ImVec2(x0 + f.w * .015f, f.h * .86f), alpha, gStatus, 0, x1 - x0 - f.w * .03f,
@@ -48338,6 +48586,502 @@ index 000000000..968b94cdd
 +}
 +
 +} // namespace launcher
+diff --git a/shell/ps4/launcher/game_codes.cpp b/shell/ps4/launcher/game_codes.cpp
+new file mode 100644
+index 000000000..a73648a64
+--- /dev/null
++++ b/shell/ps4/launcher/game_codes.cpp
+@@ -0,0 +1,490 @@
++/*
++	Resonance's cheats and patches for the running game, put together in Flycast's cheat engine.
++
++	Patches change how a game runs (60 fps, widescreen, fixes) and are on unless switched off;
++	cheats are off until picked. Both are RetroArch .cht files or lists of GameShark / CodeBreaker
++	codes (.txt: a name line, then its codes), from:
++	  cheats   the file picked in the quick menu (libretro's cheat database or /data/Resonance/cheats)
++	  patches  /data/Resonance/patches/<product id or title>.cht/.txt (people's own), the Resonance
++	           patch library on GitHub (game-patches/ in the project, fetched by product id or title
++	           when Patch Source is Download automatically), and entries of the cheat file that are
++	           patches by their name ("60FPS", "Widescreen", ...)
++	All of them go into one .cht for Flycast (/data/Resonance/cheats/state/<id>-active.cht); what
++	is on or off is remembered per game (/data/Resonance/cheats/state/<id>.txt).
++
++	This file is part of Flycast.
++
++    Flycast is free software: you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation, either version 2 of the License, or
++    (at your option) any later version.
++
++    Flycast is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
++ */
++#include "launcher_internal.h"
++#include "updater.h"
++#include "cheats.h"
++#include "emulator.h"
++#include "cfg/cfg.h"
++#include "cfg/ini.h"
++#include "oslib/oslib.h"
++
++#include <algorithm>
++#include <cctype>
++#include <cstdio>
++#include <ctime>
++#include <dirent.h>
++#include <map>
++#include <mutex>
++#include <regex>
++#include <set>
++#include <sys/stat.h>
++#include <thread>
++
++extern "C" void ps4_boot_trace(const char *line);
++
++namespace launcher
++{
++namespace
++{
++const char *const kRoot = "/data/Resonance";
++const char *const kPatchIndexUrl = "https://raw.githubusercontent.com/iHaiDeeZ/Resonance/main/game-patches/index.txt";
++const char *const kPatchFileUrl = "https://raw.githubusercontent.com/iHaiDeeZ/Resonance/main/game-patches/";
++
++// the keys of one entry in a RetroArch .cht
++const char *const kChtKeys[] = { "address", "address_bit_position", "big_endian", "cheat_type", "code", "desc", "dest_address",
++	"enable", "handler", "memory_search_size", "value", "repeat_count", "repeat_add_to_value", "repeat_add_to_address" };
++
++std::mutex gMutex;
++std::string gGameId;
++std::map<std::string, bool> gIsPatch;	// entry name -> patch (else cheat)
++std::map<std::string, bool> gState;		// entry name -> on, as the player left it
++
++std::string dir(const char *sub) {
++	return std::string(kRoot) + "/" + sub;
++}
++
++void mkdirs()
++{
++	mkdir(kRoot, 0777);
++	mkdir(dir("cheats").c_str(), 0777);
++	mkdir(dir("cheats/state").c_str(), 0777);
++	mkdir(dir("patches").c_str(), 0777);
++	mkdir(dir("patches/online").c_str(), 0777);
++}
++
++std::string safeId(std::string id)
++{
++	for (char& c : id)
++		if (!isalnum((unsigned char)c) && c != '-')
++			c = '_';
++	return id.empty() ? "game" : id;
++}
++
++bool readFile(const std::string& path, std::string& out)
++{
++	FILE *f = fopen(path.c_str(), "rb");
++	if (f == nullptr)
++		return false;
++	out.clear();
++	char buf[8192];
++	size_t n;
++	while ((n = fread(buf, 1, sizeof(buf), f)) > 0 && out.size() < (1u << 20))
++		out.append(buf, n);
++	fclose(f);
++	return true;
++}
++
++bool writeFile(const std::string& path, const std::string& data)
++{
++	FILE *f = fopen(path.c_str(), "wb");
++	if (f == nullptr)
++		return false;
++	const bool ok = fwrite(data.data(), 1, data.size(), f) == data.size();
++	fclose(f);
++	return ok;
++}
++
++bool endsWith(const std::string& s, const char *ext)
++{
++	const size_t n = strlen(ext);
++	if (s.size() < n)
++		return false;
++	for (size_t i = 0; i < n; i++)
++		if (tolower((unsigned char)s[s.size() - n + i]) != ext[i])
++			return false;
++	return true;
++}
++
++// a cheat file's entry that is really a patch
++bool patchByName(const std::string& name)
++{
++	static const std::regex re("60 ?fps|60 ?hz|frame ?rate|widescreen|wide screen|16:9|no ?blur|deflicker|progressive", std::regex::icase);
++	return std::regex_search(name, re);
++}
++
++std::string statePath() {
++	return dir("cheats/state/") + safeId(gGameId) + ".txt";
++}
++
++void loadState()
++{
++	gState.clear();
++	std::string text;
++	if (!readFile(statePath(), text))
++		return;
++	size_t at = 0;
++	while (at < text.size())
++	{
++		size_t end = text.find('\n', at);
++		if (end == std::string::npos)
++			end = text.size();
++		const std::string line = text.substr(at, end - at);
++		at = end + 1;
++		if (line.size() > 2 && (line[0] == '0' || line[0] == '1') && line[1] == '\t')
++			gState[line.substr(2)] = line[0] == '1';
++	}
++}
++
++void saveState()
++{
++	std::string text = "# Resonance: cheats and patches switched on (1) or off (0) for this game\n";
++	for (const auto& [name, on] : gState)
++		text += std::string(on ? "1" : "0") + "\t" + name + "\n";
++	writeFile(statePath(), text);
++}
++
++// The game's patch files of the player's own and the downloaded ones
++std::vector<std::string> patchFiles()
++{
++	std::vector<std::string> out;
++	const std::string title = gui_ps4_game_title();
++	for (const char *sub : { "patches", "patches/online" })
++	{
++		DIR *d = opendir(dir(sub).c_str());
++		if (d == nullptr)
++			continue;
++		while (dirent *e = readdir(d))
++		{
++			const std::string name = e->d_name;
++			if (!endsWith(name, ".cht") && !endsWith(name, ".txt"))
++				continue;
++			const std::string stem = name.substr(0, name.size() - 4);
++			if (stem == safeId(gGameId) || stem == gGameId || (!title.empty() && titleScore(title, stem) >= .75f))
++				out.push_back(dir(sub) + "/" + name);
++		}
++		closedir(d);
++	}
++	std::sort(out.begin(), out.end());
++	return out;
++}
++
++// One .cht's entries appended to the merged file
++void appendCht(const std::string& path, bool patches, config::IniFile& out, int& n)
++{
++	std::string text;
++	if (!readFile(path, text))
++		return;
++	config::IniFile in;
++	in.load(text);
++	const int count = in.getInt("", "cheats", 0);
++	for (int i = 0; count == 0 || i < count; i++)
++	{
++		const std::string from = "cheat" + std::to_string(i) + "_";
++		if (!in.hasEntry("", from + "address"))
++		{
++			if (count == 0)
++				break;
++			continue;
++		}
++		const std::string to = "cheat" + std::to_string(n) + "_";
++		for (const char *key : kChtKeys)
++			if (in.hasEntry("", from + key))
++				out.set("", to + key, in.getString("", from + key));
++		const std::string name = in.getString("", from + "desc", "Cheat " + std::to_string(i + 1));
++		gIsPatch[name] = patches || patchByName(name);
++		n++;
++	}
++}
++
++// A list of GameShark / CodeBreaker codes: a name line, then its codes ("XXXXXXXX YYYYYYYY")
++void addCodeList(const std::string& path, bool patches)
++{
++	std::string text;
++	if (!readFile(path, text))
++		return;
++	std::string name, codes;
++	auto flush = [&]() {
++		if (!name.empty() && !codes.empty())
++		{
++			try {
++				cheatManager.addGameSharkCheat(name, codes);
++				gIsPatch[name] = patches || patchByName(name);
++			} catch (const std::exception& e) {
++				WARN_LOG(COMMON, "codes '%s': %s", name.c_str(), e.what());
++			}
++		}
++		codes.clear();
++	};
++	size_t at = 0;
++	while (at < text.size())
++	{
++		size_t end = text.find('\n', at);
++		if (end == std::string::npos)
++			end = text.size();
++		std::string line = text.substr(at, end - at);
++		at = end + 1;
++		while (!line.empty() && (line.back() == '\r' || line.back() == ' ' || line.back() == '\t'))
++			line.pop_back();
++		if (line.empty() || line[0] == '#' || line[0] == ';')
++			continue;
++		bool hex = true;
++		int digits = 0;
++		for (char c : line)
++		{
++			if (isxdigit((unsigned char)c))
++				digits++;
++			else if (c != ' ' && c != '-' && c != '\t')
++				hex = false;
++		}
++		if (hex && digits >= 8)
++			codes += line + " ";
++		else
++		{
++			flush();
++			name = line;
++		}
++	}
++	flush();
++}
++
++// Everything for the game into Flycast's cheat engine (the emulation is stopped, or this runs on
++// its thread)
++void rebuild()
++{
++	std::lock_guard<std::mutex> lock(gMutex);
++	mkdirs();
++	gIsPatch.clear();
++	const std::string cheatFile = config::loadStr("cheats", gGameId);
++	const int patchSource = config::loadInt("resonance", "PatchSource", 0);
++	config::IniFile merged;
++	int n = 0;
++	std::vector<std::string> lists;
++	if (patchSource != 2)
++		for (const std::string& p : patchFiles())
++		{
++			if (endsWith(p, ".cht"))
++				appendCht(p, true, merged, n);
++			else
++				lists.push_back(p);
++		}
++	if (!cheatFile.empty() && cheatFile.find("-active.cht") == std::string::npos)
++	{
++		if (endsWith(cheatFile, ".txt") && !endsWith(cheatFile, ".cht"))
++			lists.push_back(cheatFile);
++		else
++			appendCht(cheatFile, false, merged, n);
++	}
++	merged.set("", "cheats", n);
++	std::string data;
++	merged.save(data);
++	const std::string active = dir("cheats/state/") + safeId(gGameId) + "-active.cht";
++	writeFile(active, data);
++	cheatManager.loadCheatFile(active);
++	// Flycast remembers the file it loaded: keep the one the player picked
++	config::saveStr("cheats", gGameId, cheatFile);
++	for (const std::string& p : lists)
++	{
++		const bool patches = p.find("/patches/") != std::string::npos;
++		addCodeList(p, patches);
++	}
++	// on or off: as left, else patches on and cheats off
++	for (size_t i = 0; i < cheatManager.cheatCount(); i++)
++	{
++		const std::string name = cheatManager.cheatDescription(i);
++		auto st = gState.find(name);
++		const bool patch = gIsPatch.count(name) ? gIsPatch[name] : patchByName(name);
++		cheatManager.enableCheat(i, st != gState.end() ? st->second : patch);
++	}
++	if (patchSource == 2)
++		for (size_t i = 0; i < cheatManager.cheatCount(); i++)
++			if (gIsPatch[cheatManager.cheatDescription(i)])
++				cheatManager.enableCheat(i, false);
++	char line[160];
++	snprintf(line, sizeof(line), "codes: %s: %d entries", gGameId.c_str(), (int)cheatManager.cheatCount());
++	ps4_boot_trace(line);
++}
++
++// Patch Source on Download automatically: the library's patch for the game, a day at most old
++void fetchPatches(std::string gameId, std::string title)
++{
++	mkdirs();
++	const std::string indexPath = dir("patches/online/index.txt");
++	std::string index, error;
++	struct stat st;
++	if (stat(indexPath.c_str(), &st) != 0 || time(nullptr) - st.st_mtime > 24 * 3600 || !readFile(indexPath, index))
++	{
++		if (ps4_http_get(kPatchIndexUrl, index, error) != 200)
++			return;
++		writeFile(indexPath, index);
++	}
++	// "<file>\t<product id>\t<title>" lines
++	std::string best;
++	float bestScore = 0;
++	size_t at = 0;
++	while (at < index.size())
++	{
++		size_t end = index.find('\n', at);
++		if (end == std::string::npos)
++			end = index.size();
++		std::string line = index.substr(at, end - at);
++		at = end + 1;
++		if (!line.empty() && line.back() == '\r')
++			line.pop_back();
++		if (line.empty() || line[0] == '#')
++			continue;
++		const size_t t1 = line.find('\t'), t2 = t1 == std::string::npos ? t1 : line.find('\t', t1 + 1);
++		if (t1 == std::string::npos)
++			continue;
++		const std::string file = line.substr(0, t1);
++		const std::string id = line.substr(t1 + 1, t2 == std::string::npos ? std::string::npos : t2 - t1 - 1);
++		const std::string name = t2 == std::string::npos ? "" : line.substr(t2 + 1);
++		const float score = !id.empty() && id == gameId ? 2.f : name.empty() ? 0.f : titleScore(title, name);
++		if (score > bestScore && file.find('/') == std::string::npos && (endsWith(file, ".cht") || endsWith(file, ".txt")))
++		{
++			bestScore = score;
++			best = file;
++		}
++	}
++	if (best.empty() || bestScore < .75f)
++		return;
++	const std::string dest = dir("patches/online/") + safeId(gameId) + (endsWith(best, ".txt") ? ".txt" : ".cht");
++	std::string body, old;
++	if (ps4_http_get(kPatchFileUrl + best, body, error) != 200 || body.empty())
++		return;
++	if (readFile(dest, old) && old == body)
++		return;
++	writeFile(dest, body);
++	ps4_boot_trace(("codes: patches for " + gameId + " from the library: " + best).c_str());
++	// into the running game, from the emulation thread
++	emu.run([gameId] {
++		if (gameId == gGameId)
++			rebuild();
++	});
++}
++
++// Cheat Source on Download automatically and nothing picked: the best match from libretro's
++// database (left off)
++void fetchCheats(std::string gameId, std::string title)
++{
++	std::string error;
++	const std::vector<CheatCandidate> found = cheatCandidates(title, error);
++	if (found.empty() || found[0].score < .75f)
++		return;
++	const std::string dest = dir("cheats/") + safeId(gameId) + ".cht";
++	if (!downloadCheat(found[0].name, dest).empty())
++		return;
++	ps4_boot_trace(("codes: cheats for " + gameId + ": " + found[0].name).c_str());
++	emu.run([gameId, dest] {
++		if (gameId != gGameId || !config::loadStr("cheats", gameId).empty())
++			return;
++		config::saveStr("cheats", gameId, dest);
++		rebuild();
++	});
++}
++} // namespace
++
++void codesGameStarted()
++{
++	// a game's start also reports a disc change: once is enough
++	static std::string lastId;
++	static time_t lastAt;
++	const time_t now = time(nullptr);
++	if (settings.content.gameId == lastId && now - lastAt < 5)
++		return;
++	lastId = settings.content.gameId;
++	lastAt = now;
++	gGameId = settings.content.gameId;
++	if (gGameId.empty())
++		return;
++	loadState();
++	rebuild();
++	const std::string title = gui_ps4_game_title();
++	const std::string id = gGameId;
++	const bool cheatsMissing = config::loadStr("cheats", id).empty();
++	if (config::loadInt("resonance", "PatchSource", 0) == 0 || (cheatsAutomatic() && cheatsMissing))
++		std::thread([id, title, cheatsMissing] {
++			ThreadName _("GameCodes");
++			if (config::loadInt("resonance", "PatchSource", 0) == 0)
++				fetchPatches(id, title);
++			if (cheatsAutomatic() && cheatsMissing)
++				fetchCheats(id, title);
++		}).detach();
++}
++
++void codesReload() {
++	rebuild();
++}
++
++void codesPickCheatFile(const std::string& path)
++{
++	config::saveStr("cheats", gGameId, path);
++	rebuild();
++}
++
++std::vector<CodeRow> codeRows()
++{
++	std::vector<CodeRow> rows;
++	for (size_t i = 0; i < cheatManager.cheatCount(); i++)
++	{
++		const std::string name = cheatManager.cheatDescription(i);
++		// a GameShark code is several entries under one name: one row
++		if (!rows.empty() && rows.back().name == name)
++			continue;
++		bool patch;
++		{
++			std::lock_guard<std::mutex> lock(gMutex);
++			patch = gIsPatch.count(name) ? gIsPatch[name] : patchByName(name);
++		}
++		rows.push_back({ name, patch, cheatManager.cheatEnabled(i) });
++	}
++	std::stable_sort(rows.begin(), rows.end(), [](const CodeRow& a, const CodeRow& b) { return a.patch > b.patch; });
++	return rows;
++}
++
++void codeToggle(const std::string& name)
++{
++	bool on = false;
++	for (size_t i = 0; i < cheatManager.cheatCount(); i++)
++		if (cheatManager.cheatDescription(i) == name)
++		{
++			on = !cheatManager.cheatEnabled(i);
++			break;
++		}
++	for (size_t i = 0; i < cheatManager.cheatCount(); i++)
++		if (cheatManager.cheatDescription(i) == name)
++			cheatManager.enableCheat(i, on);
++	std::lock_guard<std::mutex> lock(gMutex);
++	gState[name] = on;
++	saveState();
++}
++
++} // namespace launcher
++
++void launcher_game_started()
++{
++	static bool listening;
++	if (!listening)
++	{
++		listening = true;
++		// another disc: Flycast reloads its cheats for it
++		EventManager::listen(Event::DiskChange, [](Event, void *) { launcher::codesGameStarted(); }, nullptr);
++	}
++	launcher::codesGameStarted();
++}
 diff --git a/shell/ps4/launcher/intro.cpp b/shell/ps4/launcher/intro.cpp
 new file mode 100644
 index 000000000..827448a60
@@ -50362,10 +51106,10 @@ index 000000000..f10907e1d
 +}
 diff --git a/shell/ps4/launcher/launcher.h b/shell/ps4/launcher/launcher.h
 new file mode 100644
-index 000000000..99f97610a
+index 000000000..8773750d6
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher.h
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,78 @@
 +/*
 +	Resonance: the PS4 home screen (launcher) that replaces Flycast's game list.
 +
@@ -50439,15 +51183,17 @@ index 000000000..99f97610a
 +bool launcher_quick_menu_draw();
 +// L3+R3 or the touchpad during a game: the quick menu
 +void launcher_open_quick_menu();
++// The game has loaded (or another disc went in): its cheats and patches
++void launcher_game_started();
 +// GuiState::Loading: the started game's cover until its first picture (label: what's going on,
 +// progress 0..1 or < 0)
 +void launcher_loading_draw(const char *label, float progress);
 diff --git a/shell/ps4/launcher/launcher_internal.h b/shell/ps4/launcher/launcher_internal.h
 new file mode 100644
-index 000000000..2fcbe4686
+index 000000000..7f505b9ec
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher_internal.h
-@@ -0,0 +1,280 @@
+@@ -0,0 +1,288 @@
 +/*
 +	Resonance launcher internals: what the core (launcher.cpp) shares with the themes
 +	(theme_*.cpp), covers (covers.cpp) and sounds (sound.cpp).
@@ -50674,6 +51420,14 @@ index 000000000..2fcbe4686
 +std::string downloadCheat(const std::string& name, const std::string& dest);	// "" when done
 +std::vector<std::string> folderCheats();	// paths of the files in the cheats folder
 +bool cheatsAutomatic();						// Settings > System > Cheat Source
++float titleScore(const std::string& title, const std::string& name);	// about 1: the same game
++// game_codes.cpp: the running game's cheats and patches (patches on unless switched off)
++struct CodeRow { std::string name; bool patch; bool on; };
++void codesGameStarted();
++void codesReload();
++void codesPickCheatFile(const std::string& path);
++std::vector<CodeRow> codeRows();		// one per code, patches first
++void codeToggle(const std::string& name);
 +// cheats_menu.cpp: the quick menu's cheats; cheatsInput false = back to the quick menu
 +void cheatsOpen(float t);
 +bool cheatsInput(const MenuInput& in, float t);
@@ -50787,7 +51541,7 @@ index 000000000..5605ef4cb
 +};
 diff --git a/shell/ps4/launcher/quick_menu.cpp b/shell/ps4/launcher/quick_menu.cpp
 new file mode 100644
-index 000000000..2b5c49d94
+index 000000000..424012735
 --- /dev/null
 +++ b/shell/ps4/launcher/quick_menu.cpp
 @@ -0,0 +1,337 @@
@@ -51053,7 +51807,7 @@ index 000000000..2b5c49d94
 +		{ ICON_FA_CLOCK_ROTATE_LEFT, T("Load State"), slot, true, date == 0 },
 +		{ ICON_FA_VOLUME_HIGH, T("Volume Level"), std::to_string(config::AudioVolume.get()) + "%", true, false },
 +		{ ICON_FA_GAUGE_HIGH, T("Show FPS Counter"), config::ShowFPS ? T("On") : T("Off"), true, false },
-+		{ ICON_FA_MASK, T("Cheats"), "", false, false },
++		{ ICON_FA_MASK, T("Cheats & Patches"), "", false, false },
 +		{ ICON_FA_COMPACT_DISC, severalDiscs ? T("Change Disc") : gui_ps4_disc_open() ? T("Insert Disk") : T("Eject Disk"), discValue,
 +				severalDiscs, false },
 +		{ ICON_FA_GEAR, T("Settings"), "", false, false },
@@ -51130,10 +51884,10 @@ index 000000000..2b5c49d94
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..5573c7161
+index 000000000..0045e9858
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,902 @@
+@@ -0,0 +1,906 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -51348,10 +52102,14 @@ index 000000000..5573c7161
 +		system.items.push_back(toggle(Tnop("Dreamcast 32MB RAM Mod"), Tnop("Enables 32MB RAM Mod for Dreamcast. May affect compatibility"), config::RamMod32MB, true));
 +		system.items.push_back(toggle(Tnop("Load State at Start"), Tnop("Load the last saved state of the game when starting"), config::AutoLoadState));
 +		system.items.push_back(toggle(Tnop("Save State on Exit"), Tnop("Save the state of the game when stopping"), config::AutoSaveState));
-+		system.items.push_back(Setting { T("Cheat Source"), T("Put .cht files in /data/Resonance/cheats"),
++		system.items.push_back(Setting { T("Cheat Source"), T("Put .cht or .txt files in /data/Resonance/cheats"),
 +			{ { T("Download automatically"), 0 }, { T("Cheats folder only"), 1 } },
 +			[] { return config::loadInt("resonance", "CheatSource", 0); },
 +			[](int v) { config::saveInt("resonance", "CheatSource", v); } });
++		system.items.push_back(Setting { T("Patch Source"), T("60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches"),
++			{ { T("Download automatically"), 0 }, { T("Patches folder only"), 1 }, { T("Off"), 2 } },
++			[] { return config::loadInt("resonance", "PatchSource", 0); },
++			[](int v) { config::saveInt("resonance", "PatchSource", v); } });
 +		groups.push_back(std::move(system));
 +
 +		Group home { ICON_FA_HOUSE, T("Home Screen Settings"), T("Theme, language, covers, opening"), {} };

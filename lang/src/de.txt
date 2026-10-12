@@ -812,3 +812,9 @@
 2105	%d Blöcke
 2106	Disc wechseln
 2107	Disc %d
+2108	Cheats & Patches
+2109	Patch-Quelle
+2110	60 FPS, Breitbild und andere Patches: aus der Resonance-Patch-Bibliothek, oder lege .cht- oder .txt-Dateien in /data/Resonance/patches
+2111	Nur Patch-Ordner
+2112	Lege .cht- oder .txt-Dateien in /data/Resonance/cheats
+2113	Noch keine Cheats oder Patches

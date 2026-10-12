@@ -812,3 +812,9 @@
 2105	%d blocchi
 2106	Cambia disco
 2107	Disco %d
+2108	Trucchi e patch
+2109	Origine delle patch
+2110	60 fps, widescreen e altre patch: dalla libreria di patch di Resonance, oppure metti file .cht o .txt in /data/Resonance/patches
+2111	Solo cartella delle patch
+2112	Metti file .cht o .txt in /data/Resonance/cheats
+2113	Ancora nessun trucco o patch

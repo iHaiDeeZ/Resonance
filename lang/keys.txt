@@ -812,3 +812,9 @@
 2105	%d blocks
 2106	Change Disc
 2107	Disc %d
+2108	Cheats & Patches
+2109	Patch Source
+2110	60 fps, widescreen and other patches: from the Resonance patch library, or put .cht or .txt files in /data/Resonance/patches
+2111	Patches folder only
+2112	Put .cht or .txt files in /data/Resonance/cheats
+2113	No cheats or patches yet

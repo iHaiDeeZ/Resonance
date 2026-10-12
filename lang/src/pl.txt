@@ -812,3 +812,9 @@
 2105	Bloki: %d
 2106	Zmień płytę
 2107	Płyta %d
+2108	Kody i łatki
+2109	Źródło łatek
+2110	60 kl./s, szeroki ekran i inne łatki: z biblioteki łatek Resonance albo umieść pliki .cht lub .txt w /data/Resonance/patches
+2111	Tylko folder łatek
+2112	Umieść pliki .cht lub .txt w /data/Resonance/cheats
+2113	Brak kodów i łatek

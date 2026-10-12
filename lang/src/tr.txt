@@ -813,3 +813,9 @@
 2105	%d blok
 2106	Diski değiştir
 2107	Disk %d
+2108	Hileler ve yamalar
+2109	Yama kaynağı
+2110	60 FPS, geniş ekran ve diğer yamalar: Resonance yama kütüphanesinden ya da .cht veya .txt dosyalarını /data/Resonance/patches klasörüne koyarak
+2111	Yalnızca yama klasörü
+2112	.cht veya .txt dosyalarını /data/Resonance/cheats klasörüne koyun
+2113	Henüz hile veya yama yok

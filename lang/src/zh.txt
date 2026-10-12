@@ -812,3 +812,9 @@
 2105	%d 块
 2106	更换光盘
 2107	光盘 %d
+2108	金手指与补丁
+2109	补丁来源
+2110	60 帧、宽屏等补丁：来自 Resonance 补丁库，或将 .cht 或 .txt 文件放入 /data/Resonance/patches
+2111	仅补丁文件夹
+2112	请将 .cht 或 .txt 文件放入 /data/Resonance/cheats
+2113	还没有金手指或补丁

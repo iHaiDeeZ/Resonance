@@ -812,3 +812,9 @@
 2105	%d blokken
 2106	Disc wisselen
 2107	Disc %d
+2108	Cheats en patches
+2109	Patchbron
+2110	60 fps, breedbeeld en andere patches: uit de patchbibliotheek van Resonance, of zet .cht- of .txt-bestanden in /data/Resonance/patches
+2111	Alleen patchmap
+2112	Zet .cht- of .txt-bestanden in /data/Resonance/cheats
+2113	Nog geen cheats of patches
