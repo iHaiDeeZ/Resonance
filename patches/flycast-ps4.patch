@@ -1532,7 +1532,7 @@ index d2096c491..87f7b411b 100644
 +#endif
  };
 diff --git a/core/ui/gui.cpp b/core/ui/gui.cpp
-index 614739abc..5fa607e4a 100644
+index 614739abc..e4fb12d4a 100644
 --- a/core/ui/gui.cpp
 +++ b/core/ui/gui.cpp
 @@ -17,6 +17,7 @@
@@ -1553,7 +1553,7 @@ index 614739abc..5fa607e4a 100644
  #include "profiler/fc_profiler.h"
  #include "hw/naomi/card_reader.h"
  #include "oslib/resources.h"
-@@ -451,6 +455,173 @@ void gui_open_settings()
+@@ -451,6 +455,176 @@ void gui_open_settings()
  	}
  }
  
@@ -1636,15 +1636,18 @@ index 614739abc..5fa607e4a 100644
 +		e.coverPath = art.boxartPath;
 +		out.push_back(std::move(e));
 +	}
-+	// A .cue next to the same disc's .gdi or .chd (or with its title elsewhere in the library) is
-+	// a second entry for one game: hidden. A game that is only a .cue stays.
++	// A .cue beside the same disc's .gdi or .chd (the same file name, or the same title elsewhere in
++	// the library) is a second entry for one game: hidden. Other games in its folder don't count.
 +	auto isCue = [](const LauncherEntry& e) {
 +		const std::string& n = e.path;
 +		return n.size() > 4 && strcasecmp(n.c_str() + n.size() - 4, ".cue") == 0;
 +	};
-+	auto folder = [](const std::string& path) {
-+		const size_t slash = path.find_last_of('/');
-+		return slash == std::string::npos ? std::string() : path.substr(0, slash);
++	// the path without its extension, lower case
++	auto stem = [](const std::string& path) {
++		std::string s = path.substr(0, path.find_last_of('.') == std::string::npos ? path.size() : path.find_last_of('.'));
++		for (char& c : s)
++			c = (char)tolower((unsigned char)c);
++		return s;
 +	};
 +	std::vector<LauncherEntry> kept;
 +	for (const LauncherEntry& e : out)
@@ -1652,7 +1655,7 @@ index 614739abc..5fa607e4a 100644
 +		bool duplicate = false;
 +		if (isCue(e))
 +			for (const LauncherEntry& other : out)
-+				if (&other != &e && !isCue(other) && (folder(other.path) == folder(e.path) || other.title == e.title))
++				if (&other != &e && !isCue(other) && (stem(other.path) == stem(e.path) || other.title == e.title))
 +				{
 +					duplicate = true;
 +					break;
@@ -1727,7 +1730,7 @@ index 614739abc..5fa607e4a 100644
  void gui_start_game(const std::string& path)
  {
  	const LockGuard lock(guiMutex);
-@@ -1233,8 +1404,58 @@ static bool checkUWPProtocolActivation()
+@@ -1233,8 +1407,58 @@ static bool checkUWPProtocolActivation()
  }
  #endif
  
@@ -1786,7 +1789,7 @@ index 614739abc..5fa607e4a 100644
  	drawBoxartBackground();
  	centerNextWindow();
  	ImGui::SetNextWindowSize(ScaledVec2(330, 0));
-@@ -1345,6 +1566,9 @@ void gui_display_ui()
+@@ -1345,6 +1569,9 @@ void gui_display_ui()
  		}
  	}
  
@@ -1796,7 +1799,7 @@ index 614739abc..5fa607e4a 100644
  	gui_newFrame();
  	ImGui::NewFrame();
  	error_msg_shown = false;
-@@ -1353,9 +1577,19 @@ void gui_display_ui()
+@@ -1353,9 +1580,19 @@ void gui_display_ui()
  	switch (gui_state)
  	{
  	case GuiState::Settings:
@@ -1816,7 +1819,7 @@ index 614739abc..5fa607e4a 100644
  		gui_display_commands();
  		break;
  	case GuiState::Pause:
-@@ -1364,6 +1598,11 @@ void gui_display_ui()
+@@ -1364,6 +1601,11 @@ void gui_display_ui()
  		break;
  	case GuiState::Main:
  		//gui_display_demo();
@@ -1828,7 +1831,7 @@ index 614739abc..5fa607e4a 100644
  		gui_display_content();
  		break;
  	case GuiState::Closed:
-@@ -1408,6 +1647,10 @@ void gui_display_ui()
+@@ -1408,6 +1650,10 @@ void gui_display_ui()
  		emu.start();
  }
  
@@ -1839,7 +1842,7 @@ index 614739abc..5fa607e4a 100644
  static u64 LastFPSTime;
  static int lastFrameCount = 0;
  static float fps = -1;
-@@ -1422,6 +1665,25 @@ static std::string getFPSNotification()
+@@ -1422,6 +1668,25 @@ static std::string getFPSNotification()
  			LastFPSTime = now;
  			lastFrameCount = MainFrameCount;
  		}
@@ -1865,7 +1868,7 @@ index 614739abc..5fa607e4a 100644
  		if (fps >= 0.f && fps < 9999.f) {
  			char text[32];
  			snprintf(text, sizeof(text), "F:%4.1f%s", fps, settings.input.fastForwardMode ? " >>" : "");
-@@ -1669,6 +1931,25 @@ void gui_runOnUiThread(std::function<void()> function) {
+@@ -1669,6 +1934,25 @@ void gui_runOnUiThread(std::function<void()> function) {
  	uiThreadRunner.runOnThread(function);
  }
  
@@ -1891,7 +1894,7 @@ index 614739abc..5fa607e4a 100644
  void gui_takeScreenshot()
  {
  	if (!game_started)
-@@ -1705,3 +1986,141 @@ bool __cdecl Concurrency::details::_Task_impl_base::_IsNonBlockingThread() {
+@@ -1705,3 +1989,141 @@ bool __cdecl Concurrency::details::_Task_impl_base::_IsNonBlockingThread() {
  	return false;
  }
  #endif
