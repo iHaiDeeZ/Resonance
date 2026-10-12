@@ -48340,10 +48340,10 @@ index 000000000..968b94cdd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/intro.cpp b/shell/ps4/launcher/intro.cpp
 new file mode 100644
-index 000000000..a54334880
+index 000000000..827448a60
 --- /dev/null
 +++ b/shell/ps4/launcher/intro.cpp
-@@ -0,0 +1,671 @@
+@@ -0,0 +1,722 @@
 +/*
 +	Resonance's opening, played once when the app starts: Sonic spin-dashes into the spotlight as a
 +	ball, skids to the middle of the stage and hops up as the Dreamcast drops out of the sky, uncurls
@@ -48909,6 +48909,57 @@ index 000000000..a54334880
 +	{
 +		if (t < TITLE_START)
 +			return;
++		float aspect;
++		const ImTextureID logo = logoTexture(aspect);
++		if (logo == ImTextureID())
++		{
++			drawLetters(f, t);
++			return;
++		}
++		const LogoInfo& li = logoInfo();
++		const float lt = t - TITLE_START;
++		// sized by the letters (the picture has a glow margin all round)
++		const float h = std::min(f.h * .13f / (1.f - 2.f * li.pad), f.w * .62f / (aspect - 2.f * li.pad)), w = h * aspect;
++		const ImVec2 c(f.w * .5f, f.h * .80f);
++		// a dark band to sit on
++		const float band = clamp01(lt / .3f);
++		f.dl->AddRectFilledMultiColor(ImVec2(0, c.y - h * .55f), ImVec2(f.w, f.h), IM_COL32(0, 0, 0, 0), IM_COL32(0, 0, 0, 0),
++				IM_COL32(0, 8, 30, (int)(200 * band)), IM_COL32(0, 8, 30, (int)(200 * band)));
++		// it settles from a little larger
++		const float q = easeOut(clamp01(lt / .75f));
++		const float k = 1.f + .07f * (1.f - q);
++		const ImVec2 p0(c.x - w * k * .5f, c.y - h * k * .5f), p1(c.x + w * k * .5f, c.y + h * k * .5f);
++		const ImVec2 swirl(p0.x + li.swirlX * h * k, p0.y + li.swirlY * h * k);
++		// the swirl first, then the name opening out from it to both sides
++		const float open = easeOut(clamp01((lt - .18f) / .6f));
++		const float sr = li.swirlR * h * k * 1.25f;
++		const float left = swirl.x - sr - (swirl.x - sr - p0.x) * open, right = swirl.x + sr + (p1.x - swirl.x - sr) * open;
++		const int a = (int)(255 * clamp01(lt / .2f));
++		f.dl->PushClipRect(ImVec2(left, 0), ImVec2(right, f.h), true);
++		f.dl->AddImage(logo, p0, p1, ImVec2(0, 0), ImVec2(1, 1), IM_COL32(255, 255, 255, a));
++		f.dl->PopClipRect();
++		// rings going out from the swirl: the resonance
++		for (int i = 0; i < 3; i++)
++		{
++			const float rt = (lt - .05f - i * .2f) / .9f;
++			if (rt <= 0 || rt >= 1)
++				continue;
++			const float r = li.swirlR * h * k * (1.f + rt * 6.f);
++			f.dl->AddCircle(swirl, r, IM_COL32(255, 160, 50, (int)(170 * (1 - rt) * (1 - rt))), 72, h * .035f * (1 - rt) + 1.f);
++		}
++		// a light sweeping across once it is open
++		const float sweep = (lt - .9f) / .7f;
++		if (sweep > 0 && sweep < 1)
++		{
++			f.dl->PushClipRect(p0, p1, true);
++			drawBlob(f.dl, ImVec2(p0.x + (p1.x - p0.x) * sweep, c.y), h * .6f, IM_COL32(255, 255, 255, 70));
++			f.dl->PopClipRect();
++		}
++	}
++
++	// Without the logo picture: the name's letters dropping in
++	void drawLetters(Frame& f, float t)
++	{
 +		static const char title[] = "RESONANCE";
 +		ImFont *font = displayFont();
 +		const float size = f.h * .085f, gap = size * .12f;
@@ -49188,10 +49239,10 @@ index 000000000..d8426aabd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/launcher.cpp b/shell/ps4/launcher/launcher.cpp
 new file mode 100644
-index 000000000..f75688e70
+index 000000000..f10907e1d
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher.cpp
-@@ -0,0 +1,1050 @@
+@@ -0,0 +1,1117 @@
 +/*
 +	Resonance launcher core: the library, covers and colours, DualShock 4 input, theme switching
 +	and starting games. The themes draw; this file decides what they draw.
@@ -50041,6 +50092,72 @@ index 000000000..f75688e70
 +	}
 +}
 +
++namespace
++{
++std::vector<u8> gLogoPixels;
++int gLogoW, gLogoH;
++bool gLogoRead;
++LogoInfo gLogoInfo;
++
++void readLogo()
++{
++	if (gLogoRead)
++		return;
++	gLogoRead = true;
++	const std::string dir = std::string(ps4_app_dir()) + "/launcher/";
++	int n;
++	if (u8 *data = stbi_load((dir + "logo.png").c_str(), &gLogoW, &gLogoH, &n, 4))
++	{
++		gLogoPixels.assign(data, data + (size_t)gLogoW * gLogoH * 4);
++		stbi_image_free(data);
++	}
++	if (FILE *f = fopen((dir + "logo.txt").c_str(), "r"))
++	{
++		LogoInfo li;
++		if (fscanf(f, "%f %f %f %f", &li.pad, &li.swirlX, &li.swirlY, &li.swirlR) == 4)
++			gLogoInfo = li;
++		fclose(f);
++	}
++}
++} // namespace
++
++ImTextureID launcher::logoTexture(float& aspect)
++{
++	readLogo();
++	if (gLogoPixels.empty() || imguiDriver == nullptr)
++		return {};
++	aspect = (float)gLogoW / gLogoH;
++	// kept in memory: the swap chain rebuild at a game's start and end drops the UI's textures
++	ImTextureID id = imguiDriver->getTexture("resonance.logo");
++	if (id == ImTextureID())
++	{
++		try {
++			id = imguiDriver->updateTexture("resonance.logo", gLogoPixels.data(), gLogoW, gLogoH, false);
++		} catch (...) {
++		}
++	}
++	return id;
++}
++
++const LogoInfo& launcher::logoInfo()
++{
++	readLogo();
++	return gLogoInfo;
++}
++
++void launcher::drawCornerLogo(Frame& f, float alpha, float left)
++{
++	float aspect;
++	const ImTextureID tex = logoTexture(aspect);
++	if (tex == ImTextureID() || alpha <= .01f)
++		return;
++	// the letters' top at 3.8% of the height, their left edge at 3.5% of the width
++	// the letters and subtitle 5.6% of the height; the picture is larger by its glow margin
++	const float h = f.h * .056f / (1.f - 2.f * gLogoInfo.pad), pad = gLogoInfo.pad * h;
++	const ImVec2 p0((left < 0 ? f.w * .035f : left) - pad, f.h * .038f - pad);
++	f.dl->AddImage(tex, p0, ImVec2(p0.x + h * aspect, p0.y + h), ImVec2(0, 0), ImVec2(1, 1), IM_COL32(255, 255, 255, (int)(255 * clamp01(alpha))));
++}
++
 +void launcher::drawLaunchCard(Frame& f, const Game& g, float alpha, float progress, const std::string& label)
 +{
 +	alpha = clamp01(alpha);
@@ -50184,6 +50301,7 @@ index 000000000..f75688e70
 +		fade = 1.f - (gTime - gFadeAt) / .22f;
 +
 +	gTheme->draw(f);
++	drawCornerLogo(f, gLaunchAt >= 0 ? 1.f - clamp01((gTime - gLaunchAt) / .35f) : 1.f);
 +
 +	if (fade > 0.f)
 +		f.dl->AddRectFilled(ImVec2(0, 0), ImVec2(f.w, f.h), IM_COL32(0, 0, 0, (int)(255 * clamp01(fade))));
@@ -50326,10 +50444,10 @@ index 000000000..99f97610a
 +void launcher_loading_draw(const char *label, float progress);
 diff --git a/shell/ps4/launcher/launcher_internal.h b/shell/ps4/launcher/launcher_internal.h
 new file mode 100644
-index 000000000..b283af665
+index 000000000..2fcbe4686
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher_internal.h
-@@ -0,0 +1,270 @@
+@@ -0,0 +1,280 @@
 +/*
 +	Resonance launcher internals: what the core (launcher.cpp) shares with the themes
 +	(theme_*.cpp), covers (covers.cpp) and sounds (sound.cpp).
@@ -50465,6 +50583,16 @@ index 000000000..b283af665
 +void drawQuad(ImDrawList *dl, ImTextureID tex, const ImVec2 p[4], const ImVec2 uv[4], const ImU32 col[4]);
 +// Library empty: the message in the middle of the screen
 +void drawEmptyLibrary(Frame& f);
++// The logo (launcher/logo.png from scripts/make-logo.py): 0 until it is up; aspect = width / height
++ImTextureID logoTexture(float& aspect);
++struct LogoInfo
++{
++	float pad = .17f;						// the glow's margin, of the height
++	float swirlX = 2.2f, swirlY = .37f, swirlR = .27f;	// the swirl's centre and radius, of the height
++};
++const LogoInfo& logoInfo();
++// The logo in the top-left corner of the menus; left: where the letters start (< 0: the corner)
++void drawCornerLogo(Frame& f, float alpha, float left = -1.f);
 +// The game being started: its cover on the game's colours, title below; the themes' start
 +// animations end on it and it stays up while the game loads (progress < 0: no figure yet)
 +void drawLaunchCard(Frame& f, const Game& g, float alpha, float progress = -1.f, const std::string& label = "");
@@ -50659,10 +50787,10 @@ index 000000000..5605ef4cb
 +};
 diff --git a/shell/ps4/launcher/quick_menu.cpp b/shell/ps4/launcher/quick_menu.cpp
 new file mode 100644
-index 000000000..9d053b1c3
+index 000000000..2b5c49d94
 --- /dev/null
 +++ b/shell/ps4/launcher/quick_menu.cpp
-@@ -0,0 +1,335 @@
+@@ -0,0 +1,337 @@
 +/*
 +	Resonance's quick menu during a game (L3+R3, or the touchpad), in place of Flycast's commands
 +	window: the game paused behind a side panel with its cover and name; Resume, Save State and Load
@@ -50889,24 +51017,26 @@ index 000000000..9d053b1c3
 +
 +	// cover, name, PAUSED
 +	const float x = f.w * .05f + slide;
-+	const float coverH = f.h * .13f;
++	const float coverH = f.h * .1f;
++	const float headY = f.h * .135f;	// under the logo
++	drawCornerLogo(f, in, x);
 +	const ImTextureID cover = coverTexture(gCover);
 +	if (cover != ImTextureID())
 +	{
-+		dl->AddRectFilled(ImVec2(x + 4, f.h * .07f + 5), ImVec2(x + coverH + 4, f.h * .07f + coverH + 5), IM_COL32(0, 0, 0, (int)(110 * in)), 6.f);
-+		dl->AddImageRounded(cover, ImVec2(x, f.h * .07f), ImVec2(x + coverH, f.h * .07f + coverH), ImVec2(0, 0), ImVec2(1, 1),
++		dl->AddRectFilled(ImVec2(x + 4, headY + 5), ImVec2(x + coverH + 4, headY + coverH + 5), IM_COL32(0, 0, 0, (int)(110 * in)), 6.f);
++		dl->AddImageRounded(cover, ImVec2(x, headY), ImVec2(x + coverH, headY + coverH), ImVec2(0, 0), ImVec2(1, 1),
 +				IM_COL32(255, 255, 255, (int)(255 * in)), 6.f);
 +	}
 +	else
-+		xmbText(dl, bodyFont(), coverH * .6f, ImVec2(x + coverH * .5f, f.h * .07f + coverH * .15f), in, ICON_FA_COMPACT_DISC, .5f);
++		xmbText(dl, bodyFont(), coverH * .6f, ImVec2(x + coverH * .5f, headY + coverH * .15f), in, ICON_FA_COMPACT_DISC, .5f);
 +	const float tx = x + coverH + f.w * .015f;
 +	const float pill = f.h * .02f;
 +	const std::string paused = T("PAUSED");
 +	const float pw = textWidth(bodyFont(), pill, paused) + pill * 1.4f;
 +	const float pulse = .75f + .25f * std::sin(f.t * 3.f);
-+	dl->AddRectFilled(ImVec2(tx, f.h * .075f), ImVec2(tx + pw, f.h * .075f + pill * 1.6f), tone.u32(.9f * in * pulse), pill * .8f);
-+	xmbText(dl, bodyFont(), pill, ImVec2(tx + pill * .7f, f.h * .075f + pill * .28f), in, paused);
-+	xmbText(dl, bodyFont(), f.h * .032f, ImVec2(tx, f.h * .075f + pill * 2.3f), in, gui_ps4_game_title(), 0, panelW - (tx - slide) - f.w * .02f);
++	dl->AddRectFilled(ImVec2(tx, (headY + f.h * .005f)), ImVec2(tx + pw, (headY + f.h * .005f) + pill * 1.6f), tone.u32(.9f * in * pulse), pill * .8f);
++	xmbText(dl, bodyFont(), pill, ImVec2(tx + pill * .7f, (headY + f.h * .005f) + pill * .28f), in, paused);
++	xmbText(dl, bodyFont(), f.h * .032f, ImVec2(tx, (headY + f.h * .005f) + pill * 2.3f), in, gui_ps4_game_title(), 0, panelW - (tx - slide) - f.w * .02f);
 +
 +	// the rows
 +	spring(gPos, gVel, (float)gSel, 170.f, 26.f, f.dt);
@@ -51000,10 +51130,10 @@ index 000000000..9d053b1c3
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..2b0391bbb
+index 000000000..5573c7161
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,901 @@
+@@ -0,0 +1,902 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -51722,14 +51852,14 @@ index 000000000..2b0391bbb
 +	const float in = easeOut((f.t - m.openedAt) / .3f) * alpha;
 +	spring(m.selPos, m.selVel, (float)m.sel, 160.f, 26.f, f.dt);
 +
-+	// the group, top left
++	// the group, top left (under the logo)
 +	const float hs = f.h * .034f;
-+	xmbText(dl, bodyFont(), hs * 1.2f, ImVec2(f.w * .07f, f.h * .1f), in, g.icon);
-+	xmbText(dl, bodyFont(), hs, ImVec2(f.w * .07f + hs * 1.9f, f.h * .1f + hs * .1f), in, g.name);
++	xmbText(dl, bodyFont(), hs * 1.2f, ImVec2(f.w * .07f, f.h * .125f), in, g.icon);
++	xmbText(dl, bodyFont(), hs, ImVec2(f.w * .07f + hs * 1.9f, f.h * .125f + hs * .1f), in, g.name);
 +
 +	// the options: the selected one stays near the upper third, the list scrolls under it
 +	const float x0 = f.w * .12f + (1 - in) * f.w * .04f, x1 = f.w * .88f;
-+	const float rowH = f.h * .062f, top = f.h * .2f, bottom = f.h * .83f;
++	const float rowH = f.h * .062f, top = f.h * .22f, bottom = f.h * .83f;
 +	const int rows = (int)((bottom - top) / rowH);
 +	const int n = (int)g.items.size();
 +	float scroll = std::clamp(m.selPos - rows * .35f, 0.f, std::max(0.f, (float)n - rows));
@@ -51857,6 +51987,7 @@ index 000000000..2b0391bbb
 +	const bool overGame = gui_ps4_game_running();
 +	xmbBackground(f, overGame);
 +	xmbClock(f, 1.f);
++	drawCornerLogo(f, 1.f);
 +
 +	const int n = panel.groupCount();
 +	if (panel.isOpen())
@@ -52442,10 +52573,10 @@ index 000000000..42d649490
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/theme_orbit.cpp b/shell/ps4/launcher/theme_orbit.cpp
 new file mode 100644
-index 000000000..56a5cee1b
+index 000000000..6662c8dc9
 --- /dev/null
 +++ b/shell/ps4/launcher/theme_orbit.cpp
-@@ -0,0 +1,315 @@
+@@ -0,0 +1,314 @@
 +/*
 +	Resonance launcher, theme "Orbit": the library as discs on a slowly turning ring. Each disc
 +	has its cover printed on the label and a silver rim that catches a fixed light as it spins;
@@ -52702,8 +52833,7 @@ index 000000000..56a5cee1b
 +			return;
 +		ImDrawList *dl = f.dl;
 +		ImFont *display = fontFor(displayFont(), g.e.title);
-+		// brand and clock
-+		drawText(dl, display, f.h * .022f, ImVec2(f.w * .05f, f.h * .055f), IM_COL32(255, 255, 255, (int)(200 * alpha)), "RESONANCE");
++		// the clock (the logo is in the other corner)
 +		char clock[16];
 +		const time_t now = time(nullptr);
 +		strftime(clock, sizeof(clock), "%H:%M", localtime(&now));
@@ -53036,10 +53166,10 @@ index 000000000..a813db854
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/theme_xmb.cpp b/shell/ps4/launcher/theme_xmb.cpp
 new file mode 100644
-index 000000000..b8541c337
+index 000000000..10ec2369e
 --- /dev/null
 +++ b/shell/ps4/launcher/theme_xmb.cpp
-@@ -0,0 +1,217 @@
+@@ -0,0 +1,218 @@
 +/*
 +	Resonance's home screen, theme "Cross bar": the PS3's XMB, kept simple. Two categories across
 +	(Settings, Games), the selected one's items down: the games with their covers, or the settings
@@ -53225,7 +53355,8 @@ index 000000000..b8541c337
 +				if (y > f.h * 1.05f || y < -f.h * .1f)
 +					continue;
 +				const float focus = clamp01(1 - std::fabs(d));
-+				const float a = colA * (i == selected ? 1.f : .7f) * clamp01(1.3f - std::fabs(d) * .12f);
++				const float a = colA * (i == selected ? 1.f : .7f) * clamp01(1.3f - std::fabs(d) * .12f)
++						* clamp01((y - f.h * .1f) / (f.h * .1f));	// under the logo
 +				const int idx = ((i % count) + count) % count;
 +				if (c == GAMES)
 +				{
