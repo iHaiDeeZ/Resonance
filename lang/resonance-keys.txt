@@ -120,3 +120,8 @@ Patch Source
 Patches folder only
 Put .cht or .txt files in /data/Resonance/cheats
 No cheats or patches yet
+Refresh
+Refresh Game List
+Refreshing game list...
+Game list updated
+Look for games added to the games folders

@@ -818,3 +818,8 @@
 2111	Alleen patchmap
 2112	Zet .cht- of .txt-bestanden in /data/Resonance/cheats
 2113	Nog geen cheats of patches
+2114	Vernieuwen
+2115	Spellijst vernieuwen
+2116	Spellijst wordt vernieuwd...
+2117	Spellijst bijgewerkt
+2118	Zoeken naar spellen die aan de spelmappen zijn toegevoegd

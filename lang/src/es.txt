@@ -818,3 +818,8 @@
 2111	Solo la carpeta de parches
 2112	Pon archivos .cht o .txt en /data/Resonance/cheats
 2113	Aún no hay trucos ni parches
+2114	Actualizar
+2115	Actualizar lista de juegos
+2116	Actualizando la lista de juegos...
+2117	Lista de juegos actualizada
+2118	Buscar juegos añadidos a las carpetas de juegos

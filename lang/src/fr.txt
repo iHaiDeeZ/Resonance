@@ -113,3 +113,8 @@
 2111	Dossier des correctifs uniquement
 2112	Placez des fichiers .cht ou .txt dans /data/Resonance/cheats
 2113	Aucun code ni correctif pour le moment
+2114	Actualiser
+2115	Actualiser la liste des jeux
+2116	Actualisation de la liste des jeux...
+2117	Liste des jeux mise à jour
+2118	Rechercher les jeux ajoutés aux dossiers de jeux

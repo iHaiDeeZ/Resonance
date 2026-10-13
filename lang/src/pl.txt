@@ -818,3 +818,8 @@
 2111	Tylko folder łatek
 2112	Umieść pliki .cht lub .txt w /data/Resonance/cheats
 2113	Brak kodów i łatek
+2114	Odśwież
+2115	Odśwież listę gier
+2116	Odświeżanie listy gier...
+2117	Lista gier zaktualizowana
+2118	Wyszukaj gry dodane do folderów z grami

@@ -819,3 +819,8 @@
 2111	Yalnızca yama klasörü
 2112	.cht veya .txt dosyalarını /data/Resonance/cheats klasörüne koyun
 2113	Henüz hile veya yama yok
+2114	Yenile
+2115	Oyun listesini yenile
+2116	Oyun listesi yenileniyor...
+2117	Oyun listesi güncellendi
+2118	Oyun klasörlerine eklenen oyunları ara

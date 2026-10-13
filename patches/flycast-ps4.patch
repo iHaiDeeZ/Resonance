@@ -2133,10 +2133,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..0a7bbac89
+index 000000000..9ca4054a4
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2472 @@
+@@ -0,0 +1,2487 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4609,11 +4609,26 @@ index 000000000..0a7bbac89
 +
 +msgid "No cheats or patches yet"
 +msgstr "لا توجد رموز غش أو تصحيحات بعد"
++
++msgid "Refresh"
++msgstr "تحديث"
++
++msgid "Refresh Game List"
++msgstr "تحديث قائمة الألعاب"
++
++msgid "Refreshing game list..."
++msgstr "جارٍ تحديث قائمة الألعاب..."
++
++msgid "Game list updated"
++msgstr "تم تحديث قائمة الألعاب"
++
++msgid "Look for games added to the games folders"
++msgstr "البحث عن الألعاب المضافة إلى مجلدات الألعاب"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..d34f810b6 100644
+index fb8203ba2..34b8ae4f4 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2468 @@
+@@ -1,2963 +1,2483 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8625,14 +8640,29 @@ index fb8203ba2..d34f810b6 100644
 +
 +msgid "Put .cht or .txt files in /data/Resonance/cheats"
 +msgstr "Lege .cht- oder .txt-Dateien in /data/Resonance/cheats"
- 
++
 +msgid "No cheats or patches yet"
 +msgstr "Noch keine Cheats oder Patches"
++
++msgid "Refresh"
++msgstr "Aktualisieren"
++
++msgid "Refresh Game List"
++msgstr "Spieleliste aktualisieren"
++
++msgid "Refreshing game list..."
++msgstr "Spieleliste wird aktualisiert..."
++
++msgid "Game list updated"
++msgstr "Spieleliste aktualisiert"
+ 
++msgid "Look for games added to the games folders"
++msgstr "Nach Spielen suchen, die in die Spieleordner kopiert wurden"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..4e7066e3d 100644
+index 2735f014b..6e0687147 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2468 @@
+@@ -1,2964 +1,2483 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -12639,14 +12669,29 @@ index 2735f014b..4e7066e3d 100644
 +
 +msgid "Put .cht or .txt files in /data/Resonance/cheats"
 +msgstr "Pon archivos .cht o .txt en /data/Resonance/cheats"
- 
++
 +msgid "No cheats or patches yet"
 +msgstr "Aún no hay trucos ni parches"
++
++msgid "Refresh"
++msgstr "Actualizar"
++
++msgid "Refresh Game List"
++msgstr "Actualizar lista de juegos"
++
++msgid "Refreshing game list..."
++msgstr "Actualizando la lista de juegos..."
++
++msgid "Game list updated"
++msgstr "Lista de juegos actualizada"
+ 
++msgid "Look for games added to the games folders"
++msgstr "Buscar juegos añadidos a las carpetas de juegos"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..f0a7b70c3 100644
+index f3754825e..93ebd3701 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2468 @@
+@@ -1,2967 +1,2483 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -15963,11 +16008,26 @@ index f3754825e..f0a7b70c3 100644
 +
 +msgid "No cheats or patches yet"
 +msgstr "Aucun code ni correctif pour le moment"
++
++msgid "Refresh"
++msgstr "Actualiser"
++
++msgid "Refresh Game List"
++msgstr "Actualiser la liste des jeux"
++
++msgid "Refreshing game list..."
++msgstr "Actualisation de la liste des jeux..."
++
++msgid "Game list updated"
++msgstr "Liste des jeux mise à jour"
++
++msgid "Look for games added to the games folders"
++msgstr "Rechercher les jeux ajoutés aux dossiers de jeux"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..f937d2b2b 100644
+index ee92eb28e..a48c4aef9 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2468 @@
+@@ -1,2963 +1,2483 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -19979,14 +20039,29 @@ index ee92eb28e..f937d2b2b 100644
 +
 +msgid "Put .cht or .txt files in /data/Resonance/cheats"
 +msgstr "Metti file .cht o .txt in /data/Resonance/cheats"
- 
++
 +msgid "No cheats or patches yet"
 +msgstr "Ancora nessun trucco o patch"
++
++msgid "Refresh"
++msgstr "Aggiorna"
++
++msgid "Refresh Game List"
++msgstr "Aggiorna elenco giochi"
++
++msgid "Refreshing game list..."
++msgstr "Aggiornamento dell'elenco giochi..."
++
++msgid "Game list updated"
++msgstr "Elenco giochi aggiornato"
+ 
++msgid "Look for games added to the games folders"
++msgstr "Cerca i giochi aggiunti alle cartelle dei giochi"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..65df11aa5 100644
+index a79c6a14b..2ce681dfe 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2467 @@
+@@ -1,2966 +1,2482 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -23302,11 +23377,26 @@ index a79c6a14b..65df11aa5 100644
 +
 +msgid "No cheats or patches yet"
 +msgstr "チートもパッチもまだありません"
++
++msgid "Refresh"
++msgstr "更新"
++
++msgid "Refresh Game List"
++msgstr "ゲーム一覧を更新"
++
++msgid "Refreshing game list..."
++msgstr "ゲーム一覧を更新しています..."
++
++msgid "Game list updated"
++msgstr "ゲーム一覧を更新しました"
++
++msgid "Look for games added to the games folders"
++msgstr "ゲームフォルダーに追加されたゲームを探します"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..3c8dce793 100644
+index a5e70db54..f41382981 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2467 @@
+@@ -1,2962 +1,2482 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -27316,15 +27406,30 @@ index a5e70db54..3c8dce793 100644
 +
 +msgid "Put .cht or .txt files in /data/Resonance/cheats"
 +msgstr ".cht 또는 .txt 파일을 /data/Resonance/cheats에 넣으세요"
- 
++
 +msgid "No cheats or patches yet"
 +msgstr "아직 치트나 패치가 없습니다"
++
++msgid "Refresh"
++msgstr "새로 고침"
++
++msgid "Refresh Game List"
++msgstr "게임 목록 새로 고침"
++
++msgid "Refreshing game list..."
++msgstr "게임 목록을 새로 고치는 중..."
++
++msgid "Game list updated"
++msgstr "게임 목록이 업데이트되었습니다"
+ 
++msgid "Look for games added to the games folders"
++msgstr "게임 폴더에 추가된 게임을 찾습니다"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..56fed9c3f
+index 000000000..990d3b4bc
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2468 @@
+@@ -0,0 +1,2483 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -29793,11 +29898,26 @@ index 000000000..56fed9c3f
 +
 +msgid "No cheats or patches yet"
 +msgstr "Nog geen cheats of patches"
++
++msgid "Refresh"
++msgstr "Vernieuwen"
++
++msgid "Refresh Game List"
++msgstr "Spellijst vernieuwen"
++
++msgid "Refreshing game list..."
++msgstr "Spellijst wordt vernieuwd..."
++
++msgid "Game list updated"
++msgstr "Spellijst bijgewerkt"
++
++msgid "Look for games added to the games folders"
++msgstr "Zoeken naar spellen die aan de spelmappen zijn toegevoegd"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..87d59c4ca 100644
+index 548cbb44d..8d71a0bf4 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2469 @@
+@@ -1,2965 +1,2484 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -33813,14 +33933,29 @@ index 548cbb44d..87d59c4ca 100644
 +
 +msgid "Put .cht or .txt files in /data/Resonance/cheats"
 +msgstr "Umieść pliki .cht lub .txt w /data/Resonance/cheats"
- 
++
 +msgid "No cheats or patches yet"
 +msgstr "Brak kodów i łatek"
++
++msgid "Refresh"
++msgstr "Odśwież"
++
++msgid "Refresh Game List"
++msgstr "Odśwież listę gier"
++
++msgid "Refreshing game list..."
++msgstr "Odświeżanie listy gier..."
++
++msgid "Game list updated"
++msgstr "Lista gier zaktualizowana"
+ 
++msgid "Look for games added to the games folders"
++msgstr "Wyszukaj gry dodane do folderów z grami"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..378160304 100644
+index 6ec100a1e..bebd89ad7 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2468 @@
+@@ -1,2966 +1,2483 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -37151,12 +37286,27 @@ index 6ec100a1e..378160304 100644
 +
 +msgid "No cheats or patches yet"
 +msgstr "Ainda sem trapaças ou patches"
++
++msgid "Refresh"
++msgstr "Atualizar"
++
++msgid "Refresh Game List"
++msgstr "Atualizar lista de jogos"
++
++msgid "Refreshing game list..."
++msgstr "Atualizando a lista de jogos..."
++
++msgid "Game list updated"
++msgstr "Lista de jogos atualizada"
++
++msgid "Look for games added to the games folders"
++msgstr "Procurar jogos adicionados às pastas de jogos"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..840c598ee
+index 000000000..6df870539
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2469 @@
+@@ -0,0 +1,2484 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -39626,11 +39776,26 @@ index 000000000..840c598ee
 +
 +msgid "No cheats or patches yet"
 +msgstr "Пока нет читов и патчей"
++
++msgid "Refresh"
++msgstr "Обновить"
++
++msgid "Refresh Game List"
++msgstr "Обновить список игр"
++
++msgid "Refreshing game list..."
++msgstr "Обновление списка игр..."
++
++msgid "Game list updated"
++msgstr "Список игр обновлён"
++
++msgid "Look for games added to the games folders"
++msgstr "Найти игры, добавленные в папки с играми"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..a41cc19e7 100644
+index 8c8d8bc08..07c0ecebd 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2468 @@
+@@ -1,2965 +1,2483 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -43347,14 +43512,29 @@ index 8c8d8bc08..a41cc19e7 100644
 +
 +msgid "Put .cht or .txt files in /data/Resonance/cheats"
 +msgstr ".cht veya .txt dosyalarını /data/Resonance/cheats klasörüne koyun"
- 
++
 +msgid "No cheats or patches yet"
 +msgstr "Henüz hile veya yama yok"
++
++msgid "Refresh"
++msgstr "Yenile"
++
++msgid "Refresh Game List"
++msgstr "Oyun listesini yenile"
++
++msgid "Refreshing game list..."
++msgstr "Oyun listesi yenileniyor..."
++
++msgid "Game list updated"
++msgstr "Oyun listesi güncellendi"
+ 
++msgid "Look for games added to the games folders"
++msgstr "Oyun klasörlerine eklenen oyunları ara"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..0309903e0 100644
+index 3ecabd349..5f65f8a6b 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2467 @@
+@@ -1,2962 +1,2482 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -47364,9 +47544,24 @@ index 3ecabd349..0309903e0 100644
 +
 +msgid "Put .cht or .txt files in /data/Resonance/cheats"
 +msgstr "请将 .cht 或 .txt 文件放入 /data/Resonance/cheats"
- 
++
 +msgid "No cheats or patches yet"
 +msgstr "还没有金手指或补丁"
++
++msgid "Refresh"
++msgstr "刷新"
++
++msgid "Refresh Game List"
++msgstr "刷新游戏列表"
++
++msgid "Refreshing game list..."
++msgstr "正在刷新游戏列表..."
++
++msgid "Game list updated"
++msgstr "游戏列表已更新"
+ 
++msgid "Look for games added to the games folders"
++msgstr "查找添加到游戏文件夹中的游戏"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -49986,10 +50181,10 @@ index 000000000..d8426aabd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/launcher.cpp b/shell/ps4/launcher/launcher.cpp
 new file mode 100644
-index 000000000..c3615f341
+index 000000000..a142f780d
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher.cpp
-@@ -0,0 +1,1152 @@
+@@ -0,0 +1,1223 @@
 +/*
 +	Resonance launcher core: the library, covers and colours, DualShock 4 input, theme switching
 +	and starting games. The themes draw; this file decides what they draw.
@@ -50029,6 +50224,8 @@ index 000000000..c3615f341
 +#include <deque>
 +#include <mutex>
 +#include <thread>
++#include <dirent.h>
++#include <sys/stat.h>
 +#include <unordered_map>
 +
 +extern "C" void ps4_boot_trace(const char *line);
@@ -50297,6 +50494,8 @@ index 000000000..c3615f341
 +			}
 +		}
 +	}
++	if (pressed & ORBIS_PAD_BUTTON_R3)
++		refreshGames();
 +	if (pressed & ORBIS_PAD_BUTTON_SQUARE)
 +		requestTheme(gThemeIndex + 1);
 +	if (pressed & (ORBIS_PAD_BUTTON_TRIANGLE | ORBIS_PAD_BUTTON_OPTIONS | ORBIS_PAD_BUTTON_TOUCH_PAD))
@@ -50305,6 +50504,68 @@ index 000000000..c3615f341
 +} // namespace
 +
 +// ---- requests from themes ----
++
++void refreshGames()
++{
++	gui_ps4_rescan_games();
++	playSound(Sound::Confirm);
++	gToast = i18n::T("Refreshing game list...");
++	gToastAt = gTime;
++	gToastFor = 1.6f;
++}
++
++namespace
++{
++// The games folders on the console's own disk changed (a game folder added or removed, a file put
++// in one): a number from their times and entry counts. Shares on the network are left to R3.
++u64 libraryStamp()
++{
++	u64 stamp = 0;
++	for (const std::string& root : config::ContentPath.get())
++	{
++		if (root.empty() || root.find("://") != std::string::npos)
++			continue;
++		struct stat st;
++		if (stat(root.c_str(), &st) != 0)
++			continue;
++		stamp = stamp * 31 + (u64)st.st_mtime;
++		DIR *d = opendir(root.c_str());
++		if (d == nullptr)
++			continue;
++		int entries = 0;
++		while (dirent *e = readdir(d))
++		{
++			entries++;
++			if (e->d_type != DT_DIR || e->d_name[0] == '.')
++				continue;
++			const std::string sub = root + (root.back() == '/' ? "" : "/") + e->d_name;
++			if (stat(sub.c_str(), &st) == 0)
++				stamp = stamp * 31 + (u64)st.st_mtime;
++		}
++		closedir(d);
++		stamp = stamp * 31 + (u64)entries;
++	}
++	return stamp;
++}
++
++void watchLibrary()
++{
++	static u64 last;
++	static float nextAt;
++	if (gTime < nextAt)
++		return;
++	nextAt = gTime + 3.f;
++	const u64 stamp = libraryStamp();
++	if (last != 0 && stamp != last)
++	{
++		gui_ps4_rescan_games();
++		gToast = i18n::T("Game list updated");
++		gToastAt = gTime;
++		gToastFor = 2.f;
++	}
++	last = stamp;
++}
++} // namespace
 +
 +void requestTheme(int index)
 +{
@@ -50811,6 +51072,10 @@ index 000000000..c3615f341
 +		dl->AddTriangle(ImVec2(c.x, c.y - k * 1.05f), ImVec2(c.x + k * 1.05f, c.y + k * .75f), ImVec2(c.x - k * 1.05f, c.y + k * .75f),
 +				IM_COL32(90, 220, 180, (int)(255 * alpha)), t);
 +		break;
++	case 'r':
++		// the right stick pressed: R3
++		drawText(dl, bodyFont(), size * .52f, ImVec2(c.x, c.y - size * .33f), IM_COL32(230, 234, 242, (int)(255 * alpha)), "R3", .5f);
++		break;
 +	}
 +}
 +
@@ -50821,7 +51086,7 @@ index 000000000..c3615f341
 +	const float size = f.h * .028f, y = f.h * .935f, gap = size * .55f;
 +	struct Hint { char b; std::string label; };
 +	const Hint hints[] = {
-+		{ 'x', i18n::T("Start") }, { 's', themeLabel(gThemeIndex) }, { 't', i18n::T("Settings") },
++		{ 'x', i18n::T("Start") }, { 's', themeLabel(gThemeIndex) }, { 'r', i18n::T("Refresh") }, { 't', i18n::T("Settings") },
 +	};
 +	ImFont *font = bodyFont();
 +	const float fs = f.h * .022f;
@@ -51042,6 +51307,7 @@ index 000000000..c3615f341
 +	gLast = now;
 +	soundStart();
 +
++	watchLibrary();
 +	if (gTime >= gNextRefresh)
 +	{
 +		refreshLibrary();
@@ -51228,10 +51494,10 @@ index 000000000..8773750d6
 +void launcher_loading_draw(const char *label, float progress);
 diff --git a/shell/ps4/launcher/launcher_internal.h b/shell/ps4/launcher/launcher_internal.h
 new file mode 100644
-index 000000000..03bdc3647
+index 000000000..403e9eccf
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher_internal.h
-@@ -0,0 +1,289 @@
+@@ -0,0 +1,291 @@
 +/*
 +	Resonance launcher internals: what the core (launcher.cpp) shares with the themes
 +	(theme_*.cpp), covers (covers.cpp) and sounds (sound.cpp).
@@ -51340,6 +51606,8 @@ index 000000000..03bdc3647
 +
 +// Requests from themes to the core
 +void requestTheme(int index);
++// Look for new games now (R3, Settings > Home Screen > Refresh Game List)
++void refreshGames();
 +int currentTheme();
 +void openSettings();
 +void moveSelection(int delta);
@@ -51923,10 +52191,10 @@ index 000000000..424012735
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..0045e9858
+index 000000000..7dec6375e
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,906 @@
+@@ -0,0 +1,910 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -52170,6 +52438,10 @@ index 000000000..0045e9858
 +		home.items.push_back(Setting { T("Opening Animation"), T("Plays when the app starts"), onOff(),
 +			[] { return introEnabled() ? 1 : 0; },
 +			[](int v) { setIntroEnabled(v != 0); } });
++		Setting refresh { T("Refresh Game List"), T("Look for games added to the games folders"), {}, [] { return 0; }, [](int) {} };
++		refresh.value = [] { return std::string("R3"); };
++		refresh.action = [] { gui_ps4_rescan_games(); playSound(Sound::Confirm); };
++		home.items.push_back(std::move(refresh));
 +		groups.push_back(std::move(home));
 +		groups.push_back(cardsGroup());
 +		groups.push_back(networkGroup());
@@ -53966,7 +54238,7 @@ index 000000000..a813db854
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/theme_xmb.cpp b/shell/ps4/launcher/theme_xmb.cpp
 new file mode 100644
-index 000000000..10ec2369e
+index 000000000..38c336116
 --- /dev/null
 +++ b/shell/ps4/launcher/theme_xmb.cpp
 @@ -0,0 +1,218 @@
@@ -54076,7 +54348,7 @@ index 000000000..10ec2369e
 +			drawCategories(f, ui);
 +			drawColumn(f, ui, n);
 +			if (cat == GAMES)
-+				xmbHints(f, n > 0 ? std::vector<Hint> { { 'x', i18n::T("Start") }, { 't', i18n::T("Settings") } }
++				xmbHints(f, n > 0 ? std::vector<Hint> { { 'x', i18n::T("Start") }, { 'r', i18n::T("Refresh") }, { 't', i18n::T("Settings") } }
 +						: std::vector<Hint> {}, ui);
 +			else
 +				xmbHints(f, { { 'x', i18n::T("Select") } }, ui);

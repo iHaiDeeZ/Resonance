@@ -818,3 +818,8 @@
 2111	Nur Patch-Ordner
 2112	Lege .cht- oder .txt-Dateien in /data/Resonance/cheats
 2113	Noch keine Cheats oder Patches
+2114	Aktualisieren
+2115	Spieleliste aktualisieren
+2116	Spieleliste wird aktualisiert...
+2117	Spieleliste aktualisiert
+2118	Nach Spielen suchen, die in die Spieleordner kopiert wurden
