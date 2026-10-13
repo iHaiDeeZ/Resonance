@@ -118,3 +118,7 @@
 2116	Actualisation de la liste des jeux...
 2117	Liste des jeux mise à jour
 2118	Rechercher les jeux ajoutés aux dossiers de jeux
+2119	Réglages pour
+2120	Tous les jeux
+2121	Ce jeu
+2122	Les réglages modifiés maintenant s'appliquent à tous les jeux ou à ce jeu seulement (par exemple sans écran large dans un jeu 2D)

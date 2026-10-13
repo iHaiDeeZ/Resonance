@@ -79,6 +79,43 @@ index c5ac6f6e8..257ab0937 100644
  endif()
  
  if(NOT LIBRETRO)
+diff --git a/core/emulator.cpp b/core/emulator.cpp
+index 25e685bcc..063e3b3d7 100644
+--- a/core/emulator.cpp
++++ b/core/emulator.cpp
+@@ -879,6 +879,32 @@ void loadGameSpecificSettings()
+ 		config::WidescreenGameHacks.override(false);
+ 		config::DynarecEnabled.override(true);
+ 	}
++#ifdef __ORBIS__
++	// Resonance: 2D games have nothing past the 4:3 picture (at a stage's ends widescreen shows the
++	// plain background colour): 4:3 for them, unless the game has settings of its own
++	if (settings.platform.isConsole() && !config::Settings::instance().hasPerGameConfig())
++	{
++		std::string name;
++		for (size_t i = 0; i < sizeof(ip_meta.software_name) && ip_meta.software_name[i] != 0; i++)
++		{
++			const char c = ip_meta.software_name[i];
++			name += isalnum((unsigned char)c) ? (char)toupper((unsigned char)c) : ' ';
++		}
++		static const char *const games2d[] = {
++			"CAPCOM VS", "MARVEL VS", "STREET FIGHTER", "KING OF FIGHTERS", "GAROU", "GUILTY GEAR", "JOJO",
++			"VAMPIRE CHRONICLE", "LAST BLADE", "REAL BOUT", "PUZZLE FIGHTER", "GIGA WING", "GIGAWING", "MARS MATRIX",
++			"PSYVARIAR", "BORDER DOWN", "CHAOS FIELD", "SHIKIGAMI", "PUYO PUYO",
++		};
++		for (const char *g : games2d)
++			if (name.find(g) != std::string::npos)
++			{
++				config::Widescreen.override(false);
++				config::SuperWidescreen.override(false);
++				NOTICE_LOG(BOOT, "2D game (%s): 4:3", name.c_str());
++				break;
++			}
++	}
++#endif
+ }
+ 
+ void Emulator::step()
 diff --git a/core/hw/pvr/Renderer_if.cpp b/core/hw/pvr/Renderer_if.cpp
 index 49c3f720f..e9e7eadff 100644
 --- a/core/hw/pvr/Renderer_if.cpp
@@ -1532,7 +1569,7 @@ index d2096c491..87f7b411b 100644
 +#endif
  };
 diff --git a/core/ui/gui.cpp b/core/ui/gui.cpp
-index 614739abc..e4fb12d4a 100644
+index 614739abc..9d787eb83 100644
 --- a/core/ui/gui.cpp
 +++ b/core/ui/gui.cpp
 @@ -17,6 +17,7 @@
@@ -1894,7 +1931,7 @@ index 614739abc..e4fb12d4a 100644
  void gui_takeScreenshot()
  {
  	if (!game_started)
-@@ -1705,3 +1989,141 @@ bool __cdecl Concurrency::details::_Task_impl_base::_IsNonBlockingThread() {
+@@ -1705,3 +1989,164 @@ bool __cdecl Concurrency::details::_Task_impl_base::_IsNonBlockingThread() {
  	return false;
  }
  #endif
@@ -2035,6 +2072,29 @@ index 614739abc..e4fb12d4a 100644
 +void gui_ps4_rescan_games() {
 +	scanner.refresh();
 +}
++
++bool gui_ps4_game_config() {
++	return config::Settings::instance().hasPerGameConfig();
++}
++
++void gui_ps4_set_game_config(bool on)
++{
++	if (!game_started || on == config::Settings::instance().hasPerGameConfig())
++		return;
++	if (on)
++	{
++		// the settings as they are now become the game's own
++		config::Settings::instance().setPerGameConfig(true);
++		SaveSettings();
++	}
++	else
++	{
++		// back to the settings of every game
++		config::Settings::instance().setPerGameConfig(false);
++		config::Settings::instance().load(false);
++		loadGameSpecificSettings();
++	}
++}
 +#endif
 diff --git a/core/ui/gui_font.cpp b/core/ui/gui_font.cpp
 index 3e3f1b215..bb9756419 100644
@@ -2133,10 +2193,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..9ca4054a4
+index 000000000..53e484ab8
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2487 @@
+@@ -0,0 +1,2499 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4624,11 +4684,23 @@ index 000000000..9ca4054a4
 +
 +msgid "Look for games added to the games folders"
 +msgstr "البحث عن الألعاب المضافة إلى مجلدات الألعاب"
++
++msgid "Settings For"
++msgstr "الإعدادات لـ"
++
++msgid "All Games"
++msgstr "كل الألعاب"
++
++msgid "This Game"
++msgstr "هذه اللعبة"
++
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "الإعدادات التي تغيّرها الآن تنطبق على كل الألعاب أو على هذه اللعبة فقط (مثل إيقاف الشاشة العريضة في لعبة ثنائية الأبعاد)"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..34b8ae4f4 100644
+index fb8203ba2..a2d00b581 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2483 @@
+@@ -1,2963 +1,2495 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8655,14 +8727,26 @@ index fb8203ba2..34b8ae4f4 100644
 +
 +msgid "Game list updated"
 +msgstr "Spieleliste aktualisiert"
- 
++
 +msgid "Look for games added to the games folders"
 +msgstr "Nach Spielen suchen, die in die Spieleordner kopiert wurden"
++
++msgid "Settings For"
++msgstr "Einstellungen für"
++
++msgid "All Games"
++msgstr "Alle Spiele"
++
++msgid "This Game"
++msgstr "Dieses Spiel"
+ 
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Jetzt geänderte Einstellungen gelten für alle Spiele oder nur für dieses Spiel (zum Beispiel Breitbild aus in einem 2D-Spiel)"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..6e0687147 100644
+index 2735f014b..f5b195397 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2483 @@
+@@ -1,2964 +1,2495 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -12684,14 +12768,26 @@ index 2735f014b..6e0687147 100644
 +
 +msgid "Game list updated"
 +msgstr "Lista de juegos actualizada"
- 
++
 +msgid "Look for games added to the games folders"
 +msgstr "Buscar juegos añadidos a las carpetas de juegos"
++
++msgid "Settings For"
++msgstr "Ajustes para"
++
++msgid "All Games"
++msgstr "Todos los juegos"
++
++msgid "This Game"
++msgstr "Este juego"
+ 
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Los ajustes que cambies ahora se aplican a todos los juegos o solo a este (por ejemplo, sin pantalla panorámica en un juego 2D)"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..93ebd3701 100644
+index f3754825e..196ea2934 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2483 @@
+@@ -1,2967 +1,2495 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16023,11 +16119,23 @@ index f3754825e..93ebd3701 100644
 +
 +msgid "Look for games added to the games folders"
 +msgstr "Rechercher les jeux ajoutés aux dossiers de jeux"
++
++msgid "Settings For"
++msgstr "Réglages pour"
++
++msgid "All Games"
++msgstr "Tous les jeux"
++
++msgid "This Game"
++msgstr "Ce jeu"
++
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Les réglages modifiés maintenant s'appliquent à tous les jeux ou à ce jeu seulement (par exemple sans écran large dans un jeu 2D)"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..a48c4aef9 100644
+index ee92eb28e..53eec99e1 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2483 @@
+@@ -1,2963 +1,2495 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20054,14 +20162,26 @@ index ee92eb28e..a48c4aef9 100644
 +
 +msgid "Game list updated"
 +msgstr "Elenco giochi aggiornato"
- 
++
 +msgid "Look for games added to the games folders"
 +msgstr "Cerca i giochi aggiunti alle cartelle dei giochi"
++
++msgid "Settings For"
++msgstr "Impostazioni per"
++
++msgid "All Games"
++msgstr "Tutti i giochi"
++
++msgid "This Game"
++msgstr "Questo gioco"
+ 
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Le impostazioni cambiate ora valgono per tutti i giochi o solo per questo (per esempio widescreen disattivato in un gioco 2D)"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..2ce681dfe 100644
+index a79c6a14b..469d271a9 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2482 @@
+@@ -1,2966 +1,2494 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -23392,11 +23512,23 @@ index a79c6a14b..2ce681dfe 100644
 +
 +msgid "Look for games added to the games folders"
 +msgstr "ゲームフォルダーに追加されたゲームを探します"
++
++msgid "Settings For"
++msgstr "設定の対象"
++
++msgid "All Games"
++msgstr "すべてのゲーム"
++
++msgid "This Game"
++msgstr "このゲーム"
++
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "ここで変更した設定をすべてのゲームに適用するか、このゲームだけに適用します（例：2D ゲームでワイド画面をオフ）"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..f41382981 100644
+index a5e70db54..8c5babe7b 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2482 @@
+@@ -1,2962 +1,2494 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -27421,15 +27553,27 @@ index a5e70db54..f41382981 100644
 +
 +msgid "Game list updated"
 +msgstr "게임 목록이 업데이트되었습니다"
- 
++
 +msgid "Look for games added to the games folders"
 +msgstr "게임 폴더에 추가된 게임을 찾습니다"
++
++msgid "Settings For"
++msgstr "설정 적용 대상"
++
++msgid "All Games"
++msgstr "모든 게임"
++
++msgid "This Game"
++msgstr "이 게임"
+ 
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "지금 바꾼 설정을 모든 게임에 적용하거나 이 게임에만 적용합니다(예: 2D 게임에서 와이드스크린 끄기)"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..990d3b4bc
+index 000000000..15545b0e7
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2483 @@
+@@ -0,0 +1,2495 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -29913,11 +30057,23 @@ index 000000000..990d3b4bc
 +
 +msgid "Look for games added to the games folders"
 +msgstr "Zoeken naar spellen die aan de spelmappen zijn toegevoegd"
++
++msgid "Settings For"
++msgstr "Instellingen voor"
++
++msgid "All Games"
++msgstr "Alle spellen"
++
++msgid "This Game"
++msgstr "Dit spel"
++
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Nu gewijzigde instellingen gelden voor alle spellen of alleen voor dit spel (bijvoorbeeld breedbeeld uit in een 2D-spel)"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..8d71a0bf4 100644
+index 548cbb44d..05fda918c 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2484 @@
+@@ -1,2965 +1,2496 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -33948,14 +34104,26 @@ index 548cbb44d..8d71a0bf4 100644
 +
 +msgid "Game list updated"
 +msgstr "Lista gier zaktualizowana"
- 
++
 +msgid "Look for games added to the games folders"
 +msgstr "Wyszukaj gry dodane do folderów z grami"
++
++msgid "Settings For"
++msgstr "Ustawienia dla"
++
++msgid "All Games"
++msgstr "Wszystkie gry"
++
++msgid "This Game"
++msgstr "Ta gra"
+ 
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Zmienione teraz ustawienia dotyczą wszystkich gier albo tylko tej gry (na przykład bez szerokiego ekranu w grze 2D)"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..bebd89ad7 100644
+index 6ec100a1e..9efe0d0dd 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2483 @@
+@@ -1,2966 +1,2495 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -37301,12 +37469,24 @@ index 6ec100a1e..bebd89ad7 100644
 +
 +msgid "Look for games added to the games folders"
 +msgstr "Procurar jogos adicionados às pastas de jogos"
++
++msgid "Settings For"
++msgstr "Configurações para"
++
++msgid "All Games"
++msgstr "Todos os jogos"
++
++msgid "This Game"
++msgstr "Este jogo"
++
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "As configurações alteradas agora valem para todos os jogos ou só para este (por exemplo, sem widescreen em um jogo 2D)"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..6df870539
+index 000000000..4b47ce112
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2484 @@
+@@ -0,0 +1,2496 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -39791,11 +39971,23 @@ index 000000000..6df870539
 +
 +msgid "Look for games added to the games folders"
 +msgstr "Найти игры, добавленные в папки с играми"
++
++msgid "Settings For"
++msgstr "Настройки для"
++
++msgid "All Games"
++msgstr "Все игры"
++
++msgid "This Game"
++msgstr "Эта игра"
++
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Изменённые сейчас настройки применяются ко всем играм или только к этой (например, без широкого экрана в 2D-игре)"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..07c0ecebd 100644
+index 8c8d8bc08..de1abc234 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2483 @@
+@@ -1,2965 +1,2495 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -43527,14 +43719,26 @@ index 8c8d8bc08..07c0ecebd 100644
 +
 +msgid "Game list updated"
 +msgstr "Oyun listesi güncellendi"
- 
++
 +msgid "Look for games added to the games folders"
 +msgstr "Oyun klasörlerine eklenen oyunları ara"
++
++msgid "Settings For"
++msgstr "Ayarlar şunun için"
++
++msgid "All Games"
++msgstr "Tüm oyunlar"
++
++msgid "This Game"
++msgstr "Bu oyun"
+ 
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "Şimdi değiştirilen ayarlar tüm oyunlara ya da yalnızca bu oyuna uygulanır (örneğin 2D bir oyunda geniş ekran kapalı)"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..5f65f8a6b 100644
+index 3ecabd349..2f790eda1 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2482 @@
+@@ -1,2962 +1,2494 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -47559,9 +47763,21 @@ index 3ecabd349..5f65f8a6b 100644
 +
 +msgid "Game list updated"
 +msgstr "游戏列表已更新"
- 
++
 +msgid "Look for games added to the games folders"
 +msgstr "查找添加到游戏文件夹中的游戏"
++
++msgid "Settings For"
++msgstr "设置适用于"
++
++msgid "All Games"
++msgstr "所有游戏"
++
++msgid "This Game"
++msgstr "此游戏"
+ 
++msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
++msgstr "现在更改的设置适用于所有游戏或仅适用于此游戏（例如在 2D 游戏中关闭宽屏）"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -51410,10 +51626,10 @@ index 000000000..a142f780d
 +}
 diff --git a/shell/ps4/launcher/launcher.h b/shell/ps4/launcher/launcher.h
 new file mode 100644
-index 000000000..8773750d6
+index 000000000..b8d2c6fe0
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher.h
-@@ -0,0 +1,78 @@
+@@ -0,0 +1,81 @@
 +/*
 +	Resonance: the PS4 home screen (launcher) that replaces Flycast's game list.
 +
@@ -51473,6 +51689,9 @@ index 000000000..8773750d6
 +void gui_ps4_quit_game();
 +void gui_ps4_open_quick_menu();
 +void gui_ps4_rescan_games();	// after a network share was added or removed
++// The running game's own settings (emu.cfg's section for its id): on, changes are kept for it only
++bool gui_ps4_game_config();
++void gui_ps4_set_game_config(bool on);
 +// Settings changed: saved; devices changed while a game runs are plugged in again
 +void gui_ps4_apply_settings(const bool mapleChanged[4], const bool expansionChanged[4][2]);
 +// The settings screen is done: back to the quick menu (in a game) or the home screen
@@ -52191,10 +52410,10 @@ index 000000000..424012735
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..7dec6375e
+index 000000000..b3a0005df
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,910 @@
+@@ -0,0 +1,917 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -52306,6 +52525,13 @@ index 000000000..7dec6375e
 +		char buf[128];
 +
 +		Group video { ICON_FA_DISPLAY, T("Video Settings"), T("Resolution, widescreen, filtering, frame rate"), {} };
++		// in a game: its own settings or every game's (a 2D game without widescreen, say)
++		if (gui_ps4_game_running())
++			video.items.push_back(Setting { T("Settings For"),
++				T("Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"),
++				{ { T("All Games"), 0 }, { T("This Game"), 1 } },
++				[] { return gui_ps4_game_config() ? 1 : 0; },
++				[this](int v) { gui_ps4_set_game_config(v != 0); rebuildPending = true; } });
 +		{
 +			std::vector<Choice> res;
 +			const float scales[] = { 1.f, 1.5f, 2.f, 3.f, 4.f };

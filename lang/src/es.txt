@@ -823,3 +823,7 @@
 2116	Actualizando la lista de juegos...
 2117	Lista de juegos actualizada
 2118	Buscar juegos añadidos a las carpetas de juegos
+2119	Ajustes para
+2120	Todos los juegos
+2121	Este juego
+2122	Los ajustes que cambies ahora se aplican a todos los juegos o solo a este (por ejemplo, sin pantalla panorámica en un juego 2D)

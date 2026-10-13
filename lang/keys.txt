@@ -823,3 +823,7 @@
 2116	Refreshing game list...
 2117	Game list updated
 2118	Look for games added to the games folders
+2119	Settings For
+2120	All Games
+2121	This Game
+2122	Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)

@@ -133,3 +133,7 @@
 2116	Atualizando a lista de jogos...
 2117	Lista de jogos atualizada
 2118	Procurar jogos adicionados às pastas de jogos
+2119	Configurações para
+2120	Todos os jogos
+2121	Este jogo
+2122	As configurações alteradas agora valem para todos os jogos ou só para este (por exemplo, sem widescreen em um jogo 2D)

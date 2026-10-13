@@ -823,3 +823,7 @@
 2116	Aggiornamento dell'elenco giochi...
 2117	Elenco giochi aggiornato
 2118	Cerca i giochi aggiunti alle cartelle dei giochi
+2119	Impostazioni per
+2120	Tutti i giochi
+2121	Questo gioco
+2122	Le impostazioni cambiate ora valgono per tutti i giochi o solo per questo (per esempio widescreen disattivato in un gioco 2D)

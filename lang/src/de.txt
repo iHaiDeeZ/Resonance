@@ -823,3 +823,7 @@
 2116	Spieleliste wird aktualisiert...
 2117	Spieleliste aktualisiert
 2118	Nach Spielen suchen, die in die Spieleordner kopiert wurden
+2119	Einstellungen für
+2120	Alle Spiele
+2121	Dieses Spiel
+2122	Jetzt geänderte Einstellungen gelten für alle Spiele oder nur für dieses Spiel (zum Beispiel Breitbild aus in einem 2D-Spiel)

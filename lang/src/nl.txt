@@ -823,3 +823,7 @@
 2116	Spellijst wordt vernieuwd...
 2117	Spellijst bijgewerkt
 2118	Zoeken naar spellen die aan de spelmappen zijn toegevoegd
+2119	Instellingen voor
+2120	Alle spellen
+2121	Dit spel
+2122	Nu gewijzigde instellingen gelden voor alle spellen of alleen voor dit spel (bijvoorbeeld breedbeeld uit in een 2D-spel)

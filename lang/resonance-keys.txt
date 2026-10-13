@@ -125,3 +125,7 @@ Refresh Game List
 Refreshing game list...
 Game list updated
 Look for games added to the games folders
+Settings For
+All Games
+This Game
+Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)

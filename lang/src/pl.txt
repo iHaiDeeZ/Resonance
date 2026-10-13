@@ -823,3 +823,7 @@
 2116	Odświeżanie listy gier...
 2117	Lista gier zaktualizowana
 2118	Wyszukaj gry dodane do folderów z grami
+2119	Ustawienia dla
+2120	Wszystkie gry
+2121	Ta gra
+2122	Zmienione teraz ustawienia dotyczą wszystkich gier albo tylko tej gry (na przykład bez szerokiego ekranu w grze 2D)

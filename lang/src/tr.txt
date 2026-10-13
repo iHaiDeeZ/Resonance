@@ -824,3 +824,7 @@
 2116	Oyun listesi yenileniyor...
 2117	Oyun listesi güncellendi
 2118	Oyun klasörlerine eklenen oyunları ara
+2119	Ayarlar şunun için
+2120	Tüm oyunlar
+2121	Bu oyun
+2122	Şimdi değiştirilen ayarlar tüm oyunlara ya da yalnızca bu oyuna uygulanır (örneğin 2D bir oyunda geniş ekran kapalı)
