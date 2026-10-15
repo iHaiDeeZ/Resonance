@@ -144,6 +144,38 @@ index 01021b7a6..7b5223f60 100644
  void SaveSettings();
  
  int flycast_init(int argc, char* argv[]);
+diff --git a/core/hw/aica/aica_if.cpp b/core/hw/aica/aica_if.cpp
+index 92bfa83f5..c09120e1e 100644
+--- a/core/hw/aica/aica_if.cpp
++++ b/core/hw/aica/aica_if.cpp
+@@ -34,6 +34,10 @@ int dma_sched_id = -1;
+ static u32 RealTimeClock;
+ int rtc_schid = -1;
+ 
++#ifdef __ORBIS__
++extern "C" long ps4_utc_offset(void);	// shell/ps4/ps4_main.cpp
++#endif
++
+ u32 GetRTC_now()
+ {
+ 	// rtc kept static for netplay when savestate is not loaded
+@@ -45,11 +49,16 @@ u32 GetRTC_now()
+ 	// We compute the TZ/DST current time offset and add it to the result
+ 	// as if we were in the UTC time zone (as well as the DC Epoch)
+ 	time_t rawtime = time(NULL);
++#ifdef __ORBIS__
++	// PS4: the console's time zone (homebrew's localtime() is UTC)
++	const time_t time_offset = ps4_utc_offset();
++#else
+ 	struct tm localtm, gmtm;
+ 	localtm = *localtime(&rawtime);
+ 	gmtm = *gmtime(&rawtime);
+ 	gmtm.tm_isdst = -1;
+ 	time_t time_offset = mktime(&localtm) - mktime(&gmtm);
++#endif
+ 	// 1/1/50 to 1/1/70 is 20 years and 5 leap days
+ 	return (20 * 365 + 5) * 24 * 60 * 60 + rawtime + time_offset;
+ }
 diff --git a/core/hw/pvr/Renderer_if.cpp b/core/hw/pvr/Renderer_if.cpp
 index 49c3f720f..e9e7eadff 100644
 --- a/core/hw/pvr/Renderer_if.cpp
@@ -2298,10 +2330,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..bc7e0a662
+index 000000000..18d7ff88f
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2514 @@
+@@ -0,0 +1,2553 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4816,11 +4848,50 @@ index 000000000..bc7e0a662
 +
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "الألعاب المدعومة: شاشة 16:9 حقيقية لنحو 230 لعبة لها تصحيح للشاشة العريضة، و4:3 لبقية الألعاب. تمديد إلى 16:9: تمديد صورة 4:3 على كامل الشاشة دون أن يختفي شيء. كل الألعاب: العرض الإضافي لكل لعبة، وقد تظهر الأشياء وتختفي عند الجانبين"
++
++msgid "Add Cheat Code"
++msgstr "إضافة رمز غش"
++
++msgid "Add Patch Code"
++msgstr "إضافة رمز تصحيح"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "اسم رمز الغش (مثل أرواح غير محدودة)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "اسم التصحيح (مثل 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "الرموز: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "الرموز أرقام سداسية عشرية فقط: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "يوجد رمز بهذا الاسم بالفعل"
++
++msgid "Code added"
++msgstr "تمت إضافة الرمز"
++
++msgid "Removed: %s"
++msgstr "تمت الإزالة: %s"
++
++msgid "Square: remove this code"
++msgstr "المربع: إزالة هذا الرمز"
++
++msgid "Start a game first"
++msgstr "شغّل لعبة أولاً"
++
++msgid "Cheat %d"
++msgstr "غش %d"
++
++msgid "Patch %d"
++msgstr "تصحيح %d"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..52d698c1e 100644
+index fb8203ba2..6a1c33943 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2510 @@
+@@ -1,2963 +1,2549 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8874,14 +8945,53 @@ index fb8203ba2..52d698c1e 100644
 +
 +msgid "Stretch to 16:9"
 +msgstr "Auf 16:9 strecken"
- 
++
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Unterstützte Spiele: echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Auf 16:9 strecken: das 4:3-Bild über den ganzen Bildschirm gezogen, nichts fehlt. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können"
++
++msgid "Add Cheat Code"
++msgstr "Cheat-Code eingeben"
++
++msgid "Add Patch Code"
++msgstr "Patch-Code eingeben"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Name des Cheats (z. B. Unendlich Leben)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Name des Patches (z. B. 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Codes bestehen nur aus Hex-Ziffern: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Ein Code mit diesem Namen existiert bereits"
++
++msgid "Code added"
++msgstr "Code hinzugefügt"
++
++msgid "Removed: %s"
++msgstr "Entfernt: %s"
++
++msgid "Square: remove this code"
++msgstr "Quadrat: diesen Code entfernen"
++
++msgid "Start a game first"
++msgstr "Starte zuerst ein Spiel"
++
++msgid "Cheat %d"
++msgstr "Cheat %d"
+ 
++msgid "Patch %d"
++msgstr "Patch %d"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..dce641643 100644
+index 2735f014b..41555194d 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2510 @@
+@@ -1,2964 +1,2549 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -12930,14 +13040,53 @@ index 2735f014b..dce641643 100644
 +
 +msgid "Stretch to 16:9"
 +msgstr "Estirar a 16:9"
- 
++
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Juegos compatibles: 16:9 real para unos 230 juegos con parche panorámico, 4:3 para el resto. Estirar a 16:9: la imagen 4:3 estirada a toda la pantalla, no falta nada. Todos los juegos: el ancho extra en cada juego, donde pueden aparecer y desaparecer cosas en los lados"
++
++msgid "Add Cheat Code"
++msgstr "Añadir código de truco"
++
++msgid "Add Patch Code"
++msgstr "Añadir código de parche"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Nombre del truco (p. ej. Vidas infinitas)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Nombre del parche (p. ej. 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Códigos: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Los códigos son solo dígitos hexadecimales: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Ya hay un código con este nombre"
++
++msgid "Code added"
++msgstr "Código añadido"
++
++msgid "Removed: %s"
++msgstr "Eliminado: %s"
++
++msgid "Square: remove this code"
++msgstr "Cuadrado: eliminar este código"
++
++msgid "Start a game first"
++msgstr "Inicia un juego primero"
++
++msgid "Cheat %d"
++msgstr "Truco %d"
+ 
++msgid "Patch %d"
++msgstr "Parche %d"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..be4733fa3 100644
+index f3754825e..b4e62913b 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2510 @@
+@@ -1,2967 +1,2549 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16296,11 +16445,50 @@ index f3754825e..be4733fa3 100644
 +
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Jeux pris en charge : un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Étirer en 16:9 : l'image 4:3 étirée sur tout l'écran, rien ne manque. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés"
++
++msgid "Add Cheat Code"
++msgstr "Ajouter un code de triche"
++
++msgid "Add Patch Code"
++msgstr "Ajouter un code de correctif"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Nom du code (ex. Vies infinies)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Nom du correctif (ex. 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Codes : XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Les codes ne contiennent que des chiffres hexadécimaux : XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Un code porte déjà ce nom"
++
++msgid "Code added"
++msgstr "Code ajouté"
++
++msgid "Removed: %s"
++msgstr "Supprimé : %s"
++
++msgid "Square: remove this code"
++msgstr "Carré : supprimer ce code"
++
++msgid "Start a game first"
++msgstr "Lancez d'abord un jeu"
++
++msgid "Cheat %d"
++msgstr "Code %d"
++
++msgid "Patch %d"
++msgstr "Correctif %d"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..2e9ac7107 100644
+index ee92eb28e..64efe53a8 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2510 @@
+@@ -1,2963 +1,2549 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20354,14 +20542,53 @@ index ee92eb28e..2e9ac7107 100644
 +
 +msgid "Stretch to 16:9"
 +msgstr "Allarga a 16:9"
- 
++
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Giochi supportati: vero 16:9 per circa 230 giochi con una patch widescreen, 4:3 per gli altri. Allarga a 16:9: l'immagine 4:3 allargata su tutto lo schermo, non manca nulla. Tutti i giochi: la larghezza in più per ogni gioco, dove ai lati gli oggetti possono apparire e sparire"
++
++msgid "Add Cheat Code"
++msgstr "Aggiungi codice trucco"
++
++msgid "Add Patch Code"
++msgstr "Aggiungi codice patch"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Nome del trucco (es. Vite infinite)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Nome della patch (es. 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Codici: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "I codici sono solo cifre esadecimali: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Esiste già un codice con questo nome"
++
++msgid "Code added"
++msgstr "Codice aggiunto"
++
++msgid "Removed: %s"
++msgstr "Rimosso: %s"
++
++msgid "Square: remove this code"
++msgstr "Quadrato: rimuovi questo codice"
++
++msgid "Start a game first"
++msgstr "Avvia prima un gioco"
++
++msgid "Cheat %d"
++msgstr "Trucco %d"
+ 
++msgid "Patch %d"
++msgstr "Patch %d"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..0bd9437f2 100644
+index a79c6a14b..d624e4396 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2509 @@
+@@ -1,2966 +1,2548 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -23719,11 +23946,50 @@ index a79c6a14b..0bd9437f2 100644
 +
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "対応ゲーム：ワイド画面パッチがある約 230 本は本来の 16:9、その他は 4:3。16:9 に引き伸ばす：4:3 の画面を横に引き伸ばして全画面に表示し、何も欠けません。すべてのゲーム：どのゲームでも横の領域を描画しますが、端で物体が出たり消えたりすることがあります"
++
++msgid "Add Cheat Code"
++msgstr "チートコードを入力"
++
++msgid "Add Patch Code"
++msgstr "パッチコードを入力"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "チートの名前（例：残機無限）"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "パッチの名前（例：60 FPS）"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "コード：XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "コードは16進数のみです：XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "この名前のコードはすでにあります"
++
++msgid "Code added"
++msgstr "コードを追加しました"
++
++msgid "Removed: %s"
++msgstr "削除しました：%s"
++
++msgid "Square: remove this code"
++msgstr "四角：このコードを削除"
++
++msgid "Start a game first"
++msgstr "先にゲームを起動してください"
++
++msgid "Cheat %d"
++msgstr "チート %d"
++
++msgid "Patch %d"
++msgstr "パッチ %d"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..0f5e31b09 100644
+index a5e70db54..52ef54d63 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2509 @@
+@@ -1,2962 +1,2548 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -27775,15 +28041,54 @@ index a5e70db54..0f5e31b09 100644
 +
 +msgid "Stretch to 16:9"
 +msgstr "16:9로 늘리기"
- 
++
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "지원 게임: 와이드스크린 패치가 있는 약 230개 게임은 진짜 16:9, 나머지는 4:3. 16:9로 늘리기: 4:3 화면을 가로로 늘려 전체 화면에 표시하며 빠지는 것이 없습니다. 모든 게임: 모든 게임에서 양옆을 넓혀 그리지만 가장자리에서 물체가 나타났다 사라질 수 있습니다"
++
++msgid "Add Cheat Code"
++msgstr "치트 코드 입력"
++
++msgid "Add Patch Code"
++msgstr "패치 코드 입력"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "치트 이름(예: 무한 목숨)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "패치 이름(예: 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "코드: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "코드는 16진수 숫자만 가능합니다: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "이 이름의 코드가 이미 있습니다"
++
++msgid "Code added"
++msgstr "코드를 추가했습니다"
++
++msgid "Removed: %s"
++msgstr "삭제됨: %s"
++
++msgid "Square: remove this code"
++msgstr "네모: 이 코드 삭제"
++
++msgid "Start a game first"
++msgstr "먼저 게임을 시작하세요"
++
++msgid "Cheat %d"
++msgstr "치트 %d"
+ 
++msgid "Patch %d"
++msgstr "패치 %d"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..a55e0c156
+index 000000000..46ea0d3df
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2510 @@
+@@ -0,0 +1,2549 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -30294,11 +30599,50 @@ index 000000000..a55e0c156
 +
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Ondersteunde spellen: echt 16:9 voor zo'n 230 spellen met een breedbeeldpatch, 4:3 voor de rest. Uitrekken naar 16:9: het 4:3-beeld over het hele scherm uitgerekt, er ontbreekt niets. Alle spellen: de extra breedte voor elk spel, waarbij aan de zijkanten dingen kunnen verschijnen en verdwijnen"
++
++msgid "Add Cheat Code"
++msgstr "Cheatcode invoeren"
++
++msgid "Add Patch Code"
++msgstr "Patchcode invoeren"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Naam van de cheat (bijv. Oneindig levens)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Naam van de patch (bijv. 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Codes bestaan alleen uit hexadecimale cijfers: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Er is al een code met deze naam"
++
++msgid "Code added"
++msgstr "Code toegevoegd"
++
++msgid "Removed: %s"
++msgstr "Verwijderd: %s"
++
++msgid "Square: remove this code"
++msgstr "Vierkant: deze code verwijderen"
++
++msgid "Start a game first"
++msgstr "Start eerst een spel"
++
++msgid "Cheat %d"
++msgstr "Cheat %d"
++
++msgid "Patch %d"
++msgstr "Patch %d"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..39aed08c3 100644
+index 548cbb44d..97c191bb9 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2511 @@
+@@ -1,2965 +1,2550 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -34356,14 +34700,53 @@ index 548cbb44d..39aed08c3 100644
 +
 +msgid "Stretch to 16:9"
 +msgstr "Rozciągnij do 16:9"
- 
++
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Obsługiwane gry: prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Rozciągnij do 16:9: obraz 4:3 rozciągnięty na cały ekran, niczego nie brakuje. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać"
++
++msgid "Add Cheat Code"
++msgstr "Dodaj kod"
++
++msgid "Add Patch Code"
++msgstr "Dodaj kod łatki"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Nazwa kodu (np. Nieskończone życia)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Nazwa łatki (np. 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Kody: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Kody to tylko cyfry szesnastkowe: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Kod o tej nazwie już istnieje"
++
++msgid "Code added"
++msgstr "Dodano kod"
++
++msgid "Removed: %s"
++msgstr "Usunięto: %s"
++
++msgid "Square: remove this code"
++msgstr "Kwadrat: usuń ten kod"
++
++msgid "Start a game first"
++msgstr "Najpierw uruchom grę"
++
++msgid "Cheat %d"
++msgstr "Kod %d"
+ 
++msgid "Patch %d"
++msgstr "Łatka %d"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..a5eab5411 100644
+index 6ec100a1e..0eca0c734 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2510 @@
+@@ -1,2966 +1,2549 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -37736,12 +38119,51 @@ index 6ec100a1e..a5eab5411 100644
 +
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Jogos compatíveis: 16:9 de verdade para cerca de 230 jogos com patch widescreen, 4:3 para o resto. Esticar para 16:9: a imagem 4:3 esticada na tela toda, nada some. Todos os jogos: a largura extra em todo jogo, onde coisas podem aparecer e sumir nas laterais"
++
++msgid "Add Cheat Code"
++msgstr "Adicionar código de trapaça"
++
++msgid "Add Patch Code"
++msgstr "Adicionar código de patch"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Nome da trapaça (ex.: Vidas infinitas)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Nome do patch (ex.: 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Códigos: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Os códigos são só dígitos hexadecimais: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Já existe um código com esse nome"
++
++msgid "Code added"
++msgstr "Código adicionado"
++
++msgid "Removed: %s"
++msgstr "Removido: %s"
++
++msgid "Square: remove this code"
++msgstr "Quadrado: remover este código"
++
++msgid "Start a game first"
++msgstr "Inicie um jogo primeiro"
++
++msgid "Cheat %d"
++msgstr "Trapaça %d"
++
++msgid "Patch %d"
++msgstr "Patch %d"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..d6bccd46b
+index 000000000..bef2cb05e
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2511 @@
+@@ -0,0 +1,2550 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -40253,11 +40675,50 @@ index 000000000..d6bccd46b
 +
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Поддерживаемые игры: настоящий 16:9 примерно для 230 игр с широкоэкранным патчем, 4:3 для остальных. Растянуть до 16:9: картинка 4:3 растянута на весь экран, ничего не пропадает. Все игры: дополнительная ширина в каждой игре, где по краям объекты могут появляться и исчезать"
++
++msgid "Add Cheat Code"
++msgstr "Ввести чит-код"
++
++msgid "Add Patch Code"
++msgstr "Ввести код патча"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Название чита (например, Бесконечные жизни)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Название патча (например, 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Коды: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Коды состоят только из шестнадцатеричных цифр: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Код с таким названием уже есть"
++
++msgid "Code added"
++msgstr "Код добавлен"
++
++msgid "Removed: %s"
++msgstr "Удалено: %s"
++
++msgid "Square: remove this code"
++msgstr "Квадрат: удалить этот код"
++
++msgid "Start a game first"
++msgstr "Сначала запустите игру"
++
++msgid "Cheat %d"
++msgstr "Чит %d"
++
++msgid "Patch %d"
++msgstr "Патч %d"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..e875bfe93 100644
+index 8c8d8bc08..33f84bec2 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2510 @@
+@@ -1,2965 +1,2549 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -44016,14 +44477,53 @@ index 8c8d8bc08..e875bfe93 100644
 +
 +msgid "Stretch to 16:9"
 +msgstr "16:9'a uzat"
- 
++
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Desteklenen oyunlar: geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. 16:9'a uzat: 4:3 görüntü tüm ekrana uzatılır, hiçbir şey kaybolmaz. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir"
++
++msgid "Add Cheat Code"
++msgstr "Hile kodu ekle"
++
++msgid "Add Patch Code"
++msgstr "Yama kodu ekle"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "Hilenin adı (ör. Sonsuz can)"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "Yamanın adı (ör. 60 FPS)"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "Kodlar: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "Kodlar yalnızca onaltılık rakamlardır: XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "Bu adda bir kod zaten var"
++
++msgid "Code added"
++msgstr "Kod eklendi"
++
++msgid "Removed: %s"
++msgstr "Kaldırıldı: %s"
++
++msgid "Square: remove this code"
++msgstr "Kare: bu kodu kaldır"
++
++msgid "Start a game first"
++msgstr "Önce bir oyun başlatın"
++
++msgid "Cheat %d"
++msgstr "Hile %d"
+ 
++msgid "Patch %d"
++msgstr "Yama %d"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..840126718 100644
+index 3ecabd349..1a5d6c69c 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2509 @@
+@@ -1,2962 +1,2548 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -48075,9 +48575,48 @@ index 3ecabd349..840126718 100644
 +
 +msgid "Stretch to 16:9"
 +msgstr "拉伸至 16:9"
- 
++
 +msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "支持的游戏：约 230 款有宽屏补丁的游戏显示真正的 16:9，其余为 4:3。拉伸至 16:9：将 4:3 画面横向拉伸至全屏，不会缺少任何内容。所有游戏：每款游戏都绘制两侧的额外区域，边缘的物体可能会时隐时现"
++
++msgid "Add Cheat Code"
++msgstr "输入金手指代码"
++
++msgid "Add Patch Code"
++msgstr "输入补丁代码"
++
++msgid "Name of the cheat (e.g. Infinite Lives)"
++msgstr "金手指名称（例如：无限生命）"
++
++msgid "Name of the patch (e.g. 60 FPS)"
++msgstr "补丁名称（例如：60 FPS）"
++
++msgid "Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++msgstr "代码：XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."
++
++msgid "Codes are hex digits only: XXXXXXXX YYYYYYYY"
++msgstr "代码只能是十六进制数字：XXXXXXXX YYYYYYYY"
++
++msgid "A code with this name is already there"
++msgstr "已有同名代码"
++
++msgid "Code added"
++msgstr "已添加代码"
++
++msgid "Removed: %s"
++msgstr "已删除：%s"
++
++msgid "Square: remove this code"
++msgstr "方块：删除此代码"
++
++msgid "Start a game first"
++msgstr "请先启动游戏"
++
++msgid "Cheat %d"
++msgstr "金手指 %d"
+ 
++msgid "Patch %d"
++msgstr "补丁 %d"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -48364,7 +48903,7 @@ index 000000000..c970bb9f7
 +static PS4AudioBackend ps4AudioBackend;
 diff --git a/shell/ps4/launcher/cheats_db.cpp b/shell/ps4/launcher/cheats_db.cpp
 new file mode 100644
-index 000000000..f09f5ff58
+index 000000000..c03302c84
 --- /dev/null
 +++ b/shell/ps4/launcher/cheats_db.cpp
 @@ -0,0 +1,253 @@
@@ -48604,7 +49143,7 @@ index 000000000..f09f5ff58
 +		while (dirent *e = readdir(d))
 +		{
 +			const std::string name = e->d_name;
-+			if (name.size() < 5 || name == "libretro-index.txt")
++			if (name.size() < 5 || name == "libretro-index.txt" || name.find("-typed.txt") != std::string::npos)
 +				continue;
 +			const std::string ext = name.substr(name.size() - 4);
 +			if (ext == ".cht" || ext == ".txt")
@@ -48623,10 +49162,10 @@ index 000000000..f09f5ff58
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/cheats_menu.cpp b/shell/ps4/launcher/cheats_menu.cpp
 new file mode 100644
-index 000000000..15c2a9648
+index 000000000..924623f74
 --- /dev/null
 +++ b/shell/ps4/launcher/cheats_menu.cpp
-@@ -0,0 +1,288 @@
+@@ -0,0 +1,334 @@
 +/*
 +	Resonance's cheats in the quick menu: the game's cheats, each On/Off, and "Get Cheats": a list of
 +	matching files from libretro's cheat database (by the game's title) and the files in
@@ -48820,7 +49359,9 @@ index 000000000..15c2a9648
 +	gNow = t;
 +	poll();
 +	const std::vector<CodeRow> codes = codeRows();
-+	const int n = gView == View::LIST ? (int)codes.size() + 1 : (int)gSources.size();
++	// LIST: Get Cheats, Add Cheat Code, Add Patch Code, then the codes
++	constexpr int FIRST_CODE = 3;
++	const int n = gView == View::LIST ? (int)codes.size() + FIRST_CODE : (int)gSources.size();
 +	if (in.dy != 0 && n > 0)
 +	{
 +		gSel = std::clamp(gSel + in.dy, 0, n - 1);
@@ -48837,6 +49378,19 @@ index 000000000..15c2a9648
 +		}
 +		return false;
 +	}
++	// Square: a code typed in here goes again
++	if (in.square && gView == View::LIST && gSel >= FIRST_CODE && gSel - FIRST_CODE < (int)codes.size()
++			&& codeTyped(codes[gSel - FIRST_CODE].name))
++	{
++		const std::string name = codes[gSel - FIRST_CODE].name;
++		codeRemoveTyped(name);
++		char buf[256];
++		snprintf(buf, sizeof(buf), T("Removed: %s"), name.c_str());
++		say(buf, false);
++		playSound(Sound::Back);
++		gSel = std::min(gSel, (int)codeRows().size() + FIRST_CODE - 1);
++		return true;
++	}
 +	if (!in.cross || gSearch.valid() || gDownload.valid())
 +		return true;
 +	if (gView == View::LIST)
@@ -48846,10 +49400,37 @@ index 000000000..15c2a9648
 +			playSound(Sound::Confirm);
 +			startSearch(false);
 +		}
-+		else if (gSel - 1 < (int)codes.size())
++		else if (gSel == 1 || gSel == 2)
++		{
++			// typed in: a name, then the codes
++			const bool patch = gSel == 2;
++			playSound(Sound::Confirm);
++			openKeyboard(patch ? T("Name of the patch (e.g. 60 FPS)") : T("Name of the cheat (e.g. Infinite Lives)"), "", false,
++				[patch](bool ok, const std::string& name) {
++					if (!ok)
++						return;
++					openKeyboard(T("Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ..."), "", false,
++						[patch, name](bool ok, const std::string& codes) {
++							if (!ok)
++								return;
++							const std::string error = codeAdd(name, codes, patch);
++							if (error.empty())
++							{
++								say(T("Code added"), false);
++								playSound(Sound::Confirm);
++							}
++							else
++							{
++								say(error, true);
++								playSound(Sound::Error);
++							}
++						});
++				});
++		}
++		else if (gSel - FIRST_CODE < (int)codes.size())
 +		{
 +			// remembered for the game; a GameShark code's lines go together
-+			codeToggle(codes[gSel - 1].name);
++			codeToggle(codes[gSel - FIRST_CODE].name);
 +			playSound(Sound::Move);
 +		}
 +	}
@@ -48879,6 +49460,8 @@ index 000000000..15c2a9648
 +	if (gView == View::LIST)
 +	{
 +		lines.push_back({ std::string(ICON_FA_DOWNLOAD "  ") + T("Get Cheats"), "" });
++		lines.push_back({ std::string(ICON_FA_KEYBOARD "  ") + T("Add Cheat Code"), "" });
++		lines.push_back({ std::string(ICON_FA_KEYBOARD "  ") + T("Add Patch Code"), "" });
 +		// patches (a wrench) above cheats
 +		for (const CodeRow& c : codes)
 +			lines.push_back({ std::string(c.patch ? ICON_FA_WRENCH "  " : ICON_FA_MASK "  ") + c.name, c.on ? T("On") : T("Off") });
@@ -48908,6 +49491,8 @@ index 000000000..15c2a9648
 +	dl->PopClipRect();
 +	if (gView == View::LIST && codes.empty() && gStatus.empty())
 +		xmbText(dl, bodyFont(), ts * .9f, ImVec2(x0 + f.w * .015f, top + rowH * 1.6f), alpha * .8f, T("No cheats or patches yet"));
++	if (gView == View::LIST && gSel >= 3 && gSel - 3 < (int)codes.size() && codeTyped(codes[gSel - 3].name) && gStatus.empty())
++		xmbText(dl, bodyFont(), f.h * .023f, ImVec2(x0 + f.w * .015f, f.h * .86f), alpha * .85f, T("Square: remove this code"));
 +	const bool busy = gSearch.valid() || gDownload.valid();
 +	if (!gStatus.empty() && (busy || gNow - gStatusAt < 8.f))
 +		xmbText(dl, bodyFont(), f.h * .023f, ImVec2(x0 + f.w * .015f, f.h * .86f), alpha, gStatus, 0, x1 - x0 - f.w * .03f,
@@ -49302,10 +49887,10 @@ index 000000000..968b94cdd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/game_codes.cpp b/shell/ps4/launcher/game_codes.cpp
 new file mode 100644
-index 000000000..a73648a64
+index 000000000..1dd139a3f
 --- /dev/null
 +++ b/shell/ps4/launcher/game_codes.cpp
-@@ -0,0 +1,490 @@
+@@ -0,0 +1,610 @@
 +/*
 +	Resonance's cheats and patches for the running game, put together in Flycast's cheat engine.
 +
@@ -49373,6 +49958,9 @@ index 000000000..a73648a64
 +std::string gGameId;
 +std::map<std::string, bool> gIsPatch;	// entry name -> patch (else cheat)
 +std::map<std::string, bool> gState;		// entry name -> on, as the player left it
++std::set<std::string> gTyped;			// names of the codes typed in on the console
++
++std::string typedPath(bool patch);
 +
 +std::string dir(const char *sub) {
 +	return std::string(kRoot) + "/" + sub;
@@ -49484,7 +50072,8 @@ index 000000000..a73648a64
 +			if (!endsWith(name, ".cht") && !endsWith(name, ".txt"))
 +				continue;
 +			const std::string stem = name.substr(0, name.size() - 4);
-+			if (stem == safeId(gGameId) || stem == gGameId || (!title.empty() && titleScore(title, stem) >= .75f))
++			if (stem == safeId(gGameId) || stem == gGameId || stem == safeId(gGameId) + "-typed"
++					|| (!title.empty() && titleScore(title, stem) >= .75f))
 +				out.push_back(dir(sub) + "/" + name);
 +		}
 +		closedir(d);
@@ -49527,6 +50116,7 @@ index 000000000..a73648a64
 +	std::string text;
 +	if (!readFile(path, text))
 +		return;
++	const bool typed = endsWith(path, "-typed.txt");
 +	std::string name, codes;
 +	auto flush = [&]() {
 +		if (!name.empty() && !codes.empty())
@@ -49534,6 +50124,8 @@ index 000000000..a73648a64
 +			try {
 +				cheatManager.addGameSharkCheat(name, codes);
 +				gIsPatch[name] = patches || patchByName(name);
++				if (typed)
++					gTyped.insert(name);
 +			} catch (const std::exception& e) {
 +				WARN_LOG(COMMON, "codes '%s': %s", name.c_str(), e.what());
 +			}
@@ -49579,6 +50171,7 @@ index 000000000..a73648a64
 +	std::lock_guard<std::mutex> lock(gMutex);
 +	mkdirs();
 +	gIsPatch.clear();
++	gTyped.clear();
 +	const std::string cheatFile = config::loadStr("cheats", gGameId);
 +	const int patchSource = config::loadInt("resonance", "PatchSource", 0);
 +	config::IniFile merged;
@@ -49607,6 +50200,10 @@ index 000000000..a73648a64
 +	cheatManager.loadCheatFile(active);
 +	// Flycast remembers the file it loaded: keep the one the player picked
 +	config::saveStr("cheats", gGameId, cheatFile);
++	// cheats typed in on the console go with the picked file
++	struct stat st;
++	if (stat(typedPath(false).c_str(), &st) == 0)
++		lists.push_back(typedPath(false));
 +	for (const std::string& p : lists)
 +	{
 +		const bool patches = p.find("/patches/") != std::string::npos;
@@ -49706,7 +50303,115 @@ index 000000000..a73648a64
 +		rebuild();
 +	});
 +}
++std::string typedPath(bool patch) {
++	return dir(patch ? "patches/" : "cheats/") + safeId(gGameId) + "-typed.txt";
++}
++
++// a typed file without the code of this name (its name line and the code lines under it)
++void removeBlock(const std::string& path, const std::string& name)
++{
++	std::string text, out;
++	if (!readFile(path, text))
++		return;
++	bool skipping = false;
++	size_t at = 0;
++	while (at < text.size())
++	{
++		size_t end = text.find('\n', at);
++		if (end == std::string::npos)
++			end = text.size();
++		const std::string line = text.substr(at, end - at);
++		at = end + 1;
++		bool hex = !line.empty();
++		for (char c : line)
++			if (!isxdigit((unsigned char)c) && c != ' ')
++				hex = false;
++		if (!hex && !line.empty() && line[0] != '#')
++			skipping = line == name;
++		if (!skipping)
++			out += line + "\n";
++	}
++	writeFile(path, out);
++}
 +} // namespace
++
++std::string codeAdd(const std::string& rawName, const std::string& codes, bool patch)
++{
++	if (gGameId.empty())
++		return i18n::T("Start a game first");
++	std::string name = rawName;
++	while (!name.empty() && isspace((unsigned char)name.back()))
++		name.pop_back();
++	while (!name.empty() && isspace((unsigned char)name[0]))
++		name.erase(0, 1);
++	// the words: 8 hex digits each, separated by spaces, dashes, colons or nothing
++	std::string digits;
++	for (char c : codes)
++	{
++		if (isxdigit((unsigned char)c))
++			digits += (char)toupper((unsigned char)c);
++		else if (!isspace((unsigned char)c) && c != '-' && c != ':' && c != ',')
++			return i18n::T("Codes are hex digits only: XXXXXXXX YYYYYYYY");
++	}
++	if (digits.size() < 16 || digits.size() % 8 != 0)
++		return i18n::T("Codes are hex digits only: XXXXXXXX YYYYYYYY");
++	bool nameLooksLikeCode = true;
++	int nameDigits = 0;
++	for (char c : name)
++	{
++		if (isxdigit((unsigned char)c))
++			nameDigits++;
++		else if (c != ' ' && c != '-')
++			nameLooksLikeCode = false;
++	}
++	if (name.empty() || (nameLooksLikeCode && nameDigits >= 8))
++	{
++		char buf[64];
++		snprintf(buf, sizeof(buf), patch ? i18n::T("Patch %d") : i18n::T("Cheat %d"), (int)codeRows().size() + 1);
++		name = buf;
++	}
++	for (const CodeRow& r : codeRows())
++		if (r.name == name)
++			return i18n::T("A code with this name is already there");
++	std::string block = name + "\n";
++	for (size_t i = 0; i < digits.size(); i += 8)
++		block += digits.substr(i, 8) + ((i / 8) % 2 == 0 && i + 8 < digits.size() ? " " : "\n");
++	mkdirs();
++	std::string text;
++	readFile(typedPath(patch), text);
++	if (!text.empty() && text.back() != '\n')
++		text += "\n";
++	if (text.empty())
++		text = std::string("# typed in on the console: a name line, then its codes\n");
++	writeFile(typedPath(patch), text + block);
++	{
++		std::lock_guard<std::mutex> lock(gMutex);
++		gState[name] = true;	// typed in to be used
++		saveState();
++	}
++	rebuild();
++	return "";
++}
++
++bool codeTyped(const std::string& name)
++{
++	std::lock_guard<std::mutex> lock(gMutex);
++	return gTyped.count(name) != 0;
++}
++
++void codeRemoveTyped(const std::string& name)
++{
++	if (!codeTyped(name))
++		return;
++	removeBlock(typedPath(false), name);
++	removeBlock(typedPath(true), name);
++	{
++		std::lock_guard<std::mutex> lock(gMutex);
++		gState.erase(name);
++		saveState();
++	}
++	rebuild();
++}
 +
 +void codesGameStarted()
 +{
@@ -50526,7 +51231,7 @@ index 000000000..827448a60
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/keyboard.cpp b/shell/ps4/launcher/keyboard.cpp
 new file mode 100644
-index 000000000..d8426aabd
+index 000000000..67e10c3dd
 --- /dev/null
 +++ b/shell/ps4/launcher/keyboard.cpp
 @@ -0,0 +1,165 @@
@@ -50568,7 +51273,7 @@ index 000000000..d8426aabd
 +constexpr u32 OPTION_PASSWORD = 0x4;			// typed characters shown as dots
 +
 +bool gOpen;
-+char16_t gText[256];
++char16_t gText[1024];		// long enough for a code list typed in
 +char16_t gTitle[128];
 +std::function<void(bool, const std::string&)> gDone;
 +
@@ -50697,10 +51402,10 @@ index 000000000..d8426aabd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/launcher.cpp b/shell/ps4/launcher/launcher.cpp
 new file mode 100644
-index 000000000..4b398a2cf
+index 000000000..e19db16a2
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher.cpp
-@@ -0,0 +1,1234 @@
+@@ -0,0 +1,1246 @@
 +/*
 +	Resonance launcher core: the library, covers and colours, DualShock 4 input, theme switching
 +	and starting games. The themes draw; this file decides what they draw.
@@ -50745,6 +51450,7 @@ index 000000000..4b398a2cf
 +#include <unordered_map>
 +
 +extern "C" void ps4_boot_trace(const char *line);
++extern "C" long ps4_utc_offset(void);
 +
 +namespace launcher
 +{
@@ -51018,6 +51724,17 @@ index 000000000..4b398a2cf
 +		openSettings();
 +}
 +} // namespace
++
++const struct tm *launcher::localTm(time_t t)
++{
++	static struct tm out;
++	const time_t local = t + ps4_utc_offset();
++	const struct tm *g = gmtime(&local);
++	if (g == nullptr)
++		return nullptr;
++	out = *g;
++	return &out;
++}
 +
 +// ---- requests from themes ----
 +
@@ -52024,10 +52741,10 @@ index 000000000..b8d2c6fe0
 +void launcher_loading_draw(const char *label, float progress);
 diff --git a/shell/ps4/launcher/launcher_internal.h b/shell/ps4/launcher/launcher_internal.h
 new file mode 100644
-index 000000000..403e9eccf
+index 000000000..bf443dee4
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher_internal.h
-@@ -0,0 +1,291 @@
+@@ -0,0 +1,298 @@
 +/*
 +	Resonance launcher internals: what the core (launcher.cpp) shares with the themes
 +	(theme_*.cpp), covers (covers.cpp) and sounds (sound.cpp).
@@ -52180,6 +52897,8 @@ index 000000000..403e9eccf
 +// animations end on it and it stays up while the game loads (progress < 0: no figure yet)
 +void drawLaunchCard(Frame& f, const Game& g, float alpha, float progress = -1.f, const std::string& label = "");
 +float easeOut(float t);
++// The console's local time (time zone and summer time from its settings) as a tm
++const struct tm *localTm(time_t t);
 +float clamp01(float t);
 +// Spring toward goal (critically damped-ish); returns the new position
 +void spring(float& pos, float& vel, float goal, float stiffness, float damping, float dt);
@@ -52265,6 +52984,11 @@ index 000000000..403e9eccf
 +void codesPickCheatFile(const std::string& path);
 +std::vector<CodeRow> codeRows();		// one per code, patches first
 +void codeToggle(const std::string& name);
++// A code typed in on the console (name, then GameShark / CodeBreaker words): "" when added, else
++// what is wrong. Kept in <id>-typed.txt in the cheats or the patches folder
++std::string codeAdd(const std::string& name, const std::string& codes, bool patch);
++bool codeTyped(const std::string& name);
++void codeRemoveTyped(const std::string& name);
 +// cheats_menu.cpp: the quick menu's cheats; cheatsInput false = back to the quick menu
 +void cheatsOpen(float t);
 +bool cheatsInput(const MenuInput& in, float t);
@@ -52378,10 +53102,10 @@ index 000000000..5605ef4cb
 +};
 diff --git a/shell/ps4/launcher/quick_menu.cpp b/shell/ps4/launcher/quick_menu.cpp
 new file mode 100644
-index 000000000..424012735
+index 000000000..23c193b51
 --- /dev/null
 +++ b/shell/ps4/launcher/quick_menu.cpp
-@@ -0,0 +1,337 @@
+@@ -0,0 +1,347 @@
 +/*
 +	Resonance's quick menu during a game (L3+R3, or the touchpad), in place of Flycast's commands
 +	window: the game paused behind a side panel with its cover and name; Resume, Save State and Load
@@ -52472,6 +53196,16 @@ index 000000000..424012735
 +	}
 +	gLastFrame = frame;
 +	gIn.read(f.t);
++	// the on-screen keyboard (typing a code): the menu waits, and the press that closes it isn't
++	// taken by the menu too
++	static bool keyboardWasOpen;
++	keyboardUpdate();
++	if (keyboardOpen() || keyboardWasOpen)
++	{
++		gIn.dx = gIn.dy = 0;
++		gIn.cross = gIn.circle = gIn.square = gIn.triangle = gIn.l1 = gIn.r1 = false;
++	}
++	keyboardWasOpen = keyboardOpen();
 +	ImDrawList *dl = f.dl;
 +	const float in = easeOut((f.t - gOpenedAt) / .25f);
 +
@@ -52703,7 +53437,7 @@ index 000000000..424012735
 +		{
 +			const time_t t = (time_t)date;
 +			char tb[64];
-+			strftime(tb, sizeof(tb), "%d/%m/%Y  %H:%M", localtime(&t));
++			strftime(tb, sizeof(tb), "%d/%m/%Y  %H:%M", localTm(t));
 +			when = tb;
 +		}
 +		xmbText(dl, bodyFont(), f.h * .026f, ImVec2(a.x, b.y + f.h * .055f), card, slot + "   " + when);
@@ -54189,7 +54923,7 @@ index 000000000..42d649490
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/theme_orbit.cpp b/shell/ps4/launcher/theme_orbit.cpp
 new file mode 100644
-index 000000000..be1b8bbce
+index 000000000..4c1b48b4f
 --- /dev/null
 +++ b/shell/ps4/launcher/theme_orbit.cpp
 @@ -0,0 +1,317 @@
@@ -54455,7 +55189,7 @@ index 000000000..be1b8bbce
 +		// the clock (the logo is in the other corner)
 +		char clock[16];
 +		const time_t now = time(nullptr);
-+		strftime(clock, sizeof(clock), "%H:%M", localtime(&now));
++		strftime(clock, sizeof(clock), "%H:%M", localTm(now));
 +		drawText(dl, display, f.h * .026f, ImVec2(f.w * .95f, f.h * .05f), IM_COL32(255, 255, 255, (int)(220 * alpha)), clock, 1.f);
 +
 +		// the title, letter by letter after each move
@@ -54512,7 +55246,7 @@ index 000000000..be1b8bbce
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/theme_shelf.cpp b/shell/ps4/launcher/theme_shelf.cpp
 new file mode 100644
-index 000000000..a813db854
+index 000000000..633575851
 --- /dev/null
 +++ b/shell/ps4/launcher/theme_shelf.cpp
 @@ -0,0 +1,267 @@
@@ -54766,7 +55500,7 @@ index 000000000..a813db854
 +		}
 +		char clock[16];
 +		const time_t now = time(nullptr);
-+		strftime(clock, sizeof(clock), "%H:%M", localtime(&now));
++		strftime(clock, sizeof(clock), "%H:%M", localTm(now));
 +		drawText(dl, displayFont(), f.h * .026f, ImVec2(f.w * .95f, f.h * .04f), IM_COL32(255, 255, 255, (int)(220 * alpha)), clock, 1.f);
 +	}
 +
@@ -55646,7 +56380,7 @@ index 000000000..43bc91cfb
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/xmb_style.cpp b/shell/ps4/launcher/xmb_style.cpp
 new file mode 100644
-index 000000000..0506dd1cb
+index 000000000..705312e75
 --- /dev/null
 +++ b/shell/ps4/launcher/xmb_style.cpp
 @@ -0,0 +1,242 @@
@@ -55691,7 +56425,7 @@ index 000000000..0506dd1cb
 +		{ .44f, .24f, .66f }, { .76f, .56f, .12f }, { .52f, .32f, .18f }, { .74f, .14f, .16f },
 +	};
 +	const time_t now = time(nullptr);
-+	const tm *lt = localtime(&now);
++	const tm *lt = localTm(now);
 +	return months[lt != nullptr ? lt->tm_mon % 12 : 7];
 +}
 +
@@ -55754,7 +56488,7 @@ index 000000000..0506dd1cb
 +{
 +	char clock[32];
 +	const time_t now = time(nullptr);
-+	const tm *lt = localtime(&now);
++	const tm *lt = localTm(now);
 +	strftime(clock, sizeof(clock), "%d/%m  %H:%M", lt);
 +	const float size = f.h * .026f;
 +	const float w = xmbText(f.dl, bodyFont(), size, ImVec2(f.w * .94f, f.h * .055f), alpha, clock, 1.f);
@@ -57334,10 +58068,10 @@ index 000000000..30c0fc58d
 +void ps4_plug_pad_ports();
 diff --git a/shell/ps4/ps4_main.cpp b/shell/ps4/ps4_main.cpp
 new file mode 100644
-index 000000000..471c9b3c0
+index 000000000..cb69480a1
 --- /dev/null
 +++ b/shell/ps4/ps4_main.cpp
-@@ -0,0 +1,377 @@
+@@ -0,0 +1,399 @@
 +/*
 +	Resonance: Flycast's PS4 frontend.
 +
@@ -57379,6 +58113,7 @@ index 000000000..471c9b3c0
 +#include "updater.h"
 +
 +#include <orbis/Sysmodule.h>
++#include <orbis/SystemService.h>
 +#include <orbis/libkernel.h>
 +
 +#include <fcntl.h>
@@ -57532,6 +58267,27 @@ index 000000000..471c9b3c0
 +			lastSpan = span;
 +		}
 +	}).detach();
++}
++
++// The console's time zone and summer time (Settings > Date and Time), in seconds east of UTC.
++// Homebrew's C library knows no time zone, so localtime() gives UTC: the menus' clocks and the
++// Dreamcast's clock add this instead
++extern "C" long ps4_utc_offset(void)
++{
++	static long offset;
++	static time_t readAt;
++	const time_t now = time(nullptr);
++	if (readAt == 0 || now - readAt >= 60 || now < readAt)
++	{
++		int32_t zone = 0, summer = 0;
++		if (sceSystemServiceParamGetInt(ORBIS_SYSTEM_SERVICE_PARAM_ID_TIME_ZONE, &zone) != 0)
++			zone = 0;
++		if (sceSystemServiceParamGetInt(ORBIS_SYSTEM_SERVICE_PARAM_ID_SUMMERTIME, &summer) != 0)
++			summer = 0;
++		offset = (long)zone * 60 + (summer ? 3600 : 0);
++		readAt = now;
++	}
++	return offset;
 +}
 +
 +// Exceptions thrown for the first time take a slow path (unwinder setup); do it before the JIT.

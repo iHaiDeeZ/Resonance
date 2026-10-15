@@ -833,3 +833,16 @@
 2125	Geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir
 2126	16:9'a uzat
 2127	Desteklenen oyunlar: geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. 16:9'a uzat: 4:3 görüntü tüm ekrana uzatılır, hiçbir şey kaybolmaz. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir
+2128	Hile kodu ekle
+2129	Yama kodu ekle
+2130	Hilenin adı (ör. Sonsuz can)
+2131	Yamanın adı (ör. 60 FPS)
+2132	Kodlar: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ...
+2133	Kodlar yalnızca onaltılık rakamlardır: XXXXXXXX YYYYYYYY
+2134	Bu adda bir kod zaten var
+2135	Kod eklendi
+2136	Kaldırıldı: %s
+2137	Kare: bu kodu kaldır
+2138	Önce bir oyun başlatın
+2139	Hile %d
+2140	Yama %d

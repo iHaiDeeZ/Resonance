@@ -832,3 +832,16 @@
 2125	Echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können
 2126	Auf 16:9 strecken
 2127	Unterstützte Spiele: echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Auf 16:9 strecken: das 4:3-Bild über den ganzen Bildschirm gezogen, nichts fehlt. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können
+2128	Cheat-Code eingeben
+2129	Patch-Code eingeben
+2130	Name des Cheats (z. B. Unendlich Leben)
+2131	Name des Patches (z. B. 60 FPS)
+2132	Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ...
+2133	Codes bestehen nur aus Hex-Ziffern: XXXXXXXX YYYYYYYY
+2134	Ein Code mit diesem Namen existiert bereits
+2135	Code hinzugefügt
+2136	Entfernt: %s
+2137	Quadrat: diesen Code entfernen
+2138	Starte zuerst ein Spiel
+2139	Cheat %d
+2140	Patch %d

@@ -134,3 +134,16 @@ All games
 Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides
 Stretch to 16:9
 Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides
+Add Cheat Code
+Add Patch Code
+Name of the cheat (e.g. Infinite Lives)
+Name of the patch (e.g. 60 FPS)
+Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ...
+Codes are hex digits only: XXXXXXXX YYYYYYYY
+A code with this name is already there
+Code added
+Removed: %s
+Square: remove this code
+Start a game first
+Cheat %d
+Patch %d

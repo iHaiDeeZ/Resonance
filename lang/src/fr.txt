@@ -127,3 +127,16 @@
 2125	Un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés
 2126	Étirer en 16:9
 2127	Jeux pris en charge : un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Étirer en 16:9 : l'image 4:3 étirée sur tout l'écran, rien ne manque. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés
+2128	Ajouter un code de triche
+2129	Ajouter un code de correctif
+2130	Nom du code (ex. Vies infinies)
+2131	Nom du correctif (ex. 60 FPS)
+2132	Codes : XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ...
+2133	Les codes ne contiennent que des chiffres hexadécimaux : XXXXXXXX YYYYYYYY
+2134	Un code porte déjà ce nom
+2135	Code ajouté
+2136	Supprimé : %s
+2137	Carré : supprimer ce code
+2138	Lancez d'abord un jeu
+2139	Code %d
+2140	Correctif %d

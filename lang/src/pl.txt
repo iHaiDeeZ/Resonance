@@ -832,3 +832,16 @@
 2125	Prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać
 2126	Rozciągnij do 16:9
 2127	Obsługiwane gry: prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Rozciągnij do 16:9: obraz 4:3 rozciągnięty na cały ekran, niczego nie brakuje. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać
+2128	Dodaj kod
+2129	Dodaj kod łatki
+2130	Nazwa kodu (np. Nieskończone życia)
+2131	Nazwa łatki (np. 60 FPS)
+2132	Kody: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ...
+2133	Kody to tylko cyfry szesnastkowe: XXXXXXXX YYYYYYYY
+2134	Kod o tej nazwie już istnieje
+2135	Dodano kod
+2136	Usunięto: %s
+2137	Kwadrat: usuń ten kod
+2138	Najpierw uruchom grę
+2139	Kod %d
+2140	Łatka %d

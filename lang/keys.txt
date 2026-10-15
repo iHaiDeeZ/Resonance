@@ -832,3 +832,16 @@
 2125	Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides
 2126	Stretch to 16:9
 2127	Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides
+2128	Add Cheat Code
+2129	Add Patch Code
+2130	Name of the cheat (e.g. Infinite Lives)
+2131	Name of the patch (e.g. 60 FPS)
+2132	Codes: XXXXXXXX YYYYYYYY XXXXXXXX YYYYYYYY ...
+2133	Codes are hex digits only: XXXXXXXX YYYYYYYY
+2134	A code with this name is already there
+2135	Code added
+2136	Removed: %s
+2137	Square: remove this code
+2138	Start a game first
+2139	Cheat %d
+2140	Patch %d
