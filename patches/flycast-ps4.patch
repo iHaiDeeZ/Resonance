@@ -80,16 +80,29 @@ index c5ac6f6e8..257ab0937 100644
  
  if(NOT LIBRETRO)
 diff --git a/core/emulator.cpp b/core/emulator.cpp
-index 25e685bcc..063e3b3d7 100644
+index 25e685bcc..ba9bf8375 100644
 --- a/core/emulator.cpp
 +++ b/core/emulator.cpp
-@@ -879,6 +879,32 @@ void loadGameSpecificSettings()
+@@ -850,6 +850,10 @@ void Emulator::requestReset()
+ 	getSh4Executor()->Stop();
+ }
+ 
++#ifdef __ORBIS__
++bool ps4_force_43;
++#endif
++
+ void loadGameSpecificSettings()
+ {
+ 	if (settings.platform.isConsole())
+@@ -879,6 +883,35 @@ void loadGameSpecificSettings()
  		config::WidescreenGameHacks.override(false);
  		config::DynarecEnabled.override(true);
  	}
 +#ifdef __ORBIS__
 +	// Resonance: 2D games have nothing past the 4:3 picture (at a stage's ends widescreen shows the
-+	// plain background colour): 4:3 for them, unless the game has settings of its own
++	// plain background colour): 4:3 for them, unless the game has settings of its own. The renderer
++	// checks ps4_force_43 itself, so nothing that loads the options again brings widescreen back
++	ps4_force_43 = false;
 +	if (settings.platform.isConsole() && !config::Settings::instance().hasPerGameConfig())
 +	{
 +		std::string name;
@@ -108,6 +121,7 @@ index 25e685bcc..063e3b3d7 100644
 +			{
 +				config::Widescreen.override(false);
 +				config::SuperWidescreen.override(false);
++				ps4_force_43 = true;
 +				NOTICE_LOG(BOOT, "2D game (%s): 4:3", name.c_str());
 +				break;
 +			}
@@ -116,6 +130,20 @@ index 25e685bcc..063e3b3d7 100644
  }
  
  void Emulator::step()
+diff --git a/core/emulator.h b/core/emulator.h
+index 01021b7a6..7b5223f60 100644
+--- a/core/emulator.h
++++ b/core/emulator.h
+@@ -31,6 +31,9 @@
+ #include <time.h>
+ 
+ void loadGameSpecificSettings();
++#ifdef __ORBIS__
++extern bool ps4_force_43;	// Resonance: a 2D game, shown in 4:3 whatever the widescreen options say
++#endif
+ void SaveSettings();
+ 
+ int flycast_init(int argc, char* argv[]);
 diff --git a/core/hw/pvr/Renderer_if.cpp b/core/hw/pvr/Renderer_if.cpp
 index 49c3f720f..e9e7eadff 100644
 --- a/core/hw/pvr/Renderer_if.cpp
@@ -1224,6 +1252,59 @@ index 65f5ed9d1..4df3396f4 100644
  
  	u32 mmStartAddress; // pixel data start address of max level mipmap
  	u16 width, height;	// width & height of the texture
+diff --git a/core/rend/transform_matrix.cpp b/core/rend/transform_matrix.cpp
+index 847cbd3f9..f6df9d112 100644
+--- a/core/rend/transform_matrix.cpp
++++ b/core/rend/transform_matrix.cpp
+@@ -18,6 +18,12 @@
+ */
+ #define GLM_FORCE_SWIZZLE 1
+ #include "transform_matrix.h"
++#include "emulator.h"
++#ifdef __ORBIS__
++#define PS4_WIDESCREEN (config::Widescreen && !ps4_force_43)
++#else
++#define PS4_WIDESCREEN config::Widescreen
++#endif
+ #include <glm/gtx/transform.hpp>
+ 
+ static void getTAViewport(const rend_context& rendCtx, int& width, int& height) {
+@@ -103,7 +109,7 @@ void TransformMatrix::CalcMatrices(const rend_context *renderingContext, int wid
+ 	else
+ 	{
+ 		float widescreenShift;
+-		if (config::Widescreen && !config::Rotate90 && !config::EmulateFramebuffer)
++		if (PS4_WIDESCREEN && !config::Rotate90 && !config::EmulateFramebuffer)
+ 		{
+ 			widescreenShift = 1.f - dcViewport.x / dcViewport.y * renderViewport.y / renderViewport.x;
+ 			if (config::SuperWidescreen)
+@@ -145,7 +151,7 @@ Rect TransformMatrix::intersectTileAndFBScissor() const
+ 
+ Rect TransformMatrix::getBaseScissor() const
+ {
+-	const bool widescreen = !renderingContext->isRTT && config::Widescreen
++	const bool widescreen = !renderingContext->isRTT && PS4_WIDESCREEN
+ 			&& !isClipped() && !config::Rotate90 && !config::EmulateFramebuffer;
+ 	if (widescreen)
+ 	{
+@@ -264,7 +270,7 @@ void getScaledFramebufferSize(const rend_context& rendCtx, int& width, int& heig
+ 			float upscaling = config::RenderResolution / 480.f;
+ 			float w = width * upscaling;
+ 			float h = height * upscaling;
+-			if (config::Widescreen && !config::Rotate90)
++			if (PS4_WIDESCREEN && !config::Rotate90)
+ 			{
+ 				if (config::SuperWidescreen)
+ 					w *= (float)settings.display.width / settings.display.height / 4.f * 3.f;
+@@ -312,7 +318,7 @@ float getOutputFramebufferAspectRatio()
+ 	}
+ 	else
+ 	{
+-		if (config::Widescreen && !config::EmulateFramebuffer)
++		if (PS4_WIDESCREEN && !config::EmulateFramebuffer)
+ 		{
+ 			if (config::SuperWidescreen)
+ 				aspectRatio = (float)settings.display.width / settings.display.height;
 diff --git a/core/rend/vulkan/compiler.cpp b/core/rend/vulkan/compiler.cpp
 index a58394e53..0193b056e 100644
 --- a/core/rend/vulkan/compiler.cpp
@@ -1327,6 +1408,30 @@ index a58394e53..0193b056e 100644
  
  	return VulkanContext::Instance()->GetDevice().createShaderModuleUnique
  			(vk::ShaderModuleCreateInfo(vk::ShaderModuleCreateFlags(), shaderSPV));
+diff --git a/core/rend/vulkan/overlay.cpp b/core/rend/vulkan/overlay.cpp
+index 483f1e8d9..4b8f115c3 100644
+--- a/core/rend/vulkan/overlay.cpp
++++ b/core/rend/vulkan/overlay.cpp
+@@ -19,6 +19,7 @@
+     along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ #include "overlay.h"
++#include "emulator.h"
+ #include "texture.h"
+ #include "cfg/option.h"
+ #include "hw/maple/maple_cfg.h"
+@@ -136,7 +137,11 @@ void VulkanOverlay::Draw(vk::CommandBuffer commandBuffer, vk::Extent2D viewport,
+ 		f32 vmu_padding_y = 8.f * viewport.height / 480.f;
+ 		f32 vmu_width = 48.f * viewport.width / 640.f;
+ 		f32 vmu_height = 32.f * viewport.height / 480.f;
++		#ifdef __ORBIS__
++		if (config::Widescreen && !ps4_force_43)
++#else
+ 		if (config::Widescreen)
++#endif
+ 		{
+ 			vmu_padding_x = vmu_padding_x / 4.f * 3.f;
+ 			vmu_width = vmu_width / 4.f * 3.f;
 diff --git a/core/rend/vulkan/pipeline.cpp b/core/rend/vulkan/pipeline.cpp
 index a113f3c4f..4122827b5 100644
 --- a/core/rend/vulkan/pipeline.cpp
@@ -57013,10 +57118,10 @@ index 000000000..30c0fc58d
 +void ps4_plug_pad_ports();
 diff --git a/shell/ps4/ps4_main.cpp b/shell/ps4/ps4_main.cpp
 new file mode 100644
-index 000000000..760ef5e7d
+index 000000000..471c9b3c0
 --- /dev/null
 +++ b/shell/ps4/ps4_main.cpp
-@@ -0,0 +1,369 @@
+@@ -0,0 +1,377 @@
 +/*
 +	Resonance: Flycast's PS4 frontend.
 +
@@ -57189,6 +57294,14 @@ index 000000000..760ef5e7d
 +					faults[ps4fault::Protect] / secs, faults[ps4fault::Unprotect] / secs, faults[ps4fault::RttRender] / secs,
 +					faults[ps4fault::TaRender] / secs, faults[ps4fault::FbRender] / secs, compiles, threads);
 +			ps4_boot_trace(line);
++			{
++				static bool told;
++				if (ps4_force_43 && (config::Widescreen || config::SuperWidescreen) && !told)
++				{
++					told = true;
++					ps4_boot_trace("4:3 game: the widescreen option was turned back on (the picture stays 4:3)");
++				}
++			}
 +			// screens.txt: the emulated picture every 5 s (screenshots/frame-<seconds>.png)
 +			if (access((kDataRoot + "/screens.txt").c_str(), F_OK) == 0)
 +			{
