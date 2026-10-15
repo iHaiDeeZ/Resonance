@@ -132,3 +132,5 @@ Settings changed now apply to every game, or to this game only (for example wide
 Supported games
 All games
 Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides
+Stretch to 16:9
+Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides

@@ -125,3 +125,5 @@
 2123	Jeux pris en charge
 2124	Tous les jeux
 2125	Un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés
+2126	Étirer en 16:9
+2127	Jeux pris en charge : un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Étirer en 16:9 : l'image 4:3 étirée sur tout l'écran, rien ne manque. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés

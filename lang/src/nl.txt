@@ -830,3 +830,5 @@
 2123	Ondersteunde spellen
 2124	Alle spellen
 2125	Echt 16:9 voor zo'n 230 spellen met een breedbeeldpatch, 4:3 voor de rest. Alle spellen: de extra breedte voor elk spel, waarbij aan de zijkanten dingen kunnen verschijnen en verdwijnen
+2126	Uitrekken naar 16:9
+2127	Ondersteunde spellen: echt 16:9 voor zo'n 230 spellen met een breedbeeldpatch, 4:3 voor de rest. Uitrekken naar 16:9: het 4:3-beeld over het hele scherm uitgerekt, er ontbreekt niets. Alle spellen: de extra breedte voor elk spel, waarbij aan de zijkanten dingen kunnen verschijnen en verdwijnen

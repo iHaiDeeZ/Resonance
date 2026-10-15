@@ -830,3 +830,5 @@
 2123	Juegos compatibles
 2124	Todos los juegos
 2125	16:9 real para unos 230 juegos con parche panorámico, 4:3 para el resto. Todos los juegos: el ancho extra en cada juego, donde pueden aparecer y desaparecer cosas en los lados
+2126	Estirar a 16:9
+2127	Juegos compatibles: 16:9 real para unos 230 juegos con parche panorámico, 4:3 para el resto. Estirar a 16:9: la imagen 4:3 estirada a toda la pantalla, no falta nada. Todos los juegos: el ancho extra en cada juego, donde pueden aparecer y desaparecer cosas en los lados

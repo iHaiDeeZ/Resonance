@@ -830,3 +830,5 @@
 2123	Supported games
 2124	All games
 2125	Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides
+2126	Stretch to 16:9
+2127	Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides

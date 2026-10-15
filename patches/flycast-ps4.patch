@@ -2298,10 +2298,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..82f32d921
+index 000000000..bc7e0a662
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2508 @@
+@@ -0,0 +1,2514 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4810,11 +4810,17 @@ index 000000000..82f32d921
 +
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "شاشة 16:9 حقيقية لنحو 230 لعبة لها تصحيح للشاشة العريضة، و4:3 لبقية الألعاب. كل الألعاب: العرض الإضافي لكل لعبة، وقد تظهر الأشياء وتختفي عند الجانبين"
++
++msgid "Stretch to 16:9"
++msgstr "تمديد إلى 16:9"
++
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "الألعاب المدعومة: شاشة 16:9 حقيقية لنحو 230 لعبة لها تصحيح للشاشة العريضة، و4:3 لبقية الألعاب. تمديد إلى 16:9: تمديد صورة 4:3 على كامل الشاشة دون أن يختفي شيء. كل الألعاب: العرض الإضافي لكل لعبة، وقد تظهر الأشياء وتختفي عند الجانبين"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..cd08d3f71 100644
+index fb8203ba2..52d698c1e 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2504 @@
+@@ -1,2963 +1,2510 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8862,14 +8868,20 @@ index fb8203ba2..cd08d3f71 100644
 +
 +msgid "All games"
 +msgstr "Alle Spiele"
- 
++
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können"
++
++msgid "Stretch to 16:9"
++msgstr "Auf 16:9 strecken"
+ 
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Unterstützte Spiele: echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Auf 16:9 strecken: das 4:3-Bild über den ganzen Bildschirm gezogen, nichts fehlt. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..b73be867d 100644
+index 2735f014b..dce641643 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2504 @@
+@@ -1,2964 +1,2510 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -12912,14 +12924,20 @@ index 2735f014b..b73be867d 100644
 +
 +msgid "All games"
 +msgstr "Todos los juegos"
- 
++
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "16:9 real para unos 230 juegos con parche panorámico, 4:3 para el resto. Todos los juegos: el ancho extra en cada juego, donde pueden aparecer y desaparecer cosas en los lados"
++
++msgid "Stretch to 16:9"
++msgstr "Estirar a 16:9"
+ 
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Juegos compatibles: 16:9 real para unos 230 juegos con parche panorámico, 4:3 para el resto. Estirar a 16:9: la imagen 4:3 estirada a toda la pantalla, no falta nada. Todos los juegos: el ancho extra en cada juego, donde pueden aparecer y desaparecer cosas en los lados"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..ab968ba5a 100644
+index f3754825e..be4733fa3 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2504 @@
+@@ -1,2967 +1,2510 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16272,11 +16290,17 @@ index f3754825e..ab968ba5a 100644
 +
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés"
++
++msgid "Stretch to 16:9"
++msgstr "Étirer en 16:9"
++
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Jeux pris en charge : un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Étirer en 16:9 : l'image 4:3 étirée sur tout l'écran, rien ne manque. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..80305076f 100644
+index ee92eb28e..2e9ac7107 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2504 @@
+@@ -1,2963 +1,2510 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20324,14 +20348,20 @@ index ee92eb28e..80305076f 100644
 +
 +msgid "All games"
 +msgstr "Tutti i giochi"
- 
++
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Vero 16:9 per circa 230 giochi con una patch widescreen, 4:3 per gli altri. Tutti i giochi: la larghezza in più per ogni gioco, dove ai lati gli oggetti possono apparire e sparire"
++
++msgid "Stretch to 16:9"
++msgstr "Allarga a 16:9"
+ 
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Giochi supportati: vero 16:9 per circa 230 giochi con una patch widescreen, 4:3 per gli altri. Allarga a 16:9: l'immagine 4:3 allargata su tutto lo schermo, non manca nulla. Tutti i giochi: la larghezza in più per ogni gioco, dove ai lati gli oggetti possono apparire e sparire"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..a6d9608f2 100644
+index a79c6a14b..0bd9437f2 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2503 @@
+@@ -1,2966 +1,2509 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -23683,11 +23713,17 @@ index a79c6a14b..a6d9608f2 100644
 +
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "ワイド画面パッチがある約 230 本のゲームは本来の 16:9、その他は 4:3。すべてのゲーム：どのゲームでも横の領域を描画しますが、端で物体が出たり消えたりすることがあります"
++
++msgid "Stretch to 16:9"
++msgstr "16:9 に引き伸ばす"
++
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "対応ゲーム：ワイド画面パッチがある約 230 本は本来の 16:9、その他は 4:3。16:9 に引き伸ばす：4:3 の画面を横に引き伸ばして全画面に表示し、何も欠けません。すべてのゲーム：どのゲームでも横の領域を描画しますが、端で物体が出たり消えたりすることがあります"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..18a4bedcd 100644
+index a5e70db54..0f5e31b09 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2503 @@
+@@ -1,2962 +1,2509 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -27733,15 +27769,21 @@ index a5e70db54..18a4bedcd 100644
 +
 +msgid "All games"
 +msgstr "모든 게임"
- 
++
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "와이드스크린 패치가 있는 약 230개 게임은 진짜 16:9, 나머지는 4:3. 모든 게임: 모든 게임에서 양옆을 넓혀 그리지만 가장자리에서 물체가 나타났다 사라질 수 있습니다"
++
++msgid "Stretch to 16:9"
++msgstr "16:9로 늘리기"
+ 
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "지원 게임: 와이드스크린 패치가 있는 약 230개 게임은 진짜 16:9, 나머지는 4:3. 16:9로 늘리기: 4:3 화면을 가로로 늘려 전체 화면에 표시하며 빠지는 것이 없습니다. 모든 게임: 모든 게임에서 양옆을 넓혀 그리지만 가장자리에서 물체가 나타났다 사라질 수 있습니다"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..5c4298c4b
+index 000000000..a55e0c156
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2504 @@
+@@ -0,0 +1,2510 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -30246,11 +30288,17 @@ index 000000000..5c4298c4b
 +
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Echt 16:9 voor zo'n 230 spellen met een breedbeeldpatch, 4:3 voor de rest. Alle spellen: de extra breedte voor elk spel, waarbij aan de zijkanten dingen kunnen verschijnen en verdwijnen"
++
++msgid "Stretch to 16:9"
++msgstr "Uitrekken naar 16:9"
++
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Ondersteunde spellen: echt 16:9 voor zo'n 230 spellen met een breedbeeldpatch, 4:3 voor de rest. Uitrekken naar 16:9: het 4:3-beeld over het hele scherm uitgerekt, er ontbreekt niets. Alle spellen: de extra breedte voor elk spel, waarbij aan de zijkanten dingen kunnen verschijnen en verdwijnen"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..7a5105951 100644
+index 548cbb44d..39aed08c3 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2505 @@
+@@ -1,2965 +1,2511 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -34302,14 +34350,20 @@ index 548cbb44d..7a5105951 100644
 +
 +msgid "All games"
 +msgstr "Wszystkie gry"
- 
++
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać"
++
++msgid "Stretch to 16:9"
++msgstr "Rozciągnij do 16:9"
+ 
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Obsługiwane gry: prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Rozciągnij do 16:9: obraz 4:3 rozciągnięty na cały ekran, niczego nie brakuje. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..fcecc6200 100644
+index 6ec100a1e..a5eab5411 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2504 @@
+@@ -1,2966 +1,2510 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -37676,12 +37730,18 @@ index 6ec100a1e..fcecc6200 100644
 +
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "16:9 de verdade para cerca de 230 jogos com patch widescreen, 4:3 para o resto. Todos os jogos: a largura extra em todo jogo, onde coisas podem aparecer e sumir nas laterais"
++
++msgid "Stretch to 16:9"
++msgstr "Esticar para 16:9"
++
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Jogos compatíveis: 16:9 de verdade para cerca de 230 jogos com patch widescreen, 4:3 para o resto. Esticar para 16:9: a imagem 4:3 esticada na tela toda, nada some. Todos os jogos: a largura extra em todo jogo, onde coisas podem aparecer e sumir nas laterais"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..7ad87c978
+index 000000000..d6bccd46b
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2505 @@
+@@ -0,0 +1,2511 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -40187,11 +40247,17 @@ index 000000000..7ad87c978
 +
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Настоящий 16:9 примерно для 230 игр с широкоэкранным патчем, 4:3 для остальных. Все игры: дополнительная ширина в каждой игре, где по краям объекты могут появляться и исчезать"
++
++msgid "Stretch to 16:9"
++msgstr "Растянуть до 16:9"
++
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Поддерживаемые игры: настоящий 16:9 примерно для 230 игр с широкоэкранным патчем, 4:3 для остальных. Растянуть до 16:9: картинка 4:3 растянута на весь экран, ничего не пропадает. Все игры: дополнительная ширина в каждой игре, где по краям объекты могут появляться и исчезать"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..45064c9cf 100644
+index 8c8d8bc08..e875bfe93 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2504 @@
+@@ -1,2965 +1,2510 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -43944,14 +44010,20 @@ index 8c8d8bc08..45064c9cf 100644
 +
 +msgid "All games"
 +msgstr "Tüm oyunlar"
- 
++
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "Geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir"
++
++msgid "Stretch to 16:9"
++msgstr "16:9'a uzat"
+ 
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Desteklenen oyunlar: geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. 16:9'a uzat: 4:3 görüntü tüm ekrana uzatılır, hiçbir şey kaybolmaz. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..b36e57ad3 100644
+index 3ecabd349..840126718 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2503 @@
+@@ -1,2962 +1,2509 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -47997,9 +48069,15 @@ index 3ecabd349..b36e57ad3 100644
 +
 +msgid "All games"
 +msgstr "所有游戏"
- 
++
 +msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
 +msgstr "约 230 款有宽屏补丁的游戏显示真正的 16:9，其余为 4:3。所有游戏：每款游戏都绘制两侧的额外区域，边缘的物体可能会时隐时现"
++
++msgid "Stretch to 16:9"
++msgstr "拉伸至 16:9"
+ 
++msgid "Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "支持的游戏：约 230 款有宽屏补丁的游戏显示真正的 16:9，其余为 4:3。拉伸至 16:9：将 4:3 画面横向拉伸至全屏，不会缺少任何内容。所有游戏：每款游戏都绘制两侧的额外区域，边缘的物体可能会时隐时现"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -52643,10 +52721,10 @@ index 000000000..424012735
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..56fd919d0
+index 000000000..2f0c13cdc
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,925 @@
+@@ -0,0 +1,927 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -52781,14 +52859,16 @@ index 000000000..56fd919d0
 +		}
 +		// One choice for widescreen: the games' own 16:9 patches (Flycast's list), or the extra width
 +		// drawn for every game (things the game leaves out of its 4:3 view pop in and out at the sides)
++		// Stretch to 16:9: the 4:3 picture stretched across the screen (nothing goes missing)
 +		video.items.push_back(Setting { T("Widescreen"),
-+			T("Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"),
-+			{ { T("Off"), 0 }, { T("Supported games"), 1 }, { T("All games"), 2 } },
-+			[] { return config::Widescreen ? 2 : config::WidescreenGameHacks ? 1 : 0; },
++			T("Supported games: real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. Stretch to 16:9: the 4:3 picture stretched across the screen, nothing goes missing. All games: the extra width for every game, where things can pop in and out at the sides"),
++			{ { T("Off"), 0 }, { T("Supported games"), 1 }, { T("Stretch to 16:9"), 3 }, { T("All games"), 2 } },
++			[] { return config::Widescreen ? 2 : config::WidescreenGameHacks ? 1 : config::ScreenStretching.get() >= 130 ? 3 : 0; },
 +			[](int v) {
 +				config::Widescreen.set(v == 2);
 +				config::SuperWidescreen.set(false);
 +				config::WidescreenGameHacks.set(v == 1);
++				config::ScreenStretching.set(v == 3 ? 134 : 100);
 +			} });
 +		video.items.push_back(toggle(Tnop("Integer Scaling"), Tnop("Scales the output by the maximum integer multiple allowed by the display resolution."), config::IntegerScale));
 +		video.items.push_back(toggle(Tnop("Linear Interpolation"), Tnop("Scales the output with linear interpolation. Will use nearest neighbor interpolation otherwise. Disable with integer scaling."), config::LinearInterpolation));

@@ -831,3 +831,5 @@
 2123	Desteklenen oyunlar
 2124	Tüm oyunlar
 2125	Geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir
+2126	16:9'a uzat
+2127	Desteklenen oyunlar: geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. 16:9'a uzat: 4:3 görüntü tüm ekrana uzatılır, hiçbir şey kaybolmaz. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir

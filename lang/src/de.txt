@@ -830,3 +830,5 @@
 2123	Unterstützte Spiele
 2124	Alle Spiele
 2125	Echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können
+2126	Auf 16:9 strecken
+2127	Unterstützte Spiele: echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Auf 16:9 strecken: das 4:3-Bild über den ganzen Bildschirm gezogen, nichts fehlt. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können

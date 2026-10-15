@@ -830,3 +830,5 @@
 2123	Obsługiwane gry
 2124	Wszystkie gry
 2125	Prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać
+2126	Rozciągnij do 16:9
+2127	Obsługiwane gry: prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Rozciągnij do 16:9: obraz 4:3 rozciągnięty na cały ekran, niczego nie brakuje. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać

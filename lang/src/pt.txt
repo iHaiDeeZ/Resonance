@@ -140,3 +140,5 @@
 2123	Jogos compatíveis
 2124	Todos os jogos
 2125	16:9 de verdade para cerca de 230 jogos com patch widescreen, 4:3 para o resto. Todos os jogos: a largura extra em todo jogo, onde coisas podem aparecer e sumir nas laterais
+2126	Esticar para 16:9
+2127	Jogos compatíveis: 16:9 de verdade para cerca de 230 jogos com patch widescreen, 4:3 para o resto. Esticar para 16:9: a imagem 4:3 esticada na tela toda, nada some. Todos os jogos: a largura extra em todo jogo, onde coisas podem aparecer e sumir nas laterais

@@ -830,3 +830,5 @@
 2123	Giochi supportati
 2124	Tutti i giochi
 2125	Vero 16:9 per circa 230 giochi con una patch widescreen, 4:3 per gli altri. Tutti i giochi: la larghezza in più per ogni gioco, dove ai lati gli oggetti possono apparire e sparire
+2126	Allarga a 16:9
+2127	Giochi supportati: vero 16:9 per circa 230 giochi con una patch widescreen, 4:3 per gli altri. Allarga a 16:9: l'immagine 4:3 allargata su tutto lo schermo, non manca nulla. Tutti i giochi: la larghezza in più per ogni gioco, dove ai lati gli oggetti possono apparire e sparire
