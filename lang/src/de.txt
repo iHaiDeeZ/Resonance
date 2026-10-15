@@ -827,3 +827,6 @@
 2120	Alle Spiele
 2121	Dieses Spiel
 2122	Jetzt geänderte Einstellungen gelten für alle Spiele oder nur für dieses Spiel (zum Beispiel Breitbild aus in einem 2D-Spiel)
+2123	Unterstützte Spiele
+2124	Alle Spiele
+2125	Echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können

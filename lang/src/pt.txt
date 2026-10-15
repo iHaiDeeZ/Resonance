@@ -137,3 +137,6 @@
 2120	Todos os jogos
 2121	Este jogo
 2122	As configurações alteradas agora valem para todos os jogos ou só para este (por exemplo, sem widescreen em um jogo 2D)
+2123	Jogos compatíveis
+2124	Todos os jogos
+2125	16:9 de verdade para cerca de 230 jogos com patch widescreen, 4:3 para o resto. Todos os jogos: a largura extra em todo jogo, onde coisas podem aparecer e sumir nas laterais

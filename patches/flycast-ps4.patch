@@ -2298,10 +2298,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..53e484ab8
+index 000000000..82f32d921
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2499 @@
+@@ -0,0 +1,2508 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4801,11 +4801,20 @@ index 000000000..53e484ab8
 +
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "الإعدادات التي تغيّرها الآن تنطبق على كل الألعاب أو على هذه اللعبة فقط (مثل إيقاف الشاشة العريضة في لعبة ثنائية الأبعاد)"
++
++msgid "Supported games"
++msgstr "الألعاب المدعومة"
++
++msgid "All games"
++msgstr "كل الألعاب"
++
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "شاشة 16:9 حقيقية لنحو 230 لعبة لها تصحيح للشاشة العريضة، و4:3 لبقية الألعاب. كل الألعاب: العرض الإضافي لكل لعبة، وقد تظهر الأشياء وتختفي عند الجانبين"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..a2d00b581 100644
+index fb8203ba2..cd08d3f71 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2495 @@
+@@ -1,2963 +1,2504 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8844,14 +8853,23 @@ index fb8203ba2..a2d00b581 100644
 +
 +msgid "This Game"
 +msgstr "Dieses Spiel"
- 
++
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Jetzt geänderte Einstellungen gelten für alle Spiele oder nur für dieses Spiel (zum Beispiel Breitbild aus in einem 2D-Spiel)"
++
++msgid "Supported games"
++msgstr "Unterstützte Spiele"
++
++msgid "All games"
++msgstr "Alle Spiele"
+ 
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Echtes 16:9 für etwa 230 Spiele mit Breitbild-Patch, 4:3 für die übrigen. Alle Spiele: die zusätzliche Breite für jedes Spiel, wobei an den Seiten Dinge auftauchen und verschwinden können"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..f5b195397 100644
+index 2735f014b..b73be867d 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2495 @@
+@@ -1,2964 +1,2504 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -12885,14 +12903,23 @@ index 2735f014b..f5b195397 100644
 +
 +msgid "This Game"
 +msgstr "Este juego"
- 
++
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Los ajustes que cambies ahora se aplican a todos los juegos o solo a este (por ejemplo, sin pantalla panorámica en un juego 2D)"
++
++msgid "Supported games"
++msgstr "Juegos compatibles"
++
++msgid "All games"
++msgstr "Todos los juegos"
+ 
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "16:9 real para unos 230 juegos con parche panorámico, 4:3 para el resto. Todos los juegos: el ancho extra en cada juego, donde pueden aparecer y desaparecer cosas en los lados"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..196ea2934 100644
+index f3754825e..ab968ba5a 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2495 @@
+@@ -1,2967 +1,2504 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16236,11 +16263,20 @@ index f3754825e..196ea2934 100644
 +
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Les réglages modifiés maintenant s'appliquent à tous les jeux ou à ce jeu seulement (par exemple sans écran large dans un jeu 2D)"
++
++msgid "Supported games"
++msgstr "Jeux pris en charge"
++
++msgid "All games"
++msgstr "Tous les jeux"
++
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Un vrai 16:9 pour environ 230 jeux qui ont un correctif écran large, 4:3 pour les autres. Tous les jeux : la largeur en plus pour chaque jeu, où des éléments peuvent apparaître et disparaître sur les côtés"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..53eec99e1 100644
+index ee92eb28e..80305076f 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2495 @@
+@@ -1,2963 +1,2504 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20279,14 +20315,23 @@ index ee92eb28e..53eec99e1 100644
 +
 +msgid "This Game"
 +msgstr "Questo gioco"
- 
++
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Le impostazioni cambiate ora valgono per tutti i giochi o solo per questo (per esempio widescreen disattivato in un gioco 2D)"
++
++msgid "Supported games"
++msgstr "Giochi supportati"
++
++msgid "All games"
++msgstr "Tutti i giochi"
+ 
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Vero 16:9 per circa 230 giochi con una patch widescreen, 4:3 per gli altri. Tutti i giochi: la larghezza in più per ogni gioco, dove ai lati gli oggetti possono apparire e sparire"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..469d271a9 100644
+index a79c6a14b..a6d9608f2 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2494 @@
+@@ -1,2966 +1,2503 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -23629,11 +23674,20 @@ index a79c6a14b..469d271a9 100644
 +
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "ここで変更した設定をすべてのゲームに適用するか、このゲームだけに適用します（例：2D ゲームでワイド画面をオフ）"
++
++msgid "Supported games"
++msgstr "対応ゲーム"
++
++msgid "All games"
++msgstr "すべてのゲーム"
++
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "ワイド画面パッチがある約 230 本のゲームは本来の 16:9、その他は 4:3。すべてのゲーム：どのゲームでも横の領域を描画しますが、端で物体が出たり消えたりすることがあります"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..8c5babe7b 100644
+index a5e70db54..18a4bedcd 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2494 @@
+@@ -1,2962 +1,2503 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -27670,15 +27724,24 @@ index a5e70db54..8c5babe7b 100644
 +
 +msgid "This Game"
 +msgstr "이 게임"
- 
++
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "지금 바꾼 설정을 모든 게임에 적용하거나 이 게임에만 적용합니다(예: 2D 게임에서 와이드스크린 끄기)"
++
++msgid "Supported games"
++msgstr "지원 게임"
++
++msgid "All games"
++msgstr "모든 게임"
+ 
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "와이드스크린 패치가 있는 약 230개 게임은 진짜 16:9, 나머지는 4:3. 모든 게임: 모든 게임에서 양옆을 넓혀 그리지만 가장자리에서 물체가 나타났다 사라질 수 있습니다"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..15545b0e7
+index 000000000..5c4298c4b
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2495 @@
+@@ -0,0 +1,2504 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -30174,11 +30237,20 @@ index 000000000..15545b0e7
 +
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Nu gewijzigde instellingen gelden voor alle spellen of alleen voor dit spel (bijvoorbeeld breedbeeld uit in een 2D-spel)"
++
++msgid "Supported games"
++msgstr "Ondersteunde spellen"
++
++msgid "All games"
++msgstr "Alle spellen"
++
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Echt 16:9 voor zo'n 230 spellen met een breedbeeldpatch, 4:3 voor de rest. Alle spellen: de extra breedte voor elk spel, waarbij aan de zijkanten dingen kunnen verschijnen en verdwijnen"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..05fda918c 100644
+index 548cbb44d..7a5105951 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2496 @@
+@@ -1,2965 +1,2505 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -34221,14 +34293,23 @@ index 548cbb44d..05fda918c 100644
 +
 +msgid "This Game"
 +msgstr "Ta gra"
- 
++
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Zmienione teraz ustawienia dotyczą wszystkich gier albo tylko tej gry (na przykład bez szerokiego ekranu w grze 2D)"
++
++msgid "Supported games"
++msgstr "Obsługiwane gry"
++
++msgid "All games"
++msgstr "Wszystkie gry"
+ 
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..9efe0d0dd 100644
+index 6ec100a1e..fcecc6200 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2495 @@
+@@ -1,2966 +1,2504 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -37586,12 +37667,21 @@ index 6ec100a1e..9efe0d0dd 100644
 +
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "As configurações alteradas agora valem para todos os jogos ou só para este (por exemplo, sem widescreen em um jogo 2D)"
++
++msgid "Supported games"
++msgstr "Jogos compatíveis"
++
++msgid "All games"
++msgstr "Todos os jogos"
++
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "16:9 de verdade para cerca de 230 jogos com patch widescreen, 4:3 para o resto. Todos os jogos: a largura extra em todo jogo, onde coisas podem aparecer e sumir nas laterais"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..4b47ce112
+index 000000000..7ad87c978
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2496 @@
+@@ -0,0 +1,2505 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -40088,11 +40178,20 @@ index 000000000..4b47ce112
 +
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Изменённые сейчас настройки применяются ко всем играм или только к этой (например, без широкого экрана в 2D-игре)"
++
++msgid "Supported games"
++msgstr "Поддерживаемые игры"
++
++msgid "All games"
++msgstr "Все игры"
++
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Настоящий 16:9 примерно для 230 игр с широкоэкранным патчем, 4:3 для остальных. Все игры: дополнительная ширина в каждой игре, где по краям объекты могут появляться и исчезать"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..de1abc234 100644
+index 8c8d8bc08..45064c9cf 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2495 @@
+@@ -1,2965 +1,2504 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -43836,14 +43935,23 @@ index 8c8d8bc08..de1abc234 100644
 +
 +msgid "This Game"
 +msgstr "Bu oyun"
- 
++
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "Şimdi değiştirilen ayarlar tüm oyunlara ya da yalnızca bu oyuna uygulanır (örneğin 2D bir oyunda geniş ekran kapalı)"
++
++msgid "Supported games"
++msgstr "Desteklenen oyunlar"
++
++msgid "All games"
++msgstr "Tüm oyunlar"
+ 
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "Geniş ekran yaması olan yaklaşık 230 oyun için gerçek 16:9, diğerleri için 4:3. Tüm oyunlar: her oyunda ekstra genişlik; kenarlarda nesneler belirip kaybolabilir"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..2f790eda1 100644
+index 3ecabd349..b36e57ad3 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2494 @@
+@@ -1,2962 +1,2503 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -47880,9 +47988,18 @@ index 3ecabd349..2f790eda1 100644
 +
 +msgid "This Game"
 +msgstr "此游戏"
- 
++
 +msgid "Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)"
 +msgstr "现在更改的设置适用于所有游戏或仅适用于此游戏（例如在 2D 游戏中关闭宽屏）"
++
++msgid "Supported games"
++msgstr "支持的游戏"
++
++msgid "All games"
++msgstr "所有游戏"
+ 
++msgid "Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"
++msgstr "约 230 款有宽屏补丁的游戏显示真正的 16:9，其余为 4:3。所有游戏：每款游戏都绘制两侧的额外区域，边缘的物体可能会时隐时现"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -50502,10 +50619,10 @@ index 000000000..d8426aabd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/launcher.cpp b/shell/ps4/launcher/launcher.cpp
 new file mode 100644
-index 000000000..a142f780d
+index 000000000..4b398a2cf
 --- /dev/null
 +++ b/shell/ps4/launcher/launcher.cpp
-@@ -0,0 +1,1223 @@
+@@ -0,0 +1,1234 @@
 +/*
 +	Resonance launcher core: the library, covers and colours, DualShock 4 input, theme switching
 +	and starting games. The themes draw; this file decides what they draw.
@@ -51623,6 +51740,17 @@ index 000000000..a142f780d
 +			std::thread(paletteWorker).detach();
 +		}
 +		ps4_boot_trace("launcher: home screen up");
++		// once: widescreen by the games' own patches (the extra width drawn for every game made
++		// things pop in and out at the sides); All games stays in Settings > Video
++		if (!config::loadBool("resonance", "WidescreenChoice", false))
++		{
++			config::saveBool("resonance", "WidescreenChoice", true);
++			config::Widescreen.set(false);
++			config::SuperWidescreen.set(false);
++			config::WidescreenGameHacks.set(true);
++			SaveSettings();
++			ps4_boot_trace("launcher: widescreen set to the supported games' patches");
++		}
 +	}
 +	gTime += std::min(.05f, std::chrono::duration<float>(now - gLast).count());
 +	gLast = now;
@@ -52515,10 +52643,10 @@ index 000000000..424012735
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..b3a0005df
+index 000000000..56fd919d0
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,917 @@
+@@ -0,0 +1,925 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -52651,9 +52779,17 @@ index 000000000..b3a0005df
 +			video.items.push_back(pick(Tnop("Internal Resolution"), Tnop("Internal render resolution. Higher is better, but more demanding on the GPU. Values higher than your display resolution (but no more than double your display resolution) can be used for supersampling, which provides high-quality antialiasing without reducing sharpness."),
 +					config::RenderResolution, res));
 +		}
-+		video.items.push_back(toggle(Tnop("Widescreen"), Tnop("Draw geometry outside of the normal 4:3 aspect ratio. May produce graphical glitches in the revealed areas.\nAspect Fit and shows the full 16:9 content."), config::Widescreen));
-+		video.items.push_back(toggle(Tnop("Super Widescreen"), Tnop("Use the full width of the screen or window when its aspect ratio is greater than 16:9.\nAspect Fill and remove black bars. Not compatible with integer scaling."), config::SuperWidescreen));
-+		video.items.push_back(toggle(Tnop("Widescreen Game Cheats"), Tnop("Modify the game so that it displays in 16:9 anamorphic format and use horizontal screen stretching. Only some games are supported."), config::WidescreenGameHacks));
++		// One choice for widescreen: the games' own 16:9 patches (Flycast's list), or the extra width
++		// drawn for every game (things the game leaves out of its 4:3 view pop in and out at the sides)
++		video.items.push_back(Setting { T("Widescreen"),
++			T("Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides"),
++			{ { T("Off"), 0 }, { T("Supported games"), 1 }, { T("All games"), 2 } },
++			[] { return config::Widescreen ? 2 : config::WidescreenGameHacks ? 1 : 0; },
++			[](int v) {
++				config::Widescreen.set(v == 2);
++				config::SuperWidescreen.set(false);
++				config::WidescreenGameHacks.set(v == 1);
++			} });
 +		video.items.push_back(toggle(Tnop("Integer Scaling"), Tnop("Scales the output by the maximum integer multiple allowed by the display resolution."), config::IntegerScale));
 +		video.items.push_back(toggle(Tnop("Linear Interpolation"), Tnop("Scales the output with linear interpolation. Will use nearest neighbor interpolation otherwise. Disable with integer scaling."), config::LinearInterpolation));
 +		video.items.push_back(toggle(Tnop("VSync"), Tnop("Synchronizes the frame rate with the screen refresh rate. Recommended"), config::VSync));

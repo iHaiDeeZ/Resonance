@@ -827,3 +827,6 @@
 2120	Wszystkie gry
 2121	Ta gra
 2122	Zmienione teraz ustawienia dotyczą wszystkich gier albo tylko tej gry (na przykład bez szerokiego ekranu w grze 2D)
+2123	Obsługiwane gry
+2124	Wszystkie gry
+2125	Prawdziwe 16:9 dla około 230 gier z łatką szerokoekranową, 4:3 dla pozostałych. Wszystkie gry: dodatkowa szerokość w każdej grze, gdzie po bokach obiekty mogą pojawiać się i znikać

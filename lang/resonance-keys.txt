@@ -129,3 +129,6 @@ Settings For
 All Games
 This Game
 Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)
+Supported games
+All games
+Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides

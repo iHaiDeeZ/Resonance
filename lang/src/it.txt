@@ -827,3 +827,6 @@
 2120	Tutti i giochi
 2121	Questo gioco
 2122	Le impostazioni cambiate ora valgono per tutti i giochi o solo per questo (per esempio widescreen disattivato in un gioco 2D)
+2123	Giochi supportati
+2124	Tutti i giochi
+2125	Vero 16:9 per circa 230 giochi con una patch widescreen, 4:3 per gli altri. Tutti i giochi: la larghezza in più per ogni gioco, dove ai lati gli oggetti possono apparire e sparire

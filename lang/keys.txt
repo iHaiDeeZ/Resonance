@@ -827,3 +827,6 @@
 2120	All Games
 2121	This Game
 2122	Settings changed now apply to every game, or to this game only (for example widescreen off in a 2D game)
+2123	Supported games
+2124	All games
+2125	Real 16:9 for about 230 games that have a widescreen patch, 4:3 for the rest. All games: the extra width for every game, where things can pop in and out at the sides

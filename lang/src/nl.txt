@@ -827,3 +827,6 @@
 2120	Alle spellen
 2121	Dit spel
 2122	Nu gewijzigde instellingen gelden voor alle spellen of alleen voor dit spel (bijvoorbeeld breedbeeld uit in een 2D-spel)
+2123	Ondersteunde spellen
+2124	Alle spellen
+2125	Echt 16:9 voor zo'n 230 spellen met een breedbeeldpatch, 4:3 voor de rest. Alle spellen: de extra breedte voor elk spel, waarbij aan de zijkanten dingen kunnen verschijnen en verdwijnen

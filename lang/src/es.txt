@@ -827,3 +827,6 @@
 2120	Todos los juegos
 2121	Este juego
 2122	Los ajustes que cambies ahora se aplican a todos los juegos o solo a este (por ejemplo, sin pantalla panorámica en un juego 2D)
+2123	Juegos compatibles
+2124	Todos los juegos
+2125	16:9 real para unos 230 juegos con parche panorámico, 4:3 para el resto. Todos los juegos: el ancho extra en cada juego, donde pueden aparecer y desaparecer cosas en los lados
