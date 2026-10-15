@@ -6,6 +6,15 @@ Resonance downloads the patch for the game being started from this folder when
 itself. Players can switch any patch off in the quick menu (L3+R3 → Cheats & Patches), and
 Resonance remembers that per game.
 
+## Other sources Resonance reads
+
+- **60 fps codes:** the community's [Flycast Widescreen Compatibility and Cheat Chart](https://github.com/nexus382/Flycast-Widescreen-Compatability-And-Cheat-Chart)
+  by nexus382. When a game starts, Resonance reads the chart's "60 FPS Cheats" column on GitHub. It uses a
+  code only when the row's region matches the disc's region (NA, EU or JP, from the product id). The chart
+  isn't copied here: add 60 fps codes there, and every Resonance install picks them up.
+- **Widescreen:** Flycast's built-in widescreen patches (about 230 games), used when Widescreen is
+  set to **Supported games**.
+
 ## Adding a patch
 
 1. Add the patch file to this folder. Use one of two formats:

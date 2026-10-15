@@ -49887,10 +49887,10 @@ index 000000000..968b94cdd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/game_codes.cpp b/shell/ps4/launcher/game_codes.cpp
 new file mode 100644
-index 000000000..1dd139a3f
+index 000000000..27f70dabf
 --- /dev/null
 +++ b/shell/ps4/launcher/game_codes.cpp
-@@ -0,0 +1,610 @@
+@@ -0,0 +1,745 @@
 +/*
 +	Resonance's cheats and patches for the running game, put together in Flycast's cheat engine.
 +
@@ -49949,6 +49949,9 @@ index 000000000..1dd139a3f
 +const char *const kRoot = "/data/Resonance";
 +const char *const kPatchIndexUrl = "https://raw.githubusercontent.com/iHaiDeeZ/Resonance/main/game-patches/index.txt";
 +const char *const kPatchFileUrl = "https://raw.githubusercontent.com/iHaiDeeZ/Resonance/main/game-patches/";
++// The community's Flycast chart (nexus382/Flycast-Widescreen-Compatability-And-Cheat-Chart): a
++// "60 FPS Cheats" column of CodeBreaker codes per game and region. Read where it is, not copied
++const char *const kChartUrl = "https://raw.githubusercontent.com/nexus382/Flycast-Widescreen-Compatability-And-Cheat-Chart/main/Dreamcast%20Widescreen.md";
 +
 +// the keys of one entry in a RetroArch .cht
 +const char *const kChtKeys[] = { "address", "address_bit_position", "big_endian", "cheat_type", "code", "desc", "dest_address",
@@ -50072,7 +50075,7 @@ index 000000000..1dd139a3f
 +			if (!endsWith(name, ".cht") && !endsWith(name, ".txt"))
 +				continue;
 +			const std::string stem = name.substr(0, name.size() - 4);
-+			if (stem == safeId(gGameId) || stem == gGameId || stem == safeId(gGameId) + "-typed"
++			if (stem == safeId(gGameId) || stem == gGameId || stem == safeId(gGameId) + "-typed" || stem == safeId(gGameId) + "-chart"
 +					|| (!title.empty() && titleScore(title, stem) >= .75f))
 +				out.push_back(dir(sub) + "/" + name);
 +		}
@@ -50284,6 +50287,135 @@ index 000000000..1dd139a3f
 +	});
 +}
 +
++// The disc's region from its product id: NA (T13002N, MK-51000), EU (T13002D, MK-5100050,
++// T-8117D-50), JP (T1218M, HDR-0080); "" when it can't be told
++std::string regionOf(const std::string& id)
++{
++	std::string s;
++	for (char c : id)
++		if (isalnum((unsigned char)c))
++			s += (char)toupper((unsigned char)c);
++	if (s.empty())
++		return "";
++	if (s.rfind("HDR", 0) == 0 || s.back() == 'M')
++		return "JP";
++	if (s.back() == 'N')
++		return "NA";
++	if (s.find('D') != std::string::npos && s.rfind("MK", 0) != 0)
++		return "EU";
++	if (s.rfind("MK51", 0) == 0)
++		return s.size() > 7 ? "EU" : "NA";	// MK-51000 / MK-5100050
++	if (s.size() > 2 && s.compare(s.size() - 2, 2, "50") == 0)
++		return "EU";
++	return "";
++}
++
++// The code words in a chart cell: pairs of 8 hex digits ("0103337C 00000009, ..."); a first word
++// written with 7 digits gets its leading 0 back. Words without a partner (disc offsets) are left out
++std::string chartCodes(const std::string& cell)
++{
++	static const std::regex pair("\\b([0-9A-Fa-f]{7,8})\\s+([0-9A-Fa-f]{8})\\b");
++	std::string out;
++	for (auto it = std::sregex_iterator(cell.begin(), cell.end(), pair); it != std::sregex_iterator(); ++it)
++	{
++		std::string a = (*it)[1].str(), b = (*it)[2].str();
++		if (a.size() == 7)
++			a = "0" + a;
++		for (char& c : a) c = (char)toupper((unsigned char)c);
++		for (char& c : b) c = (char)toupper((unsigned char)c);
++		out += a + " " + b + "\n";
++	}
++	return out;
++}
++
++// Patch Source on Download automatically: the chart's 60 fps code for the game, when its row is
++// for the disc's region (codes differ between regions)
++void fetchChart(std::string gameId, std::string title)
++{
++	const std::string chartPath = dir("patches/online/chart-dreamcast.md");
++	std::string chart, error;
++	struct stat st;
++	if (stat(chartPath.c_str(), &st) != 0 || time(nullptr) - st.st_mtime > 24 * 3600 || !readFile(chartPath, chart))
++	{
++		if (ps4_http_get(kChartUrl, chart, error) != 200 || chart.empty())
++			return;
++		writeFile(chartPath, chart);
++	}
++	const std::string region = regionOf(gameId);
++	// "| title | region | native ws | ws hack | ws cheat | 60 fps | notes |"
++	std::string bestCodes, bestTitle, bestNote;
++	float bestScore = 0;
++	int rowsForTitle = 0;
++	size_t at = 0;
++	while (at < chart.size())
++	{
++		size_t end = chart.find('\n', at);
++		if (end == std::string::npos)
++			end = chart.size();
++		const std::string line = chart.substr(at, end - at);
++		at = end + 1;
++		if (line.size() < 2 || line[0] != '|' || line.compare(0, 4, "|---") == 0)
++			continue;
++		std::vector<std::string> cells;
++		size_t p = 1;
++		while (p < line.size())
++		{
++			size_t q = line.find('|', p);
++			if (q == std::string::npos)
++				break;
++			std::string c = line.substr(p, q - p);
++			while (!c.empty() && isspace((unsigned char)c.back())) c.pop_back();
++			while (!c.empty() && isspace((unsigned char)c[0])) c.erase(0, 1);
++			cells.push_back(c);
++			p = q + 1;
++		}
++		if (cells.size() < 6 || cells[0] == "Game Title")
++			continue;
++		const float score = titleScore(title, cells[0]);
++		if (score < .75f)
++			continue;
++		rowsForTitle++;
++		const std::string codes = chartCodes(cells[5]);
++		if (codes.empty())
++			continue;
++		const bool regionOk = region.empty() ? false : cells[1] == region;
++		if (!regionOk)
++			continue;
++		if (score > bestScore)
++		{
++			bestScore = score;
++			bestCodes = codes;
++			bestTitle = cells[0];
++			// words before the codes say what the code does ("60fps battles ...")
++			static const std::regex firstPair("[0-9A-Fa-f]{7,8}\\s+[0-9A-Fa-f]{8}");
++			std::smatch m;
++			bestNote = std::regex_search(cells[5], m, firstPair) ? cells[5].substr(0, m.position(0)) : std::string();
++		}
++	}
++	if (bestCodes.empty())
++		return;
++	std::string name = "60 FPS";
++	{
++		std::string lower;
++		for (char c : bestNote)
++			lower += (char)tolower((unsigned char)c);
++		if (lower.find("battle") != std::string::npos)
++			name = "60 FPS (battles)";
++	}
++	const std::string dest = dir("patches/online/") + safeId(gameId) + "-chart.txt";
++	const std::string body = "# " + bestTitle + " (" + region + "): from the Flycast Widescreen Compatibility and Cheat Chart\n"
++			"# https://github.com/nexus382/Flycast-Widescreen-Compatability-And-Cheat-Chart\n" + name + "\n" + bestCodes;
++	std::string old;
++	if (readFile(dest, old) && old == body)
++		return;
++	writeFile(dest, body);
++	ps4_boot_trace(("codes: 60 fps for " + gameId + " from the Flycast chart (" + bestTitle + ", " + region + ")").c_str());
++	emu.run([gameId] {
++		if (gameId == gGameId)
++			rebuild();
++	});
++}
++
 +// Cheat Source on Download automatically and nothing picked: the best match from libretro's
 +// database (left off)
 +void fetchCheats(std::string gameId, std::string title)
@@ -50435,7 +50567,10 @@ index 000000000..1dd139a3f
 +		std::thread([id, title, cheatsMissing] {
 +			ThreadName _("GameCodes");
 +			if (config::loadInt("resonance", "PatchSource", 0) == 0)
++			{
 +				fetchPatches(id, title);
++				fetchChart(id, title);
++			}
 +			if (cheatsAutomatic() && cheatsMissing)
 +				fetchCheats(id, title);
 +		}).detach();
