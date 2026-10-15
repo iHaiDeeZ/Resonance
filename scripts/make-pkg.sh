@@ -52,7 +52,9 @@ if [ "${SFO_STYLE:-retroarch}" = retroarch ]; then
 else
     # Plain OpenOrbis/PSChrome values (known to launch with the default PAID).
     set_entry APP_TYPE Integer 4 1
-    set_entry ATTRIBUTE Integer 4 0
+    # 0x2: system dialogs (the keyboard) confirm with Cross. Without it they follow the
+    # console's region default, which is Circle on some consoles (as Crema and DolphinPS4 Lab)
+    set_entry ATTRIBUTE Integer 4 0x2
     set_entry CATEGORY Utf8 4 gd
     set_entry SYSTEM_VER Integer 4 0
 fi
