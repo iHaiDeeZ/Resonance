@@ -856,3 +856,15 @@
 2149	Dreieck
 2150	Der Joystick ist das Steuerkreuz und der linke Stick. L3+R3 öffnet das Menü
 2151	Kreuz Kreis Quadrat Dreieck L1 R1 L2 R2 sind die Tasten 1-8, Options ist Start, das Touchpad ist Münze
+2152	Spieleordner
+2153	Wo Resonance nach Spielen sucht: Konsole, USB-Laufwerke, Freigaben
+2154	Kreuz: diesen Ordner aus der Liste entfernen (die Spiele bleiben, wo sie sind)
+2155	Ordner entfernt
+2156	Ordner hinzufügen
+2157	Einen Ordner auf der Konsole, einem USB-Laufwerk oder einer Netzwerkfreigabe wählen
+2158	Kreuz: diesen Ordner öffnen
+2159	%d Spiele hier
+2160	Diesen Ordner verwenden
+2161	Orte
+2162	Dieser Ordner kann nicht geöffnet werden
+2163	Ordner hinzugefügt

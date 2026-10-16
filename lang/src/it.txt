@@ -856,3 +856,15 @@
 2149	Triangolo
 2150	Il joystick è la croce direzionale e la levetta sinistra. L3+R3 apre il menu
 2151	Croce Cerchio Quadrato Triangolo L1 R1 L2 R2 sono i pulsanti 1-8, Options è Start, il touchpad è Gettone
+2152	Cartelle dei giochi
+2153	Dove Resonance cerca i giochi: la console, le unità USB, le condivisioni
+2154	Croce: togli questa cartella dall'elenco (i giochi restano dove sono)
+2155	Cartella tolta
+2156	Aggiungi cartella
+2157	Scegli una cartella sulla console, su un'unità USB o su una condivisione di rete
+2158	Croce: apri questa cartella
+2159	%d giochi qui
+2160	Usa questa cartella
+2161	Posizioni
+2162	Impossibile aprire questa cartella
+2163	Cartella aggiunta

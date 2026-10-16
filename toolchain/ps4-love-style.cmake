@@ -13,7 +13,8 @@ set(PS4_RUNTIME_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/../port/ps4_sampler.cpp
     ${CMAKE_CURRENT_LIST_DIR}/../port/ps4_string.c
     ${CMAKE_CURRENT_LIST_DIR}/../port/ps4_random.c
-    ${CMAKE_CURRENT_LIST_DIR}/../port/ps4_net.cpp)
+    ${CMAKE_CURRENT_LIST_DIR}/../port/ps4_net.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/../port/ps4_netfs.cpp)
 
 # Generate code for the PS4's CPU (AMD Jaguar: SSE4.2, AVX, BMI1, F16C, MOVBE; no AVX2) rather
 # than baseline x86-64 (SSE2).
@@ -99,6 +100,15 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS " --wrap=pthread_create")
 # Host names through the PS4's resolver: the C library has no DNS on the PS4 (port/ps4_net.cpp,
 # from Crema; network shares and curl).
 string(APPEND CMAKE_EXE_LINKER_FLAGS " --wrap=getaddrinfo --wrap=gethostbyname")
+# The network game library: SMB / NFS shares read under /net (port/ps4_netfs.cpp, from Crema): open
+# and close (port/ps4_crashlog.cpp) and the reads below. _read and _readv are the C library's stdio
+# reads. (not lstat / fstatat: the PS4 has no fstatat)
+# On the app only (ps4_add_eboot): CMake's probe programs (Flycast's architecture check) would
+# fail to link without these files' __wrap_ functions.
+set(PS4_NETFS_WRAPS --wrap=open --wrap=close)
+foreach (fn read _read readv _readv pread lseek fstat stat getdents)
+    list(APPEND PS4_NETFS_WRAPS --wrap=${fn})
+endforeach ()
 
 # Program authority ID: the system Piglet (OpenGL ES) only gives a display to processes with a
 # system authority ID. This is RetroArch for PS4's value, as used by love-ps4.
@@ -128,6 +138,7 @@ endfunction()
 # .data.rel.ro it emits the data PT_LOAD twice, which the console rejects at launch
 # ("CE-41839-5", LNC 0x80aa001a).
 function(ps4_add_eboot target)
+    target_link_options(${target} PRIVATE ${PS4_NETFS_WRAPS})
     set(out_dir ${CMAKE_CURRENT_BINARY_DIR}/${target}_eboot)
     add_custom_command(
         OUTPUT ${out_dir}/eboot.bin

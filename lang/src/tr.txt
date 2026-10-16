@@ -857,3 +857,15 @@
 2149	Üçgen
 2150	Joystick yön tuşları ve sol çubuktur. L3+R3 menüyü açar
 2151	Çarpı Daire Kare Üçgen L1 R1 L2 R2 düğme 1-8, Options Start, dokunmatik yüzey Jeton
+2152	Oyun klasörleri
+2153	Resonance oyunları nerede arar: konsol, USB sürücüler, paylaşımlar
+2154	Çarpı: bu klasörü listeden çıkar (oyunlar yerinde kalır)
+2155	Klasör çıkarıldı
+2156	Klasör ekle
+2157	Konsolda, bir USB sürücüde ya da ağ paylaşımında bir klasör seçin
+2158	Çarpı: bu klasörü aç
+2159	Burada %d oyun
+2160	Bu klasörü kullan
+2161	Konumlar
+2162	Bu klasör açılamıyor
+2163	Klasör eklendi

@@ -856,3 +856,15 @@
 2149	Triángulo
 2150	El joystick es la cruceta y el stick izquierdo. L3+R3 abre el menú
 2151	Cruz Círculo Cuadrado Triángulo L1 R1 L2 R2 son los botones 1-8, Options es Start, el panel táctil es Moneda
+2152	Carpetas de juegos
+2153	Dónde busca juegos Resonance: la consola, unidades USB, carpetas compartidas
+2154	Cruz: quitar esta carpeta de la lista (los juegos se quedan donde están)
+2155	Carpeta quitada
+2156	Añadir carpeta
+2157	Elige una carpeta de la consola, de una unidad USB o de una carpeta compartida en red
+2158	Cruz: abrir esta carpeta
+2159	%d juegos aquí
+2160	Usar esta carpeta
+2161	Lugares
+2162	No se puede abrir esta carpeta
+2163	Carpeta añadida

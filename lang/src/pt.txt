@@ -166,3 +166,15 @@
 2149	Triângulo
 2150	O joystick é o direcional e o analógico esquerdo. L3+R3 abre o menu
 2151	Xis Bola Quadrado Triângulo L1 R1 L2 R2 são os botões 1-8, Options é Start, o touchpad é Ficha
+2152	Pastas de jogos
+2153	Onde o Resonance procura jogos: o console, unidades USB, compartilhamentos
+2154	Xis: tirar esta pasta da lista (os jogos ficam onde estão)
+2155	Pasta removida
+2156	Adicionar pasta
+2157	Escolha uma pasta no console, numa unidade USB ou num compartilhamento de rede
+2158	Xis: abrir esta pasta
+2159	%d jogos aqui
+2160	Usar esta pasta
+2161	Locais
+2162	Esta pasta não pode ser aberta
+2163	Pasta adicionada

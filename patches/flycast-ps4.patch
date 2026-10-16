@@ -2330,10 +2330,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..67155d9aa
+index 000000000..a475f7142
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2586 @@
+@@ -0,0 +1,2622 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4920,11 +4920,47 @@ index 000000000..67155d9aa
 +
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "إكس ودائرة ومربع ومثلث وL1 وR1 وL2 وR2 هي الأزرار 1-8، وOptions هو البدء، ولوحة اللمس هي العملة"
++
++msgid "Game Folders"
++msgstr "مجلدات الألعاب"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "أين يبحث Resonance عن الألعاب: الجهاز ومحركات USB والمجلدات المشتركة"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "إكس: إزالة هذا المجلد من القائمة (تبقى الألعاب في مكانها)"
++
++msgid "Folder removed"
++msgstr "تمت إزالة المجلد"
++
++msgid "Add Folder"
++msgstr "إضافة مجلد"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "اختر مجلدًا على الجهاز أو على محرك USB أو على مشاركة شبكة"
++
++msgid "Cross: open this folder"
++msgstr "إكس: فتح هذا المجلد"
++
++msgid "%d games here"
++msgstr "%d ألعاب هنا"
++
++msgid "Use This Folder"
++msgstr "استخدام هذا المجلد"
++
++msgid "Places"
++msgstr "الأماكن"
++
++msgid "This folder can't be opened"
++msgstr "لا يمكن فتح هذا المجلد"
++
++msgid "Folder added"
++msgstr "تمت إضافة المجلد"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..f80b86f4b 100644
+index fb8203ba2..a0d8aeb51 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2582 @@
+@@ -1,2963 +1,2618 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -9050,14 +9086,50 @@ index fb8203ba2..f80b86f4b 100644
 +
 +msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
 +msgstr "Der Joystick ist das Steuerkreuz und der linke Stick. L3+R3 öffnet das Menü"
- 
++
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Kreuz Kreis Quadrat Dreieck L1 R1 L2 R2 sind die Tasten 1-8, Options ist Start, das Touchpad ist Münze"
++
++msgid "Game Folders"
++msgstr "Spieleordner"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Wo Resonance nach Spielen sucht: Konsole, USB-Laufwerke, Freigaben"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Kreuz: diesen Ordner aus der Liste entfernen (die Spiele bleiben, wo sie sind)"
++
++msgid "Folder removed"
++msgstr "Ordner entfernt"
++
++msgid "Add Folder"
++msgstr "Ordner hinzufügen"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Einen Ordner auf der Konsole, einem USB-Laufwerk oder einer Netzwerkfreigabe wählen"
++
++msgid "Cross: open this folder"
++msgstr "Kreuz: diesen Ordner öffnen"
++
++msgid "%d games here"
++msgstr "%d Spiele hier"
++
++msgid "Use This Folder"
++msgstr "Diesen Ordner verwenden"
++
++msgid "Places"
++msgstr "Orte"
++
++msgid "This folder can't be opened"
++msgstr "Dieser Ordner kann nicht geöffnet werden"
+ 
++msgid "Folder added"
++msgstr "Ordner hinzugefügt"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..05daa17cb 100644
+index 2735f014b..33563dfbc 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2582 @@
+@@ -1,2964 +1,2618 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -13178,14 +13250,50 @@ index 2735f014b..05daa17cb 100644
 +
 +msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
 +msgstr "El joystick es la cruceta y el stick izquierdo. L3+R3 abre el menú"
- 
++
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Cruz Círculo Cuadrado Triángulo L1 R1 L2 R2 son los botones 1-8, Options es Start, el panel táctil es Moneda"
++
++msgid "Game Folders"
++msgstr "Carpetas de juegos"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Dónde busca juegos Resonance: la consola, unidades USB, carpetas compartidas"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Cruz: quitar esta carpeta de la lista (los juegos se quedan donde están)"
++
++msgid "Folder removed"
++msgstr "Carpeta quitada"
++
++msgid "Add Folder"
++msgstr "Añadir carpeta"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Elige una carpeta de la consola, de una unidad USB o de una carpeta compartida en red"
++
++msgid "Cross: open this folder"
++msgstr "Cruz: abrir esta carpeta"
++
++msgid "%d games here"
++msgstr "%d juegos aquí"
++
++msgid "Use This Folder"
++msgstr "Usar esta carpeta"
++
++msgid "Places"
++msgstr "Lugares"
++
++msgid "This folder can't be opened"
++msgstr "No se puede abrir esta carpeta"
+ 
++msgid "Folder added"
++msgstr "Carpeta añadida"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..0da585337 100644
+index f3754825e..1cc0dd5e5 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2582 @@
+@@ -1,2967 +1,2618 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16616,11 +16724,47 @@ index f3754825e..0da585337 100644
 +
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Croix Rond Carré Triangle L1 R1 L2 R2 sont les boutons 1 à 8, Options est Start, le pavé tactile est Pièce"
++
++msgid "Game Folders"
++msgstr "Dossiers de jeux"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Où Resonance cherche les jeux : la console, les clés USB, les partages"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Croix : retirer ce dossier de la liste (les jeux restent où ils sont)"
++
++msgid "Folder removed"
++msgstr "Dossier retiré"
++
++msgid "Add Folder"
++msgstr "Ajouter un dossier"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Choisir un dossier sur la console, une clé USB ou un partage réseau"
++
++msgid "Cross: open this folder"
++msgstr "Croix : ouvrir ce dossier"
++
++msgid "%d games here"
++msgstr "%d jeux ici"
++
++msgid "Use This Folder"
++msgstr "Utiliser ce dossier"
++
++msgid "Places"
++msgstr "Emplacements"
++
++msgid "This folder can't be opened"
++msgstr "Ce dossier ne peut pas être ouvert"
++
++msgid "Folder added"
++msgstr "Dossier ajouté"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..7c3403b1c 100644
+index ee92eb28e..3b8f62d38 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2582 @@
+@@ -1,2963 +1,2618 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20746,14 +20890,50 @@ index ee92eb28e..7c3403b1c 100644
 +
 +msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
 +msgstr "Il joystick è la croce direzionale e la levetta sinistra. L3+R3 apre il menu"
- 
++
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Croce Cerchio Quadrato Triangolo L1 R1 L2 R2 sono i pulsanti 1-8, Options è Start, il touchpad è Gettone"
++
++msgid "Game Folders"
++msgstr "Cartelle dei giochi"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Dove Resonance cerca i giochi: la console, le unità USB, le condivisioni"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Croce: togli questa cartella dall'elenco (i giochi restano dove sono)"
++
++msgid "Folder removed"
++msgstr "Cartella tolta"
++
++msgid "Add Folder"
++msgstr "Aggiungi cartella"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Scegli una cartella sulla console, su un'unità USB o su una condivisione di rete"
++
++msgid "Cross: open this folder"
++msgstr "Croce: apri questa cartella"
++
++msgid "%d games here"
++msgstr "%d giochi qui"
++
++msgid "Use This Folder"
++msgstr "Usa questa cartella"
++
++msgid "Places"
++msgstr "Posizioni"
++
++msgid "This folder can't be opened"
++msgstr "Impossibile aprire questa cartella"
+ 
++msgid "Folder added"
++msgstr "Cartella aggiunta"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..b03900144 100644
+index a79c6a14b..cfec1e2a7 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2581 @@
+@@ -1,2966 +1,2617 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -24183,11 +24363,47 @@ index a79c6a14b..b03900144 100644
 +
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "バツ マル シカク サンカク L1 R1 L2 R2 がボタン 1〜8、OPTIONS がスタート、タッチパッドがコイン"
++
++msgid "Game Folders"
++msgstr "ゲームフォルダー"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Resonance がゲームを探す場所：本体、USB ドライブ、共有フォルダー"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "バツ：このフォルダーを一覧から外す（ゲームはそのまま）"
++
++msgid "Folder removed"
++msgstr "フォルダーを外しました"
++
++msgid "Add Folder"
++msgstr "フォルダーを追加"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "本体、USB ドライブ、ネットワーク共有のフォルダーを選びます"
++
++msgid "Cross: open this folder"
++msgstr "バツ：このフォルダーを開く"
++
++msgid "%d games here"
++msgstr "ここに %d 本"
++
++msgid "Use This Folder"
++msgstr "このフォルダーを使う"
++
++msgid "Places"
++msgstr "場所"
++
++msgid "This folder can't be opened"
++msgstr "このフォルダーは開けません"
++
++msgid "Folder added"
++msgstr "フォルダーを追加しました"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..3f2c2d894 100644
+index a5e70db54..6e02bd91d 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2581 @@
+@@ -1,2962 +1,2617 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -28311,15 +28527,51 @@ index a5e70db54..3f2c2d894 100644
 +
 +msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
 +msgstr "조이스틱은 방향 버튼과 왼쪽 스틱입니다. L3+R3로 메뉴를 엽니다"
- 
++
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "엑스 원 네모 세모 L1 R1 L2 R2가 버튼 1-8, OPTIONS가 스타트, 터치패드가 코인입니다"
++
++msgid "Game Folders"
++msgstr "게임 폴더"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Resonance가 게임을 찾는 곳: 본체, USB 드라이브, 공유 폴더"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "엑스: 이 폴더를 목록에서 빼기(게임은 그대로)"
++
++msgid "Folder removed"
++msgstr "폴더를 뺐습니다"
++
++msgid "Add Folder"
++msgstr "폴더 추가"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "본체, USB 드라이브, 네트워크 공유의 폴더를 고릅니다"
++
++msgid "Cross: open this folder"
++msgstr "엑스: 이 폴더 열기"
++
++msgid "%d games here"
++msgstr "여기에 게임 %d개"
++
++msgid "Use This Folder"
++msgstr "이 폴더 사용"
++
++msgid "Places"
++msgstr "위치"
++
++msgid "This folder can't be opened"
++msgstr "이 폴더를 열 수 없습니다"
+ 
++msgid "Folder added"
++msgstr "폴더를 추가했습니다"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..c8e3ce8e5
+index 000000000..452be231a
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2582 @@
+@@ -0,0 +1,2618 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -30902,11 +31154,47 @@ index 000000000..c8e3ce8e5
 +
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Kruis Rondje Vierkant Driehoek L1 R1 L2 R2 zijn knoppen 1-8, Options is Start, de touchpad is Munt"
++
++msgid "Game Folders"
++msgstr "Spelmappen"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Waar Resonance naar spellen zoekt: de console, USB-schijven, gedeelde mappen"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Kruis: deze map uit de lijst halen (de spellen blijven waar ze zijn)"
++
++msgid "Folder removed"
++msgstr "Map verwijderd"
++
++msgid "Add Folder"
++msgstr "Map toevoegen"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Kies een map op de console, een USB-schijf of een netwerkshare"
++
++msgid "Cross: open this folder"
++msgstr "Kruis: deze map openen"
++
++msgid "%d games here"
++msgstr "%d spellen hier"
++
++msgid "Use This Folder"
++msgstr "Deze map gebruiken"
++
++msgid "Places"
++msgstr "Locaties"
++
++msgid "This folder can't be opened"
++msgstr "Deze map kan niet worden geopend"
++
++msgid "Folder added"
++msgstr "Map toegevoegd"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..7d85cd767 100644
+index 548cbb44d..8af859e4b 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2583 @@
+@@ -1,2965 +1,2619 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -35036,14 +35324,50 @@ index 548cbb44d..7d85cd767 100644
 +
 +msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
 +msgstr "Joystick to krzyżak i lewa gałka. L3+R3 otwiera menu"
- 
++
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Krzyżyk Kółko Kwadrat Trójkąt L1 R1 L2 R2 to przyciski 1-8, Options to Start, panel dotykowy to Moneta"
++
++msgid "Game Folders"
++msgstr "Foldery z grami"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Gdzie Resonance szuka gier: konsola, dyski USB, udziały sieciowe"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Krzyżyk: usuń ten folder z listy (gry zostają na miejscu)"
++
++msgid "Folder removed"
++msgstr "Usunięto folder"
++
++msgid "Add Folder"
++msgstr "Dodaj folder"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Wybierz folder na konsoli, dysku USB lub w udziale sieciowym"
++
++msgid "Cross: open this folder"
++msgstr "Krzyżyk: otwórz ten folder"
++
++msgid "%d games here"
++msgstr "Gier tutaj: %d"
++
++msgid "Use This Folder"
++msgstr "Użyj tego folderu"
++
++msgid "Places"
++msgstr "Miejsca"
++
++msgid "This folder can't be opened"
++msgstr "Nie można otworzyć tego folderu"
+ 
++msgid "Folder added"
++msgstr "Dodano folder"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..299d72aa0 100644
+index 6ec100a1e..6f9a8a3bb 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2582 @@
+@@ -1,2966 +1,2618 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -38488,12 +38812,48 @@ index 6ec100a1e..299d72aa0 100644
 +
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Xis Bola Quadrado Triângulo L1 R1 L2 R2 são os botões 1-8, Options é Start, o touchpad é Ficha"
++
++msgid "Game Folders"
++msgstr "Pastas de jogos"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Onde o Resonance procura jogos: o console, unidades USB, compartilhamentos"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Xis: tirar esta pasta da lista (os jogos ficam onde estão)"
++
++msgid "Folder removed"
++msgstr "Pasta removida"
++
++msgid "Add Folder"
++msgstr "Adicionar pasta"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Escolha uma pasta no console, numa unidade USB ou num compartilhamento de rede"
++
++msgid "Cross: open this folder"
++msgstr "Xis: abrir esta pasta"
++
++msgid "%d games here"
++msgstr "%d jogos aqui"
++
++msgid "Use This Folder"
++msgstr "Usar esta pasta"
++
++msgid "Places"
++msgstr "Locais"
++
++msgid "This folder can't be opened"
++msgstr "Esta pasta não pode ser aberta"
++
++msgid "Folder added"
++msgstr "Pasta adicionada"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..c772da290
+index 000000000..00476aaa6
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2583 @@
+@@ -0,0 +1,2619 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -41077,11 +41437,47 @@ index 000000000..c772da290
 +
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Крест Круг Квадрат Треугольник L1 R1 L2 R2 — кнопки 1–8, Options — Start, сенсорная панель — Монета"
++
++msgid "Game Folders"
++msgstr "Папки с играми"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Где Resonance ищет игры: консоль, USB-накопители, общие папки"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Крест: убрать эту папку из списка (игры остаются на месте)"
++
++msgid "Folder removed"
++msgstr "Папка убрана"
++
++msgid "Add Folder"
++msgstr "Добавить папку"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Выберите папку на консоли, USB-накопителе или в сетевой папке"
++
++msgid "Cross: open this folder"
++msgstr "Крест: открыть эту папку"
++
++msgid "%d games here"
++msgstr "Игр здесь: %d"
++
++msgid "Use This Folder"
++msgstr "Использовать эту папку"
++
++msgid "Places"
++msgstr "Места"
++
++msgid "This folder can't be opened"
++msgstr "Эту папку нельзя открыть"
++
++msgid "Folder added"
++msgstr "Папка добавлена"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..892c9d5bb 100644
+index 8c8d8bc08..5a2420d5b 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2582 @@
+@@ -1,2965 +1,2618 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -44912,14 +45308,50 @@ index 8c8d8bc08..892c9d5bb 100644
 +
 +msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
 +msgstr "Joystick yön tuşları ve sol çubuktur. L3+R3 menüyü açar"
- 
++
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "Çarpı Daire Kare Üçgen L1 R1 L2 R2 düğme 1-8, Options Start, dokunmatik yüzey Jeton"
++
++msgid "Game Folders"
++msgstr "Oyun klasörleri"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Resonance oyunları nerede arar: konsol, USB sürücüler, paylaşımlar"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "Çarpı: bu klasörü listeden çıkar (oyunlar yerinde kalır)"
++
++msgid "Folder removed"
++msgstr "Klasör çıkarıldı"
++
++msgid "Add Folder"
++msgstr "Klasör ekle"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "Konsolda, bir USB sürücüde ya da ağ paylaşımında bir klasör seçin"
++
++msgid "Cross: open this folder"
++msgstr "Çarpı: bu klasörü aç"
++
++msgid "%d games here"
++msgstr "Burada %d oyun"
++
++msgid "Use This Folder"
++msgstr "Bu klasörü kullan"
++
++msgid "Places"
++msgstr "Konumlar"
++
++msgid "This folder can't be opened"
++msgstr "Bu klasör açılamıyor"
+ 
++msgid "Folder added"
++msgstr "Klasör eklendi"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..a0a35a996 100644
+index 3ecabd349..3e9b4de44 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2581 @@
+@@ -1,2962 +1,2617 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -49043,9 +49475,45 @@ index 3ecabd349..a0a35a996 100644
 +
 +msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
 +msgstr "摇杆为方向键和左摇杆。L3+R3 打开菜单"
- 
++
 +msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
 +msgstr "叉 圆 方块 三角 L1 R1 L2 R2 为按键 1-8，OPTIONS 为开始，触摸板为投币"
++
++msgid "Game Folders"
++msgstr "游戏文件夹"
++
++msgid "Where Resonance looks for games: the console, USB drives, shares"
++msgstr "Resonance 查找游戏的位置：主机、USB 驱动器、共享文件夹"
++
++msgid "Cross: remove this folder from the list (the games stay where they are)"
++msgstr "叉：从列表中移除此文件夹（游戏保留原处）"
++
++msgid "Folder removed"
++msgstr "已移除文件夹"
++
++msgid "Add Folder"
++msgstr "添加文件夹"
++
++msgid "Pick a folder on the console, a USB drive or a network share"
++msgstr "选择主机、USB 驱动器或网络共享中的文件夹"
++
++msgid "Cross: open this folder"
++msgstr "叉：打开此文件夹"
++
++msgid "%d games here"
++msgstr "此处有 %d 款游戏"
++
++msgid "Use This Folder"
++msgstr "使用此文件夹"
++
++msgid "Places"
++msgstr "位置"
++
++msgid "This folder can't be opened"
++msgstr "无法打开此文件夹"
+ 
++msgid "Folder added"
++msgstr "已添加文件夹"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -54042,10 +54510,10 @@ index 000000000..b79d8f3ea
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..81324a039
+index 000000000..e2a0299f7
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,963 @@
+@@ -0,0 +1,1102 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -54069,6 +54537,9 @@ index 000000000..81324a039
 +    along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
 + */
 +#include "launcher_internal.h"
++#include "../netfs.h"
++#include <sys/stat.h>
++#include <dirent.h>
 +#include "../ps4_gamepad.h"
 +#include "cfg/cfg.h"
 +#include "cfg/option.h"
@@ -54314,6 +54785,7 @@ index 000000000..81324a039
 +		home.items.push_back(std::move(refresh));
 +		groups.push_back(std::move(home));
 +		groups.push_back(cardsGroup());
++		groups.push_back(foldersGroup());
 +		groups.push_back(networkGroup());
 +		groups.push_back(aboutGroup());
 +	}
@@ -54442,6 +54914,140 @@ index 000000000..81324a039
 +		}
 +	}
 +	bool rebuildPending = false;
++
++	// ---- game folders ----
++	bool browsing = false;
++	std::string browseDir;		// "" = the places games can be
++
++	void keepGroup()
++	{
++		const int g = group;
++		build();
++		group = g;
++		sel = 0;
++		selPos = 0;
++	}
++
++	static bool isGameFile(const std::string& name)
++	{
++		std::string lower = name;
++		for (char& c : lower)
++			c = (char)tolower((unsigned char)c);
++		for (const char *ext : { ".gdi", ".chd", ".cdi", ".cue", ".zip", ".7z", ".lst", ".elf" })
++		{
++			const size_t n = strlen(ext);
++			if (lower.size() > n && lower.compare(lower.size() - n, n, ext) == 0)
++				return true;
++		}
++		return false;
++	}
++
++	static bool isFolder(const std::string& path)
++	{
++		struct stat st;
++		return stat(path.c_str(), &st) == 0 && S_ISDIR(st.st_mode);
++	}
++
++	Group foldersGroup()
++	{
++		Group g { ICON_FA_FOLDER_OPEN, T("Game Folders"), T("Where Resonance looks for games: the console, USB drives, shares"), {} };
++		if (!browsing)
++		{
++			for (const std::string& path : config::ContentPath.get())
++			{
++				if (path.find("://") != std::string::npos)
++					continue;
++				Setting item { path, T("Cross: remove this folder from the list (the games stay where they are)"),
++					{ { T("Remove"), 1 } }, [] { return -1; },
++					[this, path](int) {
++						std::vector<std::string> content = config::ContentPath.get();
++						content.erase(std::remove(content.begin(), content.end(), path), content.end());
++						config::ContentPath.set(content);
++						SaveSettings();
++						gui_ps4_rescan_games();
++						keepGroup();
++						say(T("Folder removed"), false);
++					} };
++				item.value = [] { return std::string(ICON_FA_FOLDER); };
++				g.items.push_back(item);
++			}
++			Setting add { T("Add Folder"), T("Pick a folder on the console, a USB drive or a network share"), {}, [] { return 0; }, [](int) {} };
++			add.value = [] { return std::string(ICON_FA_PLUS); };
++			add.action = [this] { browsing = true; browseDir.clear(); keepGroup(); };
++			g.items.push_back(add);
++			return g;
++		}
++		auto go = [this](const std::string& dir) {
++			return [this, dir] { browseDir = dir; keepGroup(); };
++		};
++		auto item = [](const std::string& name, const std::string& help, const std::string& value, std::function<void()> action) {
++			Setting s { name, help, {}, [] { return 0; }, [](int) {} };
++			s.value = [value] { return value; };
++			s.action = std::move(action);
++			return s;
++		};
++		if (browseDir.empty())
++		{
++			// the places: the console, its drives, the network shares
++			std::vector<std::string> places = { "/", "/mnt", "/data", "/data/Resonance/games" };
++			for (int i = 0; i < 8; i++)
++				places.push_back("/mnt/usb" + std::to_string(i));
++			places.push_back("/mnt/ext0");
++			places.push_back("/mnt/ext1");
++			for (const netfs::Share& sh : netfs::shares())
++				places.push_back(sh.folder());
++			for (const std::string& p : places)
++				if (p.rfind("/net/", 0) == 0 || isFolder(p))
++					g.items.push_back(item(p, T("Cross: open this folder"), ICON_FA_FOLDER, go(p)));
++			g.items.push_back(item(T("Cancel"), "", "", [this] { browsing = false; keepGroup(); }));
++			return g;
++		}
++		// a folder: use it, up, its subfolders
++		std::vector<std::string> folders;
++		int games = 0;
++		bool readable = false;
++		if (DIR *d = opendir(browseDir.c_str()))
++		{
++			readable = true;
++			while (dirent *e = readdir(d))
++			{
++				const std::string name = e->d_name;
++				if (name.empty() || name[0] == '.')
++					continue;
++				const std::string full = (browseDir == "/" ? "" : browseDir) + "/" + name;
++				const bool dir = e->d_type == DT_DIR || (e->d_type == DT_UNKNOWN && isFolder(full));
++				if (dir)
++					folders.push_back(name);
++				else if (isGameFile(name))
++					games++;
++			}
++			closedir(d);
++		}
++		std::sort(folders.begin(), folders.end());
++		char count[64];
++		snprintf(count, sizeof(count), T("%d games here"), games);
++		const std::string here = browseDir;
++		g.items.push_back(item(T("Use This Folder"), here, count, [this, here] {
++			std::vector<std::string> content = config::ContentPath.get();
++			if (std::find(content.begin(), content.end(), here) == content.end())
++				content.push_back(here);
++			config::ContentPath.set(content);
++			SaveSettings();
++			gui_ps4_rescan_games();
++			browsing = false;
++			keepGroup();
++			say(T("Folder added"), false);
++		}));
++		std::string parent = browseDir.substr(0, browseDir.find_last_of('/'));
++		if (parent.empty())
++			parent = "/";
++		g.items.push_back(item("..", browseDir == "/" ? T("Places") : parent, "", go(browseDir == "/" ? "" : parent)));
++		if (!readable)
++			g.items.push_back(item(T("This folder can't be opened"), browseDir, "", [] {}));
++		for (const std::string& f : folders)
++			g.items.push_back(item(f + "/", T("Cross: open this folder"), "", go((browseDir == "/" ? "" : browseDir) + "/" + f)));
++		return g;
++	}
 +
 +	// ---- network shares ----
 +	std::string status;
@@ -54681,6 +55287,7 @@ index 000000000..81324a039
 +
 +void SettingsPanel::openGroup(int g, float t)
 +{
++	impl->browsing = false;
 +	impl->build();	// labels in the current language, values as they are now
 +	impl->open = true;
 +	impl->group = std::clamp(g, 0, groupCount() - 1);
@@ -57251,10 +57858,10 @@ index 000000000..705312e75
 +} // namespace launcher
 diff --git a/shell/ps4/netfs.cpp b/shell/ps4/netfs.cpp
 new file mode 100644
-index 000000000..50665129e
+index 000000000..ae453aafb
 --- /dev/null
 +++ b/shell/ps4/netfs.cpp
-@@ -0,0 +1,861 @@
+@@ -0,0 +1,926 @@
 +/*
 +	Resonance: games on network shares (see netfs.h).
 +
@@ -58061,6 +58668,34 @@ index 000000000..50665129e
 +	}
 +}
 +
++namespace
++{
++extern "C" void ps4_netfs_mount(const char *name, const char *url, const char *user, const char *password);
++extern "C" int ps4_netfs_check(const char *name, char *message, size_t size);
++
++// the address Crema's network layer takes: smb://server/share/folder, nfs://server/export
++std::string mountUrl(const Share& s)
++{
++	std::string p = s.path;
++	while (!p.empty() && (p[0] == '/' || p[0] == '\\') && s.type == "smb")
++		p.erase(0, 1);
++	for (char& c : p)
++		if (c == '\\')
++			c = '/';
++	if (s.type == "nfs")
++		return "nfs://" + s.host + (p.empty() || p[0] != '/' ? "/" : "") + p;
++	return "smb://" + s.host + "/" + p;
++}
++
++void mount(const Share& s) {
++	ps4_netfs_mount(s.label.c_str(), mountUrl(s).c_str(), s.user.c_str(), s.password.c_str());
++}
++} // namespace
++
++std::string Share::folder() const {
++	return "/net/" + label;
++}
++
 +void addShare(Share share)
 +{
 +	std::vector<Share> list = loadShares();
@@ -58068,41 +58703,78 @@ index 000000000..50665129e
 +	list.push_back(share);
 +	saveShares(list);
 +	forget(share.label);
++	mount(share);
 +	std::vector<std::string> content = config::ContentPath.get();
-+	if (std::find(content.begin(), content.end(), share.url()) == content.end())
-+	{
-+		content.push_back(share.url());
-+		config::ContentPath.set(content);
-+	}
++	content.erase(std::remove(content.begin(), content.end(), share.url()), content.end());
++	if (std::find(content.begin(), content.end(), share.folder()) == content.end())
++		content.push_back(share.folder());
++	config::ContentPath.set(content);
 +	SaveSettings();
 +}
 +
 +void removeShare(const std::string& label)
 +{
 +	std::vector<Share> list = loadShares();
-+	std::string url;
++	std::string url, folder;
 +	for (const Share& s : list)
 +		if (s.label == label)
++		{
 +			url = s.url();
++			folder = s.folder();
++		}
 +	list.erase(std::remove_if(list.begin(), list.end(), [&](const Share& s) { return s.label == label; }), list.end());
 +	saveShares(list);
 +	forget(label);
++	ps4_netfs_mount(label.c_str(), nullptr, nullptr, nullptr);
 +	std::vector<std::string> content = config::ContentPath.get();
 +	content.erase(std::remove(content.begin(), content.end(), url), content.end());
++	content.erase(std::remove(content.begin(), content.end(), folder), content.end());
 +	config::ContentPath.set(content);
 +	SaveSettings();
 +}
 +
++// Mounted under its label, connected and its top folder listed
 +std::string test(const Share& share, int& entries)
 +{
-+	Connection c(share);
-+	std::lock_guard<std::mutex> _(c.mutex);
-+	std::vector<hostfs::FileInfo> list;
-+	std::string error;
-+	if (!c.list("", list, share.url(), error))
-+		return error.empty() ? "connection failed" : error;
-+	entries = (int)list.size();
++	mount(share);
++	char message[256] = {};
++	const int ok = ps4_netfs_check(share.label.c_str(), message, sizeof(message));
++	bool saved = false;
++	for (const Share& s : loadShares())
++		saved = saved || s.label == share.label;
++	if (!ok)
++	{
++		if (!saved)
++			ps4_netfs_mount(share.label.c_str(), nullptr, nullptr, nullptr);
++		return message[0] ? message : "connection failed";
++	}
++	entries = 0;
++	sscanf(message, "Connected: %d", &entries);
 +	return "";
++}
++
++// At the start: every share mounted, and the game folders that still name smb:// or nfs:// moved to
++// the share's /net folder
++void mountAll()
++{
++	std::vector<std::string> content = config::ContentPath.get();
++	bool changed = false;
++	for (const Share& s : loadShares())
++	{
++		mount(s);
++		for (std::string& c : content)
++			if (c == s.url())
++			{
++				c = s.folder();
++				changed = true;
++			}
++	}
++	if (changed)
++	{
++		config::ContentPath.set(content);
++		SaveSettings();
++		ps4_boot_trace("netfs: shares moved to /net");
++	}
 +}
 +
 +} // namespace netfs
@@ -58118,10 +58790,10 @@ index 000000000..50665129e
 +}
 diff --git a/shell/ps4/netfs.h b/shell/ps4/netfs.h
 new file mode 100644
-index 000000000..6735da5ed
+index 000000000..0fefd3384
 --- /dev/null
 +++ b/shell/ps4/netfs.h
-@@ -0,0 +1,51 @@
+@@ -0,0 +1,54 @@
 +/*
 +	Resonance: games on network shares. NFS (libnfs: a NAS, WinNFSd on a PC) and SMB2/3 (libsmb2: a
 +	shared Windows folder, Samba) behind Flycast's storage layer (hostfs::customStorage), so the
@@ -58158,7 +58830,8 @@ index 000000000..6735da5ed
 +	std::string host;		// IP address or name
 +	std::string path;		// NFS: the exported folder ("/d/games"); SMB: share[/folder] ("Games/Dreamcast")
 +	std::string user, password;	// SMB only
-+	std::string url() const { return type + "://" + label + "/"; }
++	std::string url() const { return type + "://" + label + "/"; }	// before v01.37
++	std::string folder() const;	// where it is mounted: /net/<label>
 +	std::string describe() const;	// "NFS  192.168.0.10:/d/games"
 +};
 +
@@ -58171,6 +58844,8 @@ index 000000000..6735da5ed
 +// Connects and lists the share's top folder: "" when it works, else what went wrong.
 +// games = files with a game extension found directly in it (for the message)
 +std::string test(const Share& share, int& entries);
++// At the start: the shares mounted under /net (Crema's network layer, port/ps4_netfs.cpp)
++void mountAll();
 +
 +}
 diff --git a/shell/ps4/ps4_gamepad.cpp b/shell/ps4/ps4_gamepad.cpp
@@ -58834,10 +59509,10 @@ index 000000000..bf54e44c8
 +void ps4_arcade_reset();
 diff --git a/shell/ps4/ps4_main.cpp b/shell/ps4/ps4_main.cpp
 new file mode 100644
-index 000000000..cb69480a1
+index 000000000..e268b8057
 --- /dev/null
 +++ b/shell/ps4/ps4_main.cpp
-@@ -0,0 +1,399 @@
+@@ -0,0 +1,402 @@
 +/*
 +	Resonance: Flycast's PS4 frontend.
 +
@@ -58877,6 +59552,7 @@ index 000000000..cb69480a1
 +#include "ps4_wsi.h"
 +#include "ps4_stats.h"
 +#include "updater.h"
++#include "netfs.h"
 +
 +#include <orbis/Sysmodule.h>
 +#include <orbis/SystemService.h>
@@ -59148,6 +59824,8 @@ index 000000000..cb69480a1
 +		SaveSettings();
 +	}
 +	startPerfMonitor();
++	// the network library's shares, as folders under /net
++	netfs::mountAll();
 +	// first start: the games folder is the content folder
 +	if (config::ContentPath.get().empty())
 +	{

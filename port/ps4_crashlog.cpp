@@ -290,3 +290,26 @@ extern "C" void ps4_boot_trace(const char* stage) {
         line[sizeof(line) - 2] = '\n';
     writeAll(fd, line);
 }
+
+// The network game library's /net paths (ps4_netfs.cpp); everything else as before.
+extern "C" int __real_open(const char* path, int flags, ...);
+extern "C" int __real_close(int fd);
+extern "C" int ps4_netfs_is_path(const char* path);
+extern "C" int ps4_netfs_open(const char* path, int flags);
+extern "C" int ps4_netfs_close(int fd);
+
+extern "C" __attribute__((noinline)) int __wrap_open(const char* path, int flags, ...) {
+    va_list args;
+    va_start(args, flags);
+    const int mode = va_arg(args, int);  // always passed on: harmless when the call had none
+    va_end(args);
+    if (ps4_netfs_is_path(path))
+        return ps4_netfs_open(path, flags);
+    return __real_open(path, flags, mode);
+}
+
+extern "C" int __wrap_close(int fd) {
+    if (ps4_netfs_close(fd))
+        return 0;
+    return __real_close(fd);
+}

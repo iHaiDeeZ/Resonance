@@ -856,3 +856,15 @@
 2149	Driehoek
 2150	De joystick is de D-pad en de linkerstick. L3+R3 opent het menu
 2151	Kruis Rondje Vierkant Driehoek L1 R1 L2 R2 zijn knoppen 1-8, Options is Start, de touchpad is Munt
+2152	Spelmappen
+2153	Waar Resonance naar spellen zoekt: de console, USB-schijven, gedeelde mappen
+2154	Kruis: deze map uit de lijst halen (de spellen blijven waar ze zijn)
+2155	Map verwijderd
+2156	Map toevoegen
+2157	Kies een map op de console, een USB-schijf of een netwerkshare
+2158	Kruis: deze map openen
+2159	%d spellen hier
+2160	Deze map gebruiken
+2161	Locaties
+2162	Deze map kan niet worden geopend
+2163	Map toegevoegd

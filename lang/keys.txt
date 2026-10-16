@@ -856,3 +856,15 @@
 2149	Triangle
 2150	The joystick is the D-pad and the left stick. L3+R3 opens the menu
 2151	Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin
+2152	Game Folders
+2153	Where Resonance looks for games: the console, USB drives, shares
+2154	Cross: remove this folder from the list (the games stay where they are)
+2155	Folder removed
+2156	Add Folder
+2157	Pick a folder on the console, a USB drive or a network share
+2158	Cross: open this folder
+2159	%d games here
+2160	Use This Folder
+2161	Places
+2162	This folder can't be opened
+2163	Folder added

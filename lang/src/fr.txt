@@ -151,3 +151,15 @@
 2149	Triangle
 2150	Le joystick est la croix directionnelle et le stick gauche. L3+R3 ouvre le menu
 2151	Croix Rond Carré Triangle L1 R1 L2 R2 sont les boutons 1 à 8, Options est Start, le pavé tactile est Pièce
+2152	Dossiers de jeux
+2153	Où Resonance cherche les jeux : la console, les clés USB, les partages
+2154	Croix : retirer ce dossier de la liste (les jeux restent où ils sont)
+2155	Dossier retiré
+2156	Ajouter un dossier
+2157	Choisir un dossier sur la console, une clé USB ou un partage réseau
+2158	Croix : ouvrir ce dossier
+2159	%d jeux ici
+2160	Utiliser ce dossier
+2161	Emplacements
+2162	Ce dossier ne peut pas être ouvert
+2163	Dossier ajouté

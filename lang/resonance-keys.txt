@@ -158,3 +158,15 @@ Square
 Triangle
 The joystick is the D-pad and the left stick. L3+R3 opens the menu
 Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin
+Game Folders
+Where Resonance looks for games: the console, USB drives, shares
+Cross: remove this folder from the list (the games stay where they are)
+Folder removed
+Add Folder
+Pick a folder on the console, a USB drive or a network share
+Cross: open this folder
+%d games here
+Use This Folder
+Places
+This folder can't be opened
+Folder added

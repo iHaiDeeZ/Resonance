@@ -856,3 +856,15 @@
 2149	Trójkąt
 2150	Joystick to krzyżak i lewa gałka. L3+R3 otwiera menu
 2151	Krzyżyk Kółko Kwadrat Trójkąt L1 R1 L2 R2 to przyciski 1-8, Options to Start, panel dotykowy to Moneta
+2152	Foldery z grami
+2153	Gdzie Resonance szuka gier: konsola, dyski USB, udziały sieciowe
+2154	Krzyżyk: usuń ten folder z listy (gry zostają na miejscu)
+2155	Usunięto folder
+2156	Dodaj folder
+2157	Wybierz folder na konsoli, dysku USB lub w udziale sieciowym
+2158	Krzyżyk: otwórz ten folder
+2159	Gier tutaj: %d
+2160	Użyj tego folderu
+2161	Miejsca
+2162	Nie można otworzyć tego folderu
+2163	Dodano folder
