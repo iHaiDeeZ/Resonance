@@ -845,3 +845,5 @@
 2138	Najpierw uruchom grę
 2139	Kod %d
 2140	Łatka %d
+2141	Przyciski automatu
+2142	Panel dotykowy: wrzuć monetę. L3+R3: menu (Przyciski automatu: Test, Service)

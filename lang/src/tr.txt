@@ -846,3 +846,5 @@
 2138	Önce bir oyun başlatın
 2139	Hile %d
 2140	Yama %d
+2141	Atari düğmeleri
+2142	Dokunmatik yüzey: jeton at. L3+R3: menü (Atari düğmeleri: Test, Service)

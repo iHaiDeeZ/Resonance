@@ -845,3 +845,5 @@
 2138	Start eerst een spel
 2139	Cheat %d
 2140	Patch %d
+2141	Arcadeknoppen
+2142	Touchpad: munt inwerpen. L3+R3: menu (Arcadeknoppen: Test, Service)

@@ -2330,10 +2330,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..18d7ff88f
+index 000000000..e276de4af
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2553 @@
+@@ -0,0 +1,2559 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4887,11 +4887,17 @@ index 000000000..18d7ff88f
 +
 +msgid "Patch %d"
 +msgstr "تصحيح %d"
++
++msgid "Arcade Buttons"
++msgstr "أزرار الأركيد"
++
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "لوحة اللمس: إدخال عملة. L3+R3: القائمة (أزرار الأركيد: Test و Service)"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..6a1c33943 100644
+index fb8203ba2..2ea414da7 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2549 @@
+@@ -1,2963 +1,2555 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8984,14 +8990,20 @@ index fb8203ba2..6a1c33943 100644
 +
 +msgid "Cheat %d"
 +msgstr "Cheat %d"
- 
++
 +msgid "Patch %d"
 +msgstr "Patch %d"
++
++msgid "Arcade Buttons"
++msgstr "Arcade-Tasten"
+ 
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Touchpad: Münze einwerfen. L3+R3: Menü (Arcade-Tasten: Test, Service)"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..41555194d 100644
+index 2735f014b..63d0871d9 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2549 @@
+@@ -1,2964 +1,2555 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -13079,14 +13091,20 @@ index 2735f014b..41555194d 100644
 +
 +msgid "Cheat %d"
 +msgstr "Truco %d"
- 
++
 +msgid "Patch %d"
 +msgstr "Parche %d"
++
++msgid "Arcade Buttons"
++msgstr "Botones arcade"
+ 
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Panel táctil: insertar moneda. L3+R3: menú (Botones arcade: Test, Service)"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..b4e62913b 100644
+index f3754825e..d1b5d87ec 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2549 @@
+@@ -1,2967 +1,2555 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16484,11 +16502,17 @@ index f3754825e..b4e62913b 100644
 +
 +msgid "Patch %d"
 +msgstr "Correctif %d"
++
++msgid "Arcade Buttons"
++msgstr "Boutons arcade"
++
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Pavé tactile : insérer une pièce. L3+R3 : menu (Boutons arcade : Test, Service)"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..64efe53a8 100644
+index ee92eb28e..d2758fc94 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2549 @@
+@@ -1,2963 +1,2555 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20581,14 +20605,20 @@ index ee92eb28e..64efe53a8 100644
 +
 +msgid "Cheat %d"
 +msgstr "Trucco %d"
- 
++
 +msgid "Patch %d"
 +msgstr "Patch %d"
++
++msgid "Arcade Buttons"
++msgstr "Pulsanti arcade"
+ 
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Touchpad: inserisci gettone. L3+R3: menu (Pulsanti arcade: Test, Service)"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..d624e4396 100644
+index a79c6a14b..14e3336bc 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2548 @@
+@@ -1,2966 +1,2554 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -23985,11 +24015,17 @@ index a79c6a14b..d624e4396 100644
 +
 +msgid "Patch %d"
 +msgstr "パッチ %d"
++
++msgid "Arcade Buttons"
++msgstr "アーケードボタン"
++
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "タッチパッド：コイン投入。L3+R3：メニュー（アーケードボタン：Test、Service）"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..52ef54d63 100644
+index a5e70db54..5f093ede2 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2548 @@
+@@ -1,2962 +1,2554 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -28080,15 +28116,21 @@ index a5e70db54..52ef54d63 100644
 +
 +msgid "Cheat %d"
 +msgstr "치트 %d"
- 
++
 +msgid "Patch %d"
 +msgstr "패치 %d"
++
++msgid "Arcade Buttons"
++msgstr "아케이드 버튼"
+ 
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "터치패드: 코인 투입. L3+R3: 메뉴 (아케이드 버튼: Test, Service)"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..46ea0d3df
+index 000000000..95f76129f
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2549 @@
+@@ -0,0 +1,2555 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -30638,11 +30680,17 @@ index 000000000..46ea0d3df
 +
 +msgid "Patch %d"
 +msgstr "Patch %d"
++
++msgid "Arcade Buttons"
++msgstr "Arcadeknoppen"
++
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Touchpad: munt inwerpen. L3+R3: menu (Arcadeknoppen: Test, Service)"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..97c191bb9 100644
+index 548cbb44d..6bd45cfac 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2550 @@
+@@ -1,2965 +1,2556 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -34739,14 +34787,20 @@ index 548cbb44d..97c191bb9 100644
 +
 +msgid "Cheat %d"
 +msgstr "Kod %d"
- 
++
 +msgid "Patch %d"
 +msgstr "Łatka %d"
++
++msgid "Arcade Buttons"
++msgstr "Przyciski automatu"
+ 
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Panel dotykowy: wrzuć monetę. L3+R3: menu (Przyciski automatu: Test, Service)"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..0eca0c734 100644
+index 6ec100a1e..3c13859b4 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2549 @@
+@@ -1,2966 +1,2555 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -38158,12 +38212,18 @@ index 6ec100a1e..0eca0c734 100644
 +
 +msgid "Patch %d"
 +msgstr "Patch %d"
++
++msgid "Arcade Buttons"
++msgstr "Botões de arcade"
++
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Touchpad: inserir ficha. L3+R3: menu (Botões de arcade: Test, Service)"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..bef2cb05e
+index 000000000..a43c17ae7
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2550 @@
+@@ -0,0 +1,2556 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -40714,11 +40774,17 @@ index 000000000..bef2cb05e
 +
 +msgid "Patch %d"
 +msgstr "Патч %d"
++
++msgid "Arcade Buttons"
++msgstr "Кнопки автомата"
++
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Сенсорная панель: бросить монету. L3+R3: меню (Кнопки автомата: Test, Service)"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..33f84bec2 100644
+index 8c8d8bc08..697fd09a8 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2549 @@
+@@ -1,2965 +1,2555 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -44516,14 +44582,20 @@ index 8c8d8bc08..33f84bec2 100644
 +
 +msgid "Cheat %d"
 +msgstr "Hile %d"
- 
++
 +msgid "Patch %d"
 +msgstr "Yama %d"
++
++msgid "Arcade Buttons"
++msgstr "Atari düğmeleri"
+ 
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "Dokunmatik yüzey: jeton at. L3+R3: menü (Atari düğmeleri: Test, Service)"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..1a5d6c69c 100644
+index 3ecabd349..e8421cd17 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2548 @@
+@@ -1,2962 +1,2554 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -48614,9 +48686,15 @@ index 3ecabd349..1a5d6c69c 100644
 +
 +msgid "Cheat %d"
 +msgstr "金手指 %d"
- 
++
 +msgid "Patch %d"
 +msgstr "补丁 %d"
++
++msgid "Arcade Buttons"
++msgstr "街机按键"
+ 
++msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
++msgstr "触摸板：投币。L3+R3：菜单（街机按键：Test、Service）"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -49887,10 +49965,10 @@ index 000000000..968b94cdd
 +} // namespace launcher
 diff --git a/shell/ps4/launcher/game_codes.cpp b/shell/ps4/launcher/game_codes.cpp
 new file mode 100644
-index 000000000..27f70dabf
+index 000000000..a3e57418b
 --- /dev/null
 +++ b/shell/ps4/launcher/game_codes.cpp
-@@ -0,0 +1,745 @@
+@@ -0,0 +1,748 @@
 +/*
 +	Resonance's cheats and patches for the running game, put together in Flycast's cheat engine.
 +
@@ -50627,6 +50705,9 @@ index 000000000..27f70dabf
 +
 +void launcher_game_started()
 +{
++	// arcade boards: where the coin goes
++	if (settings.platform.isArcade())
++		os_notify(i18n::T("Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"), 6000);
 +	static bool listening;
 +	if (!listening)
 +	{
@@ -53237,10 +53318,10 @@ index 000000000..5605ef4cb
 +};
 diff --git a/shell/ps4/launcher/quick_menu.cpp b/shell/ps4/launcher/quick_menu.cpp
 new file mode 100644
-index 000000000..23c193b51
+index 000000000..b79d8f3ea
 --- /dev/null
 +++ b/shell/ps4/launcher/quick_menu.cpp
-@@ -0,0 +1,347 @@
+@@ -0,0 +1,367 @@
 +/*
 +	Resonance's quick menu during a game (L3+R3, or the touchpad), in place of Flycast's commands
 +	window: the game paused behind a side panel with its cover and name; Resume, Save State and Load
@@ -53265,6 +53346,7 @@ index 000000000..23c193b51
 +#include "launcher_internal.h"
 +#include "cfg/option.h"
 +#include "emulator.h"
++#include "../ps4_gamepad.h"
 +#include "ui/IconsFontAwesome6.h"
 +
 +#include <ctime>
@@ -53293,6 +53375,7 @@ index 000000000..23c193b51
 +bool gReloadPicture = true;
 +Game gCover;
 +int gDiscPick;		// the disc the Disc row shows (several discs)
++bool gArcadeTest = true;	// arcade boards: the Disc row presses Test (else Service)
 +
 +int currentDisc()
 +{
@@ -53375,7 +53458,12 @@ index 000000000..23c193b51
 +			playSound(Sound::Move);
 +			break;
 +		case DISC:
-+			if (currentGameDiscs.size() > 1)
++			if (settings.platform.isArcade())
++			{
++				gArcadeTest = !gArcadeTest;
++				playSound(Sound::Move);
++			}
++			else if (currentGameDiscs.size() > 1)
 +			{
 +				gDiscPick = (gDiscPick + gIn.dx + (int)currentGameDiscs.size()) % (int)currentGameDiscs.size();
 +				playSound(Sound::Move);
@@ -53423,6 +53511,17 @@ index 000000000..23c193b51
 +			cheatsOpen(f.t);
 +			break;
 +		case DISC:
++			if (settings.platform.isArcade())
++			{
++				// back to the game with Test (the operator menu: free play, difficulty...) or
++				// Service pressed
++				playSound(Sound::Confirm);
++				if (gChanged)
++					SaveSettings();
++				ps4_arcade_press(gArcadeTest);
++				gui_ps4_resume();
++				return true;
++			}
 +			if (currentGameDiscs.size() > 1)
 +			{
 +				if (gDiscPick == currentDisc() && !gui_ps4_disc_open())
@@ -53514,7 +53613,9 @@ index 000000000..23c193b51
 +		{ ICON_FA_VOLUME_HIGH, T("Volume Level"), std::to_string(config::AudioVolume.get()) + "%", true, false },
 +		{ ICON_FA_GAUGE_HIGH, T("Show FPS Counter"), config::ShowFPS ? T("On") : T("Off"), true, false },
 +		{ ICON_FA_MASK, T("Cheats & Patches"), "", false, false },
-+		{ ICON_FA_COMPACT_DISC, severalDiscs ? T("Change Disc") : gui_ps4_disc_open() ? T("Insert Disk") : T("Eject Disk"), discValue,
++		settings.platform.isArcade()
++			? RowView { ICON_FA_WRENCH, T("Arcade Buttons"), gArcadeTest ? T("Test") : T("Service"), true, false }
++			: RowView { ICON_FA_COMPACT_DISC, severalDiscs ? T("Change Disc") : gui_ps4_disc_open() ? T("Insert Disk") : T("Eject Disk"), discValue,
 +				severalDiscs, false },
 +		{ ICON_FA_GEAR, T("Settings"), "", false, false },
 +		{ ICON_FA_POWER_OFF, T("Close Game"), "", false, false },
@@ -57687,10 +57788,10 @@ index 000000000..6735da5ed
 +}
 diff --git a/shell/ps4/ps4_gamepad.cpp b/shell/ps4/ps4_gamepad.cpp
 new file mode 100644
-index 000000000..5167af91e
+index 000000000..4a28b9756
 --- /dev/null
 +++ b/shell/ps4/ps4_gamepad.cpp
-@@ -0,0 +1,420 @@
+@@ -0,0 +1,466 @@
 +/*
 +	Resonance: DualShock 4 input through ScePad.
 +
@@ -57721,6 +57822,8 @@ index 000000000..5167af91e
 +#include <orbis/UserService.h>
 +
 +#include <algorithm>
++#include <atomic>
++#include <chrono>
 +#include <cmath>
 +#include <vector>
 +
@@ -57735,6 +57838,10 @@ index 000000000..5167af91e
 +};
 +
 +std::vector<std::shared_ptr<PS4Gamepad>> gamepads;
++// Test or Service held for a moment on player 1 (the quick menu's Arcade Buttons)
++std::atomic<u32> pulseKey{0};
++std::chrono::steady_clock::time_point pulseUntil;
++bool pulseHeld;
 +int firstHandle = -1;
 +u32 rescanCountdown = 0;
 +
@@ -57937,11 +58044,42 @@ index 000000000..5167af91e
 +	if ((buttons & combo) == combo && (lastButtons & combo) != combo)
 +		launcher_open_quick_menu();
 +	const u32 changed = buttons ^ lastButtons;
++	// NAOMI / Atomiswave: the touchpad drops a coin in this player's slot (Flycast reads the coin
++	// chute from the Dreamcast D button, which no button layout sent)
++	const bool arcade = settings.platform.isArcade();
++	const int port = maple_port() >= 0 && maple_port() < 4 ? maple_port() : 0;
 +	if (changed != 0)
 +		for (u32 button : kButtons)
 +			if (changed & button)
-+				gamepad_btn_input(button, (buttons & button) != 0);
++			{
++				const bool down = (buttons & button) != 0;
++				if (arcade && button == ORBIS_PAD_BUTTON_TOUCH_PAD)
++				{
++					if (down)
++						kcode[port] &= ~(u32)DC_BTN_D;
++					else
++						kcode[port] |= DC_BTN_D;
++					continue;
++				}
++				gamepad_btn_input(button, down);
++			}
 +	lastButtons = buttons;
++	// Test / Service asked for in the quick menu: held half a second on player 1
++	if (arcade && port == 0)
++	{
++		const u32 key = pulseKey.load();
++		if (key != 0 && !pulseHeld)
++		{
++			kcode[0] &= ~key;
++			pulseHeld = true;
++		}
++		else if (key != 0 && pulseHeld && std::chrono::steady_clock::now() >= pulseUntil)
++		{
++			kcode[0] |= key;
++			pulseHeld = false;
++			pulseKey = 0;
++		}
++	}
 +
 +	const int axes[ps4pad::AXIS_COUNT] = {
 +		stickValue(data.leftStick.x), stickValue(data.leftStick.y),
@@ -58111,12 +58249,21 @@ index 000000000..5167af91e
 +		NOTICE_LOG(INPUT, "PS4: a Dreamcast controller on port %c for %s", 'A' + port, pad->name().c_str());
 +	}
 +}
++
++// Resonance's quick menu: an arcade board's Test or Service button, held for half a second once the
++// game runs again
++void ps4_arcade_press(bool test)
++{
++	pulseUntil = std::chrono::steady_clock::now() + std::chrono::milliseconds(500);
++	pulseHeld = false;
++	pulseKey = test ? (u32)DC_DPAD2_DOWN : (u32)DC_DPAD2_UP;
++}
 diff --git a/shell/ps4/ps4_gamepad.h b/shell/ps4/ps4_gamepad.h
 new file mode 100644
-index 000000000..30c0fc58d
+index 000000000..be6feefce
 --- /dev/null
 +++ b/shell/ps4/ps4_gamepad.h
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,87 @@
 +/*
 +	Resonance: DualShock 4 input through ScePad.
 +
@@ -58201,6 +58348,9 @@ index 000000000..30c0fc58d
 +bool ps4_pad_state(u32& buttons, float& lx, float& ly);
 +// Before a game starts: a Dreamcast controller on every port that has a PS4 pad and nothing else
 +void ps4_plug_pad_ports();
++
++// NAOMI / Atomiswave: press Test (the operator menu) or Service on player 1 for a moment
++void ps4_arcade_press(bool test);
 diff --git a/shell/ps4/ps4_main.cpp b/shell/ps4/ps4_main.cpp
 new file mode 100644
 index 000000000..cb69480a1

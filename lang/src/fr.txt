@@ -140,3 +140,5 @@
 2138	Lancez d'abord un jeu
 2139	Code %d
 2140	Correctif %d
+2141	Boutons arcade
+2142	Pavé tactile : insérer une pièce. L3+R3 : menu (Boutons arcade : Test, Service)

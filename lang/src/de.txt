@@ -845,3 +845,5 @@
 2138	Starte zuerst ein Spiel
 2139	Cheat %d
 2140	Patch %d
+2141	Arcade-Tasten
+2142	Touchpad: Münze einwerfen. L3+R3: Menü (Arcade-Tasten: Test, Service)

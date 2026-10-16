@@ -845,3 +845,5 @@
 2138	Start a game first
 2139	Cheat %d
 2140	Patch %d
+2141	Arcade Buttons
+2142	Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)

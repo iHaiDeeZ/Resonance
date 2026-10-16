@@ -845,3 +845,5 @@
 2138	Inicia un juego primero
 2139	Truco %d
 2140	Parche %d
+2141	Botones arcade
+2142	Panel táctil: insertar moneda. L3+R3: menú (Botones arcade: Test, Service)

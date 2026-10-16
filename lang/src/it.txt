@@ -845,3 +845,5 @@
 2138	Avvia prima un gioco
 2139	Trucco %d
 2140	Patch %d
+2141	Pulsanti arcade
+2142	Touchpad: inserisci gettone. L3+R3: menu (Pulsanti arcade: Test, Service)

@@ -147,3 +147,5 @@ Square: remove this code
 Start a game first
 Cheat %d
 Patch %d
+Arcade Buttons
+Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)

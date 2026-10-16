@@ -155,3 +155,5 @@
 2138	Inicie um jogo primeiro
 2139	Trapaça %d
 2140	Patch %d
+2141	Botões de arcade
+2142	Touchpad: inserir ficha. L3+R3: menu (Botões de arcade: Test, Service)
