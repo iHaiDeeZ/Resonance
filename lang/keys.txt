@@ -847,3 +847,12 @@
 2140	Patch %d
 2141	Arcade Buttons
 2142	Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)
+2143	NAOMI and Atomiswave: coin, start, buttons
+2144	Button %d
+2145	Reset to Defaults
+2146	Cross
+2147	Circle
+2148	Square
+2149	Triangle
+2150	The joystick is the D-pad and the left stick. L3+R3 opens the menu
+2151	Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin

@@ -847,3 +847,12 @@
 2140	Patch %d
 2141	Pulsanti arcade
 2142	Touchpad: inserisci gettone. L3+R3: menu (Pulsanti arcade: Test, Service)
+2143	NAOMI e Atomiswave: gettone, start, pulsanti
+2144	Pulsante %d
+2145	Ripristina predefiniti
+2146	Croce
+2147	Cerchio
+2148	Quadrato
+2149	Triangolo
+2150	Il joystick è la croce direzionale e la levetta sinistra. L3+R3 apre il menu
+2151	Croce Cerchio Quadrato Triangolo L1 R1 L2 R2 sono i pulsanti 1-8, Options è Start, il touchpad è Gettone

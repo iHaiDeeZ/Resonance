@@ -149,3 +149,12 @@ Cheat %d
 Patch %d
 Arcade Buttons
 Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)
+NAOMI and Atomiswave: coin, start, buttons
+Button %d
+Reset to Defaults
+Cross
+Circle
+Square
+Triangle
+The joystick is the D-pad and the left stick. L3+R3 opens the menu
+Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin

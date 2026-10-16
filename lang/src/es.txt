@@ -847,3 +847,12 @@
 2140	Parche %d
 2141	Botones arcade
 2142	Panel táctil: insertar moneda. L3+R3: menú (Botones arcade: Test, Service)
+2143	NAOMI y Atomiswave: moneda, start, botones
+2144	Botón %d
+2145	Restablecer valores
+2146	Cruz
+2147	Círculo
+2148	Cuadrado
+2149	Triángulo
+2150	El joystick es la cruceta y el stick izquierdo. L3+R3 abre el menú
+2151	Cruz Círculo Cuadrado Triángulo L1 R1 L2 R2 son los botones 1-8, Options es Start, el panel táctil es Moneda

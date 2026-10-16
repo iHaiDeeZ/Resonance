@@ -2330,10 +2330,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..e276de4af
+index 000000000..67155d9aa
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2559 @@
+@@ -0,0 +1,2586 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4893,11 +4893,38 @@ index 000000000..e276de4af
 +
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "لوحة اللمس: إدخال عملة. L3+R3: القائمة (أزرار الأركيد: Test و Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI وAtomiswave: العملة، البدء، الأزرار"
++
++msgid "Button %d"
++msgstr "الزر %d"
++
++msgid "Reset to Defaults"
++msgstr "استعادة الافتراضي"
++
++msgid "Cross"
++msgstr "إكس"
++
++msgid "Circle"
++msgstr "دائرة"
++
++msgid "Square"
++msgstr "مربع"
++
++msgid "Triangle"
++msgstr "مثلث"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "عصا التحكم هي أزرار الاتجاه والعصا اليسرى. L3+R3 يفتح القائمة"
++
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "إكس ودائرة ومربع ومثلث وL1 وR1 وL2 وR2 هي الأزرار 1-8، وOptions هو البدء، ولوحة اللمس هي العملة"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..2ea414da7 100644
+index fb8203ba2..f80b86f4b 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2555 @@
+@@ -1,2963 +1,2582 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -8996,14 +9023,41 @@ index fb8203ba2..2ea414da7 100644
 +
 +msgid "Arcade Buttons"
 +msgstr "Arcade-Tasten"
- 
++
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Touchpad: Münze einwerfen. L3+R3: Menü (Arcade-Tasten: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI und Atomiswave: Münze, Start, Tasten"
++
++msgid "Button %d"
++msgstr "Taste %d"
++
++msgid "Reset to Defaults"
++msgstr "Standard wiederherstellen"
++
++msgid "Cross"
++msgstr "Kreuz"
++
++msgid "Circle"
++msgstr "Kreis"
++
++msgid "Square"
++msgstr "Quadrat"
++
++msgid "Triangle"
++msgstr "Dreieck"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "Der Joystick ist das Steuerkreuz und der linke Stick. L3+R3 öffnet das Menü"
+ 
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Kreuz Kreis Quadrat Dreieck L1 R1 L2 R2 sind die Tasten 1-8, Options ist Start, das Touchpad ist Münze"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..63d0871d9 100644
+index 2735f014b..05daa17cb 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2555 @@
+@@ -1,2964 +1,2582 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -13097,14 +13151,41 @@ index 2735f014b..63d0871d9 100644
 +
 +msgid "Arcade Buttons"
 +msgstr "Botones arcade"
- 
++
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Panel táctil: insertar moneda. L3+R3: menú (Botones arcade: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI y Atomiswave: moneda, start, botones"
++
++msgid "Button %d"
++msgstr "Botón %d"
++
++msgid "Reset to Defaults"
++msgstr "Restablecer valores"
++
++msgid "Cross"
++msgstr "Cruz"
++
++msgid "Circle"
++msgstr "Círculo"
++
++msgid "Square"
++msgstr "Cuadrado"
++
++msgid "Triangle"
++msgstr "Triángulo"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "El joystick es la cruceta y el stick izquierdo. L3+R3 abre el menú"
+ 
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Cruz Círculo Cuadrado Triángulo L1 R1 L2 R2 son los botones 1-8, Options es Start, el panel táctil es Moneda"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..d1b5d87ec 100644
+index f3754825e..0da585337 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2555 @@
+@@ -1,2967 +1,2582 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16508,11 +16589,38 @@ index f3754825e..d1b5d87ec 100644
 +
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Pavé tactile : insérer une pièce. L3+R3 : menu (Boutons arcade : Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI et Atomiswave : pièce, start, boutons"
++
++msgid "Button %d"
++msgstr "Bouton %d"
++
++msgid "Reset to Defaults"
++msgstr "Valeurs par défaut"
++
++msgid "Cross"
++msgstr "Croix"
++
++msgid "Circle"
++msgstr "Rond"
++
++msgid "Square"
++msgstr "Carré"
++
++msgid "Triangle"
++msgstr "Triangle"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "Le joystick est la croix directionnelle et le stick gauche. L3+R3 ouvre le menu"
++
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Croix Rond Carré Triangle L1 R1 L2 R2 sont les boutons 1 à 8, Options est Start, le pavé tactile est Pièce"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..d2758fc94 100644
+index ee92eb28e..7c3403b1c 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2555 @@
+@@ -1,2963 +1,2582 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20611,14 +20719,41 @@ index ee92eb28e..d2758fc94 100644
 +
 +msgid "Arcade Buttons"
 +msgstr "Pulsanti arcade"
- 
++
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Touchpad: inserisci gettone. L3+R3: menu (Pulsanti arcade: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI e Atomiswave: gettone, start, pulsanti"
++
++msgid "Button %d"
++msgstr "Pulsante %d"
++
++msgid "Reset to Defaults"
++msgstr "Ripristina predefiniti"
++
++msgid "Cross"
++msgstr "Croce"
++
++msgid "Circle"
++msgstr "Cerchio"
++
++msgid "Square"
++msgstr "Quadrato"
++
++msgid "Triangle"
++msgstr "Triangolo"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "Il joystick è la croce direzionale e la levetta sinistra. L3+R3 apre il menu"
+ 
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Croce Cerchio Quadrato Triangolo L1 R1 L2 R2 sono i pulsanti 1-8, Options è Start, il touchpad è Gettone"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..14e3336bc 100644
+index a79c6a14b..b03900144 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2554 @@
+@@ -1,2966 +1,2581 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -24021,11 +24156,38 @@ index a79c6a14b..14e3336bc 100644
 +
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "タッチパッド：コイン投入。L3+R3：メニュー（アーケードボタン：Test、Service）"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI・Atomiswave：コイン、スタート、ボタン"
++
++msgid "Button %d"
++msgstr "ボタン %d"
++
++msgid "Reset to Defaults"
++msgstr "初期設定に戻す"
++
++msgid "Cross"
++msgstr "バツ"
++
++msgid "Circle"
++msgstr "マル"
++
++msgid "Square"
++msgstr "シカク"
++
++msgid "Triangle"
++msgstr "サンカク"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "ジョイスティックは方向キーと左スティック。L3+R3 でメニュー"
++
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "バツ マル シカク サンカク L1 R1 L2 R2 がボタン 1〜8、OPTIONS がスタート、タッチパッドがコイン"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..5f093ede2 100644
+index a5e70db54..3f2c2d894 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2554 @@
+@@ -1,2962 +1,2581 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -28122,15 +28284,42 @@ index a5e70db54..5f093ede2 100644
 +
 +msgid "Arcade Buttons"
 +msgstr "아케이드 버튼"
- 
++
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "터치패드: 코인 투입. L3+R3: 메뉴 (아케이드 버튼: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI·Atomiswave: 코인, 스타트, 버튼"
++
++msgid "Button %d"
++msgstr "버튼 %d"
++
++msgid "Reset to Defaults"
++msgstr "기본값으로 재설정"
++
++msgid "Cross"
++msgstr "엑스"
++
++msgid "Circle"
++msgstr "원"
++
++msgid "Square"
++msgstr "네모"
++
++msgid "Triangle"
++msgstr "세모"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "조이스틱은 방향 버튼과 왼쪽 스틱입니다. L3+R3로 메뉴를 엽니다"
+ 
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "엑스 원 네모 세모 L1 R1 L2 R2가 버튼 1-8, OPTIONS가 스타트, 터치패드가 코인입니다"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..95f76129f
+index 000000000..c8e3ce8e5
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2555 @@
+@@ -0,0 +1,2582 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -30686,11 +30875,38 @@ index 000000000..95f76129f
 +
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Touchpad: munt inwerpen. L3+R3: menu (Arcadeknoppen: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI en Atomiswave: munt, start, knoppen"
++
++msgid "Button %d"
++msgstr "Knop %d"
++
++msgid "Reset to Defaults"
++msgstr "Standaard herstellen"
++
++msgid "Cross"
++msgstr "Kruis"
++
++msgid "Circle"
++msgstr "Rondje"
++
++msgid "Square"
++msgstr "Vierkant"
++
++msgid "Triangle"
++msgstr "Driehoek"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "De joystick is de D-pad en de linkerstick. L3+R3 opent het menu"
++
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Kruis Rondje Vierkant Driehoek L1 R1 L2 R2 zijn knoppen 1-8, Options is Start, de touchpad is Munt"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..6bd45cfac 100644
+index 548cbb44d..7d85cd767 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2556 @@
+@@ -1,2965 +1,2583 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -34793,14 +35009,41 @@ index 548cbb44d..6bd45cfac 100644
 +
 +msgid "Arcade Buttons"
 +msgstr "Przyciski automatu"
- 
++
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Panel dotykowy: wrzuć monetę. L3+R3: menu (Przyciski automatu: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI i Atomiswave: moneta, start, przyciski"
++
++msgid "Button %d"
++msgstr "Przycisk %d"
++
++msgid "Reset to Defaults"
++msgstr "Przywróć domyślne"
++
++msgid "Cross"
++msgstr "Krzyżyk"
++
++msgid "Circle"
++msgstr "Kółko"
++
++msgid "Square"
++msgstr "Kwadrat"
++
++msgid "Triangle"
++msgstr "Trójkąt"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "Joystick to krzyżak i lewa gałka. L3+R3 otwiera menu"
+ 
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Krzyżyk Kółko Kwadrat Trójkąt L1 R1 L2 R2 to przyciski 1-8, Options to Start, panel dotykowy to Moneta"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..3c13859b4 100644
+index 6ec100a1e..299d72aa0 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2555 @@
+@@ -1,2966 +1,2582 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -38218,12 +38461,39 @@ index 6ec100a1e..3c13859b4 100644
 +
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Touchpad: inserir ficha. L3+R3: menu (Botões de arcade: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI e Atomiswave: ficha, start, botões"
++
++msgid "Button %d"
++msgstr "Botão %d"
++
++msgid "Reset to Defaults"
++msgstr "Restaurar padrões"
++
++msgid "Cross"
++msgstr "Xis"
++
++msgid "Circle"
++msgstr "Bola"
++
++msgid "Square"
++msgstr "Quadrado"
++
++msgid "Triangle"
++msgstr "Triângulo"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "O joystick é o direcional e o analógico esquerdo. L3+R3 abre o menu"
++
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Xis Bola Quadrado Triângulo L1 R1 L2 R2 são os botões 1-8, Options é Start, o touchpad é Ficha"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..a43c17ae7
+index 000000000..c772da290
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2556 @@
+@@ -0,0 +1,2583 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -40780,11 +41050,38 @@ index 000000000..a43c17ae7
 +
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Сенсорная панель: бросить монету. L3+R3: меню (Кнопки автомата: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI и Atomiswave: монета, старт, кнопки"
++
++msgid "Button %d"
++msgstr "Кнопка %d"
++
++msgid "Reset to Defaults"
++msgstr "Сбросить по умолчанию"
++
++msgid "Cross"
++msgstr "Крест"
++
++msgid "Circle"
++msgstr "Круг"
++
++msgid "Square"
++msgstr "Квадрат"
++
++msgid "Triangle"
++msgstr "Треугольник"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "Джойстик — это крестовина и левый стик. L3+R3 открывает меню"
++
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Крест Круг Квадрат Треугольник L1 R1 L2 R2 — кнопки 1–8, Options — Start, сенсорная панель — Монета"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..697fd09a8 100644
+index 8c8d8bc08..892c9d5bb 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2555 @@
+@@ -1,2965 +1,2582 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -44588,14 +44885,41 @@ index 8c8d8bc08..697fd09a8 100644
 +
 +msgid "Arcade Buttons"
 +msgstr "Atari düğmeleri"
- 
++
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "Dokunmatik yüzey: jeton at. L3+R3: menü (Atari düğmeleri: Test, Service)"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI ve Atomiswave: jeton, start, düğmeler"
++
++msgid "Button %d"
++msgstr "Düğme %d"
++
++msgid "Reset to Defaults"
++msgstr "Varsayılanlara dön"
++
++msgid "Cross"
++msgstr "Çarpı"
++
++msgid "Circle"
++msgstr "Daire"
++
++msgid "Square"
++msgstr "Kare"
++
++msgid "Triangle"
++msgstr "Üçgen"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "Joystick yön tuşları ve sol çubuktur. L3+R3 menüyü açar"
+ 
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "Çarpı Daire Kare Üçgen L1 R1 L2 R2 düğme 1-8, Options Start, dokunmatik yüzey Jeton"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..e8421cd17 100644
+index 3ecabd349..a0a35a996 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2554 @@
+@@ -1,2962 +1,2581 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -48692,9 +49016,36 @@ index 3ecabd349..e8421cd17 100644
 +
 +msgid "Arcade Buttons"
 +msgstr "街机按键"
- 
++
 +msgid "Touchpad: insert coin. L3+R3: menu (Arcade Buttons: Test, Service)"
 +msgstr "触摸板：投币。L3+R3：菜单（街机按键：Test、Service）"
++
++msgid "NAOMI and Atomiswave: coin, start, buttons"
++msgstr "NAOMI 与 Atomiswave：投币、开始、按键"
++
++msgid "Button %d"
++msgstr "按键 %d"
++
++msgid "Reset to Defaults"
++msgstr "恢复默认"
++
++msgid "Cross"
++msgstr "叉"
++
++msgid "Circle"
++msgstr "圆"
++
++msgid "Square"
++msgstr "方块"
++
++msgid "Triangle"
++msgstr "三角"
++
++msgid "The joystick is the D-pad and the left stick. L3+R3 opens the menu"
++msgstr "摇杆为方向键和左摇杆。L3+R3 打开菜单"
+ 
++msgid "Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"
++msgstr "叉 圆 方块 三角 L1 R1 L2 R2 为按键 1-8，OPTIONS 为开始，触摸板为投币"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -53691,10 +54042,10 @@ index 000000000..b79d8f3ea
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..2f0c13cdc
+index 000000000..81324a039
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,927 @@
+@@ -0,0 +1,963 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -53718,6 +54069,7 @@ index 000000000..2f0c13cdc
 +    along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
 + */
 +#include "launcher_internal.h"
++#include "../ps4_gamepad.h"
 +#include "cfg/cfg.h"
 +#include "cfg/option.h"
 +#include "emulator.h"
@@ -53902,6 +54254,7 @@ index 000000000..2f0c13cdc
 +			}
 +		}
 +		groups.push_back(std::move(pads));
++		groups.push_back(arcadeGroup());
 +
 +		Group system { ICON_FA_MICROCHIP, T("System Settings"), T("Region, language, BIOS, CPU"), {} };
 +		system.items.push_back(pick(Tnop("Dreamcast Language"), Tnop("The language as configured in the Dreamcast BIOS"), config::Language,
@@ -54187,6 +54540,40 @@ index 000000000..2f0c13cdc
 +				});
 +			});
 +		});
++	}
++
++	// NAOMI / Atomiswave: which PS4 button is each arcade function (the joystick is the D-pad and the
++	// left stick; L3+R3 still opens the quick menu)
++	Group arcadeGroup()
++	{
++		Group g { ICON_FA_COINS, T("Arcade Controls"), T("NAOMI and Atomiswave: coin, start, buttons"), {} };
++		static const char *const kButtonNames[] = { "None", "Cross", "Circle", "Square", "Triangle", "L1", "R1", "L2", "R2",
++			"L3", "R3", "Options", "Touchpad" };
++		std::vector<Choice> buttons;
++		for (int b = 0; b < ps4_arcade_button_count(); b++)
++			buttons.push_back({ T(kButtonNames[b]), b });
++		const std::string help = T("The joystick is the D-pad and the left stick. L3+R3 opens the menu");
++		for (int i = 0; i < ps4_arcade_function_count(); i++)
++		{
++			const std::string id = ps4_arcade_function_id(i);
++			std::string name;
++			if (isdigit((unsigned char)id[0]))
++			{
++				char buf[64];
++				snprintf(buf, sizeof(buf), T("Button %d"), id[0] - '0');
++				name = buf;
++			}
++			else
++				name = T(id.c_str());
++			g.items.push_back(Setting { name, help, buttons,
++				[i] { return ps4_arcade_get(i); },
++				[i](int v) { ps4_arcade_set(i, v); } });
++		}
++		Setting reset { T("Reset to Defaults"), T("Cross Circle Square Triangle L1 R1 L2 R2 are buttons 1-8, Options is Start, the touchpad is Coin"),
++			{}, [] { return 0; }, [](int) {} };
++		reset.action = [this] { ps4_arcade_reset(); playSound(Sound::Confirm); rebuildPending = true; };
++		g.items.push_back(std::move(reset));
++		return g;
 +	}
 +
 +	Group cardsGroup()
@@ -57788,10 +58175,10 @@ index 000000000..6735da5ed
 +}
 diff --git a/shell/ps4/ps4_gamepad.cpp b/shell/ps4/ps4_gamepad.cpp
 new file mode 100644
-index 000000000..4a28b9756
+index 000000000..0374b1bcb
 --- /dev/null
 +++ b/shell/ps4/ps4_gamepad.cpp
-@@ -0,0 +1,466 @@
+@@ -0,0 +1,551 @@
 +/*
 +	Resonance: DualShock 4 input through ScePad.
 +
@@ -57818,6 +58205,7 @@ index 000000000..4a28b9756
 +#include "oslib/i18n.h"
 +#include "stdclass.h"
 +#include "cfg/option.h"
++#include "cfg/cfg.h"
 +
 +#include <orbis/UserService.h>
 +
@@ -57925,6 +58313,64 @@ index 000000000..4a28b9756
 +		dirty = false;
 +	}
 +};
++
++// ---- Resonance's arcade layout (Settings > Arcade Controls): NAOMI / Atomiswave functions on PS4
++// buttons, saved in emu.cfg [resonance] Arcade.<n>. The joystick is the D-pad and the left stick.
++namespace arcade
++{
++// the functions and the Dreamcast keys Flycast reads them from (maple_jvs.cpp)
++const struct { const char *name; u32 key; int def; } kFunctions[] = {
++	{ "1", DC_BTN_A, 1 }, { "2", DC_BTN_B, 2 }, { "3", DC_BTN_C, 3 }, { "4", DC_BTN_X, 4 },
++	{ "5", DC_BTN_Y, 5 }, { "6", DC_BTN_Z, 6 }, { "7", DC_DPAD2_LEFT, 7 }, { "8", DC_DPAD2_RIGHT, 8 },
++	{ "Start", DC_BTN_START, 11 }, { "Coin", DC_BTN_D, 12 }, { "Service", DC_DPAD2_UP, 0 }, { "Test", DC_DPAD2_DOWN, 0 },
++};
++constexpr int FUNCTIONS = sizeof(kFunctions) / sizeof(kFunctions[0]);
++// the PS4 buttons to pick from (0: none); L2 and R2 count as pressed past half way
++const u32 kButtonBits[] = { 0, ORBIS_PAD_BUTTON_CROSS, ORBIS_PAD_BUTTON_CIRCLE, ORBIS_PAD_BUTTON_SQUARE, ORBIS_PAD_BUTTON_TRIANGLE,
++	ORBIS_PAD_BUTTON_L1, ORBIS_PAD_BUTTON_R1, 0, 0, ORBIS_PAD_BUTTON_L3, ORBIS_PAD_BUTTON_R3, ORBIS_PAD_BUTTON_OPTIONS,
++	ORBIS_PAD_BUTTON_TOUCH_PAD };
++constexpr int BUTTONS = sizeof(kButtonBits) / sizeof(kButtonBits[0]);
++constexpr int L2 = 7, R2 = 8;
++std::atomic<int> generation{1};
++int layout[FUNCTIONS];
++int loadedGeneration;
++
++u32 allKeys()
++{
++	u32 k = DC_DPAD_UP | DC_DPAD_DOWN | DC_DPAD_LEFT | DC_DPAD_RIGHT;
++	for (const auto& f : kFunctions)
++		k |= f.key;
++	return k;
++}
++
++void load()
++{
++	if (loadedGeneration == generation.load())
++		return;
++	for (int i = 0; i < FUNCTIONS; i++)
++		layout[i] = std::clamp(config::loadInt("resonance", std::string("Arcade.") + kFunctions[i].name, kFunctions[i].def), 0, BUTTONS - 1);
++	loadedGeneration = generation.load();
++}
++
++// the arcade keys held on this pad (pressed = bit set)
++u32 held(u32 buttons, u8 l2, u8 r2, u8 lx, u8 ly)
++{
++	load();
++	u32 keys = 0;
++	for (int i = 0; i < FUNCTIONS; i++)
++	{
++		const int b = layout[i];
++		const bool down = b == L2 ? l2 > 128 : b == R2 ? r2 > 128 : b > 0 && (buttons & kButtonBits[b]) != 0;
++		if (down)
++			keys |= kFunctions[i].key;
++	}
++	if ((buttons & ORBIS_PAD_BUTTON_UP) || ly < 64) keys |= DC_DPAD_UP;
++	if ((buttons & ORBIS_PAD_BUTTON_DOWN) || ly > 192) keys |= DC_DPAD_DOWN;
++	if ((buttons & ORBIS_PAD_BUTTON_LEFT) || lx < 64) keys |= DC_DPAD_LEFT;
++	if ((buttons & ORBIS_PAD_BUTTON_RIGHT) || lx > 192) keys |= DC_DPAD_RIGHT;
++	return keys;
++}
++} // namespace arcade
 +
 +bool portInUse(int port)
 +{
@@ -58044,42 +58490,37 @@ index 000000000..4a28b9756
 +	if ((buttons & combo) == combo && (lastButtons & combo) != combo)
 +		launcher_open_quick_menu();
 +	const u32 changed = buttons ^ lastButtons;
-+	// NAOMI / Atomiswave: the touchpad drops a coin in this player's slot (Flycast reads the coin
-+	// chute from the Dreamcast D button, which no button layout sent)
++	// NAOMI / Atomiswave: the buttons go by Resonance's arcade layout (Settings > Arcade
++	// Controls: coin, start, buttons 1-8, service, test), straight into this player's keys
 +	const bool arcade = settings.platform.isArcade();
 +	const int port = maple_port() >= 0 && maple_port() < 4 ? maple_port() : 0;
-+	if (changed != 0)
++	if (arcade)
++	{
++		u32 keys = arcade::held(buttons, data.analogButtons.l2, data.analogButtons.r2, data.leftStick.x, data.leftStick.y);
++		// Test / Service asked for in the quick menu: held half a second on player 1
++		if (port == 0)
++		{
++			const u32 key = pulseKey.load();
++			if (key != 0)
++			{
++				if (!pulseHeld)
++					pulseHeld = true;
++				else if (std::chrono::steady_clock::now() >= pulseUntil)
++				{
++					pulseHeld = false;
++					pulseKey = 0;
++				}
++				if (pulseKey.load() != 0)
++					keys |= key;
++			}
++		}
++		kcode[port] = (kcode[port] | arcade::allKeys()) & ~keys;
++	}
++	else if (changed != 0)
 +		for (u32 button : kButtons)
 +			if (changed & button)
-+			{
-+				const bool down = (buttons & button) != 0;
-+				if (arcade && button == ORBIS_PAD_BUTTON_TOUCH_PAD)
-+				{
-+					if (down)
-+						kcode[port] &= ~(u32)DC_BTN_D;
-+					else
-+						kcode[port] |= DC_BTN_D;
-+					continue;
-+				}
-+				gamepad_btn_input(button, down);
-+			}
++				gamepad_btn_input(button, (buttons & button) != 0);
 +	lastButtons = buttons;
-+	// Test / Service asked for in the quick menu: held half a second on player 1
-+	if (arcade && port == 0)
-+	{
-+		const u32 key = pulseKey.load();
-+		if (key != 0 && !pulseHeld)
-+		{
-+			kcode[0] &= ~key;
-+			pulseHeld = true;
-+		}
-+		else if (key != 0 && pulseHeld && std::chrono::steady_clock::now() >= pulseUntil)
-+		{
-+			kcode[0] |= key;
-+			pulseHeld = false;
-+			pulseKey = 0;
-+		}
-+	}
 +
 +	const int axes[ps4pad::AXIS_COUNT] = {
 +		stickValue(data.leftStick.x), stickValue(data.leftStick.y),
@@ -58258,12 +58699,43 @@ index 000000000..4a28b9756
 +	pulseHeld = false;
 +	pulseKey = test ? (u32)DC_DPAD2_DOWN : (u32)DC_DPAD2_UP;
 +}
++
++int ps4_arcade_function_count() {
++	return arcade::FUNCTIONS;
++}
++
++const char *ps4_arcade_function_id(int i) {
++	return arcade::kFunctions[i].name;
++}
++
++int ps4_arcade_button_count() {
++	return arcade::BUTTONS;
++}
++
++int ps4_arcade_get(int function)
++{
++	arcade::load();
++	return arcade::layout[function];
++}
++
++void ps4_arcade_set(int function, int button)
++{
++	config::saveInt("resonance", std::string("Arcade.") + arcade::kFunctions[function].name, button);
++	arcade::generation++;
++}
++
++void ps4_arcade_reset()
++{
++	for (int i = 0; i < arcade::FUNCTIONS; i++)
++		config::saveInt("resonance", std::string("Arcade.") + arcade::kFunctions[i].name, arcade::kFunctions[i].def);
++	arcade::generation++;
++}
 diff --git a/shell/ps4/ps4_gamepad.h b/shell/ps4/ps4_gamepad.h
 new file mode 100644
-index 000000000..be6feefce
+index 000000000..bf54e44c8
 --- /dev/null
 +++ b/shell/ps4/ps4_gamepad.h
-@@ -0,0 +1,87 @@
+@@ -0,0 +1,96 @@
 +/*
 +	Resonance: DualShock 4 input through ScePad.
 +
@@ -58351,6 +58823,15 @@ index 000000000..be6feefce
 +
 +// NAOMI / Atomiswave: press Test (the operator menu) or Service on player 1 for a moment
 +void ps4_arcade_press(bool test);
++
++// Settings > Arcade Controls: function i ("1".."8", "Start", "Coin", "Service", "Test") on PS4 button b
++// (0 none, 1 Cross, 2 Circle, 3 Square, 4 Triangle, 5 L1, 6 R1, 7 L2, 8 R2, 9 L3, 10 R3, 11 Options, 12 Touchpad)
++int ps4_arcade_function_count();
++const char *ps4_arcade_function_id(int i);
++int ps4_arcade_button_count();
++int ps4_arcade_get(int function);
++void ps4_arcade_set(int function, int button);
++void ps4_arcade_reset();
 diff --git a/shell/ps4/ps4_main.cpp b/shell/ps4/ps4_main.cpp
 new file mode 100644
 index 000000000..cb69480a1

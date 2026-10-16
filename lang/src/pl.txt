@@ -847,3 +847,12 @@
 2140	Łatka %d
 2141	Przyciski automatu
 2142	Panel dotykowy: wrzuć monetę. L3+R3: menu (Przyciski automatu: Test, Service)
+2143	NAOMI i Atomiswave: moneta, start, przyciski
+2144	Przycisk %d
+2145	Przywróć domyślne
+2146	Krzyżyk
+2147	Kółko
+2148	Kwadrat
+2149	Trójkąt
+2150	Joystick to krzyżak i lewa gałka. L3+R3 otwiera menu
+2151	Krzyżyk Kółko Kwadrat Trójkąt L1 R1 L2 R2 to przyciski 1-8, Options to Start, panel dotykowy to Moneta

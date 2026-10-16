@@ -157,3 +157,12 @@
 2140	Patch %d
 2141	Botões de arcade
 2142	Touchpad: inserir ficha. L3+R3: menu (Botões de arcade: Test, Service)
+2143	NAOMI e Atomiswave: ficha, start, botões
+2144	Botão %d
+2145	Restaurar padrões
+2146	Xis
+2147	Bola
+2148	Quadrado
+2149	Triângulo
+2150	O joystick é o direcional e o analógico esquerdo. L3+R3 abre o menu
+2151	Xis Bola Quadrado Triângulo L1 R1 L2 R2 são os botões 1-8, Options é Start, o touchpad é Ficha

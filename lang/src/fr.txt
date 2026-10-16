@@ -142,3 +142,12 @@
 2140	Correctif %d
 2141	Boutons arcade
 2142	Pavé tactile : insérer une pièce. L3+R3 : menu (Boutons arcade : Test, Service)
+2143	NAOMI et Atomiswave : pièce, start, boutons
+2144	Bouton %d
+2145	Valeurs par défaut
+2146	Croix
+2147	Rond
+2148	Carré
+2149	Triangle
+2150	Le joystick est la croix directionnelle et le stick gauche. L3+R3 ouvre le menu
+2151	Croix Rond Carré Triangle L1 R1 L2 R2 sont les boutons 1 à 8, Options est Start, le pavé tactile est Pièce

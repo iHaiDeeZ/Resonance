@@ -847,3 +847,12 @@
 2140	Patch %d
 2141	Arcade-Tasten
 2142	Touchpad: Münze einwerfen. L3+R3: Menü (Arcade-Tasten: Test, Service)
+2143	NAOMI und Atomiswave: Münze, Start, Tasten
+2144	Taste %d
+2145	Standard wiederherstellen
+2146	Kreuz
+2147	Kreis
+2148	Quadrat
+2149	Dreieck
+2150	Der Joystick ist das Steuerkreuz und der linke Stick. L3+R3 öffnet das Menü
+2151	Kreuz Kreis Quadrat Dreieck L1 R1 L2 R2 sind die Tasten 1-8, Options ist Start, das Touchpad ist Münze
