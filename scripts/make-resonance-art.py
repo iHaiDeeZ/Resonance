@@ -1,5 +1,5 @@
 # Resonance's pictures from art/resonance-source.webp (the user's Sonic + Dreamcast picture):
-#   sce_sys/icon0.png           512x512 app icon (Sonic and the Dreamcast, cropped square)
+#   sce_sys/icon0.png           512x512 app icon (art/icon.png, the purple swirl)
 #   sce_sys/pic1.png            1920x1080 PS4 home screen background
 #   launcher-assets/launcher/intro/
 #     bg.jpg                    the arena without Sonic, blurred (depth of field)
@@ -152,10 +152,9 @@ def main():
     # PS4 home screen: the picture itself at 1920x1080, and the icon cropped square around Sonic
     full = pil.resize((round(w * sh), 1080), Image.LANCZOS)
     full.crop((trim, 0, trim + 1920, 1080)).save(ROOT / "sce_sys" / "pic1.png", optimize=True)
-    side = h
-    cx = 510
-    icon = pil.crop((cx - side // 2, 0, cx - side // 2 + side, side)).resize((512, 512), Image.LANCZOS)
-    icon.save(ROOT / "sce_sys" / "icon0.png", optimize=True)
+    # the app icon is its own picture (art/icon.png: the swirl), not cut from the illustration
+    Image.open(ROOT / "art" / "icon.png").convert("RGB").resize((512, 512), Image.LANCZOS).save(
+        ROOT / "sce_sys" / "icon0.png", optimize=True)
 
     if "--preview" in sys.argv:
         prev = ROOT / "art" / "preview"
