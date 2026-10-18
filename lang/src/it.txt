@@ -868,3 +868,5 @@
 2161	Posizioni
 2162	Impossibile aprire questa cartella
 2163	Cartella aggiunta
+2164	Generazione di fotogrammi
+2165	Sperimentale: per i giochi a 30 fps, un'immagine creata tra ogni coppia di fotogrammi, così lo schermo ne mostra 60. Può tremolare sui bordi in movimento e aggiunge un po' di ritardo nei comandi

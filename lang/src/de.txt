@@ -868,3 +868,5 @@
 2161	Orte
 2162	Dieser Ordner kann nicht geöffnet werden
 2163	Ordner hinzugefügt
+2164	Frame-Generierung
+2165	Experimentell: Bei Spielen mit 30 fps wird zwischen je zwei Bildern ein Bild erzeugt, sodass der Bildschirm 60 zeigt. Kann an bewegten Kanten wabern und erhöht die Eingabeverzögerung leicht

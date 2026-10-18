@@ -178,3 +178,5 @@
 2161	Locais
 2162	Esta pasta não pode ser aberta
 2163	Pasta adicionada
+2164	Geração de quadros
+2165	Experimental: em jogos a 30 fps, uma imagem é criada entre cada dois quadros, e a tela mostra 60. Pode ondular nas bordas em movimento e adiciona um pouco de atraso nos comandos

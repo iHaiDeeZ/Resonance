@@ -79,6 +79,30 @@ index c5ac6f6e8..257ab0937 100644
  endif()
  
  if(NOT LIBRETRO)
+diff --git a/core/cfg/option.cpp b/core/cfg/option.cpp
+index 82f3994f6..13b4b21dd 100644
+--- a/core/cfg/option.cpp
++++ b/core/cfg/option.cpp
+@@ -111,6 +111,7 @@ Option<int> AnisotropicFiltering("rend.AnisotropicFiltering", 1);
+ Option<int> TextureFiltering("rend.TextureFiltering", 0); // Default
+ Option<bool> ThreadedRendering("rend.ThreadedRendering", true);
+ Option<bool> DupeFrames("rend.DupeFrames", false);
++Option<bool> FrameGeneration("rend.FrameGeneration", false);
+ Option<int> PerPixelLayers("rend.PerPixelLayers", 32);
+ #ifdef TARGET_UWP
+ Option<bool> NativeDepthInterpolation("rend.NativeDepthInterpolation", true);
+diff --git a/core/cfg/option.h b/core/cfg/option.h
+index 267c90b00..c1d86935b 100644
+--- a/core/cfg/option.h
++++ b/core/cfg/option.h
+@@ -472,6 +472,7 @@ extern Option<int> AnisotropicFiltering;
+ extern Option<int> TextureFiltering; // 0: default, 1: force nearest, 2: force linear
+ extern Option<bool> ThreadedRendering;
+ extern Option<bool> DupeFrames;
++extern Option<bool> FrameGeneration;	// Resonance: in-between pictures for 30 fps games
+ extern Option<bool> NativeDepthInterpolation;
+ extern Option<bool> EmulateFramebuffer;
+ extern Option<bool> FixUpscaleBleedingEdge;
 diff --git a/core/emulator.cpp b/core/emulator.cpp
 index 25e685bcc..ba9bf8375 100644
 --- a/core/emulator.cpp
@@ -1337,6 +1361,18 @@ index 847cbd3f9..f6df9d112 100644
  		{
  			if (config::SuperWidescreen)
  				aspectRatio = (float)settings.display.width / settings.display.height;
+diff --git a/core/rend/vulkan/CMakeLists.txt b/core/rend/vulkan/CMakeLists.txt
+index 262f90d5f..0864434dc 100644
+--- a/core/rend/vulkan/CMakeLists.txt
++++ b/core/rend/vulkan/CMakeLists.txt
+@@ -46,6 +46,7 @@ else()
+     target_sources(${PROJECT_NAME} PRIVATE
+             vulkan_driver.h
+             vulkan_context.cpp
++            frame_gen.cpp
+             "${IMGUI_BACKENDS_DIR}/imgui_impl_vulkan.cpp"
+             "${IMGUI_BACKENDS_DIR}/imgui_impl_vulkan.h")
+     if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 diff --git a/core/rend/vulkan/compiler.cpp b/core/rend/vulkan/compiler.cpp
 index a58394e53..0193b056e 100644
 --- a/core/rend/vulkan/compiler.cpp
@@ -1440,6 +1476,402 @@ index a58394e53..0193b056e 100644
  
  	return VulkanContext::Instance()->GetDevice().createShaderModuleUnique
  			(vk::ShaderModuleCreateInfo(vk::ShaderModuleCreateFlags(), shaderSPV));
+diff --git a/core/rend/vulkan/frame_gen.cpp b/core/rend/vulkan/frame_gen.cpp
+new file mode 100644
+index 000000000..d6f36f79a
+--- /dev/null
++++ b/core/rend/vulkan/frame_gen.cpp
+@@ -0,0 +1,329 @@
++/*
++	Resonance frame generation (frame_gen.h).
++
++	1. coarse: an 80x45 grid over the picture; each cell compares 8x8 samples of the newer frame with
++	   the older one moved by up to 3 cells each way (half-cell steps), small moves favoured so still
++	   things (the HUD, text) stay still. The best move and how well it matched go to `coarse`.
++	2. fine: a 160x90 grid; each cell tries its 3x3 coarse neighbours' moves and refines the best by
++	   quarter-cell steps, into `fine`.
++	3. draw: each pixel of the in-between picture blends the older frame half a move back and the
++	   newer one half a move on; where the match was poor, the newer frame as it is.
++
++	This file is part of Flycast.
++
++    Flycast is free software: you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation, either version 2 of the License, or
++    (at your option) any later version.
++
++    Flycast is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
++ */
++#include "frame_gen.h"
++#include "vulkan_context.h"
++#include "compiler.h"
++
++static VulkanContext *GetContext() {
++	return VulkanContext::Instance();
++}
++
++namespace
++{
++constexpr u32 COARSE_W = 80, COARSE_H = 45, FINE_W = 160, FINE_H = 90;
++
++const char *const kCommon = R"(
++#version 450
++layout(local_size_x = 8, local_size_y = 8) in;
++layout(set = 0, binding = 0) uniform sampler2D prevTex;
++layout(set = 0, binding = 1) uniform sampler2D curTex;
++layout(set = 0, binding = 2) uniform sampler2D coarseTex;
++layout(set = 0, binding = 3, rgba16f) uniform writeonly image2D outImage;
++float luma(vec3 c) { return dot(c, vec3(0.299, 0.587, 0.114)); }
++float cur[64];
++// the newer frame's 8x8 samples of the cell around c0 (cell size cs)
++void loadCur(vec2 c0, vec2 cs)
++{
++	for (int k = 0; k < 64; k++)
++		cur[k] = luma(textureLod(curTex, c0 + (vec2(k & 7, k >> 3) - 3.5) / 8.0 * cs, 0.0).rgb);
++}
++// how far apart they are from the older frame moved by m
++float sad(vec2 c0, vec2 cs, vec2 m)
++{
++	float s = 0.0;
++	for (int k = 0; k < 64; k++)
++		s += abs(cur[k] - luma(textureLod(prevTex, c0 + (vec2(k & 7, k >> 3) - 3.5) / 8.0 * cs - m, 0.0).rgb));
++	return s / 64.0;
++}
++)";
++
++const char *const kCoarse = R"(
++void main()
++{
++	ivec2 cell = ivec2(gl_GlobalInvocationID.xy);
++	if (cell.x >= 80 || cell.y >= 45)
++		return;
++	vec2 cs = 1.0 / vec2(80.0, 45.0);
++	vec2 c0 = (vec2(cell) + 0.5) * cs;
++	loadCur(c0, cs);
++	vec2 stepv = cs * 0.5;
++	float best = 1e9;
++	vec2 bestM = vec2(0.0);
++	for (int dy = -6; dy <= 6; dy++)
++		for (int dx = -6; dx <= 6; dx++)
++		{
++			vec2 m = vec2(dx, dy) * stepv;
++			float s = sad(c0, cs, m) + 0.004 * length(vec2(dx, dy));
++			if (s < best)
++			{
++				best = s;
++				bestM = m;
++			}
++		}
++	imageStore(outImage, cell, vec4(bestM, best, 0.0));
++}
++)";
++
++const char *const kFine = R"(
++void main()
++{
++	ivec2 cell = ivec2(gl_GlobalInvocationID.xy);
++	if (cell.x >= 160 || cell.y >= 90)
++		return;
++	vec2 cs = 1.0 / vec2(160.0, 90.0);
++	vec2 c0 = (vec2(cell) + 0.5) * cs;
++	loadCur(c0, cs);
++	// the coarse neighbours' moves, and no move
++	ivec2 cc = cell / 2;
++	float best = sad(c0, cs, vec2(0.0));
++	vec2 bestM = vec2(0.0);
++	for (int b = -1; b <= 1; b++)
++		for (int a = -1; a <= 1; a++)
++		{
++			ivec2 n = clamp(cc + ivec2(a, b), ivec2(0), ivec2(79, 44));
++			vec2 m = texelFetch(coarseTex, n, 0).xy;
++			float s = sad(c0, cs, m) + 0.002;
++			if (s < best)
++			{
++				best = s;
++				bestM = m;
++			}
++		}
++	// refined by quarter cells
++	vec2 base = bestM;
++	vec2 stepv = cs * 0.25;
++	for (int dy = -2; dy <= 2; dy++)
++		for (int dx = -2; dx <= 2; dx++)
++		{
++			if (dx == 0 && dy == 0)
++				continue;
++			vec2 m = base + vec2(dx, dy) * stepv;
++			float s = sad(c0, cs, m) + 0.001 * length(vec2(dx, dy));
++			if (s < best)
++			{
++				best = s;
++				bestM = m;
++			}
++		}
++	imageStore(outImage, cell, vec4(bestM, best, 0.0));
++}
++)";
++
++const char *const kVertex = R"(
++#version 450
++layout(location = 0) out vec2 uv;
++void main()
++{
++	vec2 p = vec2((gl_VertexIndex << 1) & 2, gl_VertexIndex & 2);
++	uv = p;
++	gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
++}
++)";
++
++const char *const kFragment = R"(
++#version 450
++layout(location = 0) in vec2 uv;
++layout(location = 0) out vec4 color;
++layout(set = 0, binding = 0) uniform sampler2D prevTex;
++layout(set = 0, binding = 1) uniform sampler2D curTex;
++layout(set = 0, binding = 2) uniform sampler2D motionTex;
++void main()
++{
++	vec4 mo = textureLod(motionTex, uv, 0.0);
++	vec2 m = mo.xy;
++	vec4 a = textureLod(prevTex, uv - m * 0.5, 0.0);
++	vec4 b = textureLod(curTex, uv + m * 0.5, 0.0);
++	// a poor match (something appearing, a cut): the newer frame as it is
++	float w = smoothstep(0.03, 0.10, mo.z);
++	color = vec4(mix(mix(a, b, 0.5), textureLod(curTex, uv, 0.0), w).rgb, 1.0);
++}
++)";
++} // namespace
++
++vk::UniquePipeline FrameGenerator::computePipeline(const char *source)
++{
++	vk::UniqueShaderModule module = ShaderCompiler::Compile(vk::ShaderStageFlagBits::eCompute, std::string(kCommon) + source);
++	vk::ComputePipelineCreateInfo info(vk::PipelineCreateFlags(),
++			vk::PipelineShaderStageCreateInfo(vk::PipelineShaderStageCreateFlags(), vk::ShaderStageFlagBits::eCompute, *module, "main"),
++			*computePipelineLayout);
++	return GetContext()->GetDevice().createComputePipelineUnique(GetContext()->GetPipelineCache(), info).value;
++}
++
++void FrameGenerator::init()
++{
++	vk::Device device = GetContext()->GetDevice();
++	sampler = device.createSamplerUnique(vk::SamplerCreateInfo(vk::SamplerCreateFlags(), vk::Filter::eLinear, vk::Filter::eLinear,
++			vk::SamplerMipmapMode::eNearest, vk::SamplerAddressMode::eClampToEdge, vk::SamplerAddressMode::eClampToEdge,
++			vk::SamplerAddressMode::eClampToEdge, 0.f, false, 1.f, false, vk::CompareOp::eNever, 0.f, 0.f));
++
++	const vk::ShaderStageFlags cs = vk::ShaderStageFlagBits::eCompute;
++	const std::array<vk::DescriptorSetLayoutBinding, 4> computeBindings = {
++		vk::DescriptorSetLayoutBinding(0, vk::DescriptorType::eCombinedImageSampler, 1, cs),
++		vk::DescriptorSetLayoutBinding(1, vk::DescriptorType::eCombinedImageSampler, 1, cs),
++		vk::DescriptorSetLayoutBinding(2, vk::DescriptorType::eCombinedImageSampler, 1, cs),
++		vk::DescriptorSetLayoutBinding(3, vk::DescriptorType::eStorageImage, 1, cs),
++	};
++	computeLayout = device.createDescriptorSetLayoutUnique(vk::DescriptorSetLayoutCreateInfo(vk::DescriptorSetLayoutCreateFlags(), computeBindings));
++	computePipelineLayout = device.createPipelineLayoutUnique(vk::PipelineLayoutCreateInfo(vk::PipelineLayoutCreateFlags(), *computeLayout));
++	const vk::ShaderStageFlags fs = vk::ShaderStageFlagBits::eFragment;
++	const std::array<vk::DescriptorSetLayoutBinding, 3> drawBindings = {
++		vk::DescriptorSetLayoutBinding(0, vk::DescriptorType::eCombinedImageSampler, 1, fs),
++		vk::DescriptorSetLayoutBinding(1, vk::DescriptorType::eCombinedImageSampler, 1, fs),
++		vk::DescriptorSetLayoutBinding(2, vk::DescriptorType::eCombinedImageSampler, 1, fs),
++	};
++	drawLayout = device.createDescriptorSetLayoutUnique(vk::DescriptorSetLayoutCreateInfo(vk::DescriptorSetLayoutCreateFlags(), drawBindings));
++	drawPipelineLayout = device.createPipelineLayoutUnique(vk::PipelineLayoutCreateInfo(vk::PipelineLayoutCreateFlags(), *drawLayout));
++
++	coarsePipeline = computePipeline(kCoarse);
++	finePipeline = computePipeline(kFine);
++
++	const std::array<vk::DescriptorPoolSize, 2> sizes = {
++		vk::DescriptorPoolSize(vk::DescriptorType::eCombinedImageSampler, 9 * 8),
++		vk::DescriptorPoolSize(vk::DescriptorType::eStorageImage, 2 * 8),
++	};
++	pool = device.createDescriptorPoolUnique(vk::DescriptorPoolCreateInfo(vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet, 3 * 8, sizes));
++
++	const vk::ImageUsageFlags usage = vk::ImageUsageFlagBits::eColorAttachment | vk::ImageUsageFlagBits::eStorage | vk::ImageUsageFlagBits::eSampled;
++	coarse = std::make_unique<FramebufferAttachment>(GetContext()->GetPhysicalDevice(), device);
++	coarse->Init(COARSE_W, COARSE_H, vk::Format::eR16G16B16A16Sfloat, usage, "framegen coarse");
++	fine = std::make_unique<FramebufferAttachment>(GetContext()->GetPhysicalDevice(), device);
++	fine->Init(FINE_W, FINE_H, vk::Format::eR16G16B16A16Sfloat, usage, "framegen fine");
++	ready = true;
++}
++
++// this swap chain image's descriptor sets, pointing at the two frames
++void FrameGenerator::sets()
++{
++	vk::Device device = GetContext()->GetDevice();
++	const u32 index = GetContext()->GetCurrentImageIndex();
++	while (perImage.size() <= index)
++	{
++		Sets s;
++		const std::array<vk::DescriptorSetLayout, 3> layouts = { *computeLayout, *computeLayout, *drawLayout };
++		std::vector<vk::UniqueDescriptorSet> got = device.allocateDescriptorSetsUnique(vk::DescriptorSetAllocateInfo(*pool, layouts));
++		s.coarse = std::move(got[0]);
++		s.fine = std::move(got[1]);
++		s.draw = std::move(got[2]);
++		perImage.push_back(std::move(s));
++	}
++	const Sets& s = perImage[index];
++	const vk::DescriptorImageInfo prev(*sampler, prevView, vk::ImageLayout::eShaderReadOnlyOptimal);
++	const vk::DescriptorImageInfo cur(*sampler, curView, vk::ImageLayout::eShaderReadOnlyOptimal);
++	const vk::DescriptorImageInfo coarseRead(*sampler, coarse->GetImageView(), vk::ImageLayout::eGeneral);
++	const vk::DescriptorImageInfo fineRead(*sampler, fine->GetImageView(), vk::ImageLayout::eGeneral);
++	const vk::DescriptorImageInfo coarseWrite(nullptr, coarse->GetImageView(), vk::ImageLayout::eGeneral);
++	const vk::DescriptorImageInfo fineWrite(nullptr, fine->GetImageView(), vk::ImageLayout::eGeneral);
++	const vk::DescriptorType sampled = vk::DescriptorType::eCombinedImageSampler, storage = vk::DescriptorType::eStorageImage;
++	const std::array<vk::WriteDescriptorSet, 11> writes = {
++		vk::WriteDescriptorSet(*s.coarse, 0, 0, sampled, prev),
++		vk::WriteDescriptorSet(*s.coarse, 1, 0, sampled, cur),
++		vk::WriteDescriptorSet(*s.coarse, 2, 0, sampled, fineRead),		// not read by the coarse pass
++		vk::WriteDescriptorSet(*s.coarse, 3, 0, storage, coarseWrite),
++		vk::WriteDescriptorSet(*s.fine, 0, 0, sampled, prev),
++		vk::WriteDescriptorSet(*s.fine, 1, 0, sampled, cur),
++		vk::WriteDescriptorSet(*s.fine, 2, 0, sampled, coarseRead),
++		vk::WriteDescriptorSet(*s.fine, 3, 0, storage, fineWrite),
++		vk::WriteDescriptorSet(*s.draw, 0, 0, sampled, prev),
++		vk::WriteDescriptorSet(*s.draw, 1, 0, sampled, cur),
++		vk::WriteDescriptorSet(*s.draw, 2, 0, sampled, fineRead),
++	};
++	device.updateDescriptorSets(writes, nullptr);
++}
++
++void FrameGenerator::Prepare(vk::CommandBuffer cb, vk::ImageView prev, vk::ImageView cur)
++{
++	if (!ready)
++		init();
++	prevView = prev;
++	curView = cur;
++	sets();
++	const Sets& s = perImage[GetContext()->GetCurrentImageIndex()];
++
++	if (!imagesInitialised)
++	{
++		// both motion images live in the general layout
++		const std::array<vk::ImageMemoryBarrier, 2> toGeneral = {
++			vk::ImageMemoryBarrier({}, vk::AccessFlagBits::eShaderWrite, vk::ImageLayout::eUndefined, vk::ImageLayout::eGeneral,
++				VK_QUEUE_FAMILY_IGNORED, VK_QUEUE_FAMILY_IGNORED, coarse->GetImage(), vk::ImageSubresourceRange(vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1)),
++			vk::ImageMemoryBarrier({}, vk::AccessFlagBits::eShaderWrite, vk::ImageLayout::eUndefined, vk::ImageLayout::eGeneral,
++				VK_QUEUE_FAMILY_IGNORED, VK_QUEUE_FAMILY_IGNORED, fine->GetImage(), vk::ImageSubresourceRange(vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1)),
++		};
++		cb.pipelineBarrier(vk::PipelineStageFlagBits::eTopOfPipe, vk::PipelineStageFlagBits::eComputeShader, {}, nullptr, nullptr, toGeneral);
++		imagesInitialised = true;
++	}
++	// the frames are finished, and the last in-between picture has read the motion images
++	cb.pipelineBarrier(vk::PipelineStageFlagBits::eColorAttachmentOutput | vk::PipelineStageFlagBits::eFragmentShader | vk::PipelineStageFlagBits::eComputeShader,
++			vk::PipelineStageFlagBits::eComputeShader, {},
++			vk::MemoryBarrier(vk::AccessFlagBits::eColorAttachmentWrite | vk::AccessFlagBits::eShaderWrite | vk::AccessFlagBits::eShaderRead,
++					vk::AccessFlagBits::eShaderRead | vk::AccessFlagBits::eShaderWrite), nullptr, nullptr);
++
++	cb.bindPipeline(vk::PipelineBindPoint::eCompute, *coarsePipeline);
++	cb.bindDescriptorSets(vk::PipelineBindPoint::eCompute, *computePipelineLayout, 0, *s.coarse, nullptr);
++	cb.dispatch((COARSE_W + 7) / 8, (COARSE_H + 7) / 8, 1);
++	cb.pipelineBarrier(vk::PipelineStageFlagBits::eComputeShader, vk::PipelineStageFlagBits::eComputeShader, {},
++			vk::MemoryBarrier(vk::AccessFlagBits::eShaderWrite, vk::AccessFlagBits::eShaderRead), nullptr, nullptr);
++
++	cb.bindPipeline(vk::PipelineBindPoint::eCompute, *finePipeline);
++	cb.bindDescriptorSets(vk::PipelineBindPoint::eCompute, *computePipelineLayout, 0, *s.fine, nullptr);
++	cb.dispatch((FINE_W + 7) / 8, (FINE_H + 7) / 8, 1);
++	cb.pipelineBarrier(vk::PipelineStageFlagBits::eComputeShader, vk::PipelineStageFlagBits::eFragmentShader, {},
++			vk::MemoryBarrier(vk::AccessFlagBits::eShaderWrite, vk::AccessFlagBits::eShaderRead), nullptr, nullptr);
++}
++
++void FrameGenerator::Draw(vk::CommandBuffer cb, vk::RenderPass renderPass)
++{
++	if (!drawPipeline || renderPass != drawRenderPass)
++	{
++		vk::Device device = GetContext()->GetDevice();
++		vk::UniqueShaderModule vs = ShaderCompiler::Compile(vk::ShaderStageFlagBits::eVertex, kVertex);
++		vk::UniqueShaderModule fsm = ShaderCompiler::Compile(vk::ShaderStageFlagBits::eFragment, kFragment);
++		const std::array<vk::PipelineShaderStageCreateInfo, 2> stages = {
++			vk::PipelineShaderStageCreateInfo(vk::PipelineShaderStageCreateFlags(), vk::ShaderStageFlagBits::eVertex, *vs, "main"),
++			vk::PipelineShaderStageCreateInfo(vk::PipelineShaderStageCreateFlags(), vk::ShaderStageFlagBits::eFragment, *fsm, "main"),
++		};
++		vk::PipelineVertexInputStateCreateInfo vertexInput;
++		vk::PipelineInputAssemblyStateCreateInfo assembly(vk::PipelineInputAssemblyStateCreateFlags(), vk::PrimitiveTopology::eTriangleList);
++		vk::PipelineViewportStateCreateInfo viewport(vk::PipelineViewportStateCreateFlags(), 1, nullptr, 1, nullptr);
++		vk::PipelineRasterizationStateCreateInfo raster;
++		raster.lineWidth = 1.0f;
++		vk::PipelineMultisampleStateCreateInfo multisample;
++		vk::PipelineDepthStencilStateCreateInfo depth;
++		vk::PipelineColorBlendAttachmentState attachment;
++		attachment.colorWriteMask = vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA;
++		vk::PipelineColorBlendStateCreateInfo blend(vk::PipelineColorBlendStateCreateFlags(), false, vk::LogicOp::eNoOp, attachment);
++		const std::array<vk::DynamicState, 2> dynamicStates = { vk::DynamicState::eViewport, vk::DynamicState::eScissor };
++		vk::PipelineDynamicStateCreateInfo dynamic(vk::PipelineDynamicStateCreateFlags(), dynamicStates);
++		vk::GraphicsPipelineCreateInfo info(vk::PipelineCreateFlags(), stages, &vertexInput, &assembly, nullptr, &viewport, &raster,
++				&multisample, &depth, &blend, &dynamic, *drawPipelineLayout, renderPass, 0);
++		drawPipeline = device.createGraphicsPipelineUnique(GetContext()->GetPipelineCache(), info).value;
++		drawRenderPass = renderPass;
++	}
++	const Sets& s = perImage[GetContext()->GetCurrentImageIndex()];
++	cb.bindPipeline(vk::PipelineBindPoint::eGraphics, *drawPipeline);
++	cb.bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *drawPipelineLayout, 0, *s.draw, nullptr);
++	cb.draw(3, 1, 0, 0);
++}
+diff --git a/core/rend/vulkan/frame_gen.h b/core/rend/vulkan/frame_gen.h
+new file mode 100644
+index 000000000..b550bf74f
+--- /dev/null
++++ b/core/rend/vulkan/frame_gen.h
+@@ -0,0 +1,55 @@
++/*
++	Resonance frame generation: for a game that draws 30 frames a second, a picture between each two
++	of them, so the screen shows 60. No help from the game (an emulator has no motion vectors): the
++	motion is estimated from the two finished frames (block matching, coarse then fine, on the
++	GPU), and each pixel of the in-between picture is taken half way along it from both frames.
++	Where nothing matches (something appearing, a cut), the newer frame is shown as it is.
++
++	This file is part of Flycast.
++
++    Flycast is free software: you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation, either version 2 of the License, or
++    (at your option) any later version.
++
++    Flycast is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
++ */
++#pragma once
++#include "vulkan.h"
++#include "texture.h"
++
++#include <memory>
++#include <vector>
++
++class FrameGenerator
++{
++public:
++	// Outside a render pass: the motion between the two frames (both readable by shaders)
++	void Prepare(vk::CommandBuffer cb, vk::ImageView prev, vk::ImageView cur);
++	// In the swap chain's render pass, its viewport set: the picture in between
++	void Draw(vk::CommandBuffer cb, vk::RenderPass renderPass);
++
++private:
++	void init();
++	void sets();
++	vk::UniquePipeline computePipeline(const char *source);
++
++	bool ready = false;
++	vk::UniqueSampler sampler;
++	vk::UniqueDescriptorSetLayout computeLayout, drawLayout;
++	vk::UniquePipelineLayout computePipelineLayout, drawPipelineLayout;
++	vk::UniquePipeline coarsePipeline, finePipeline, drawPipeline;
++	vk::RenderPass drawRenderPass;
++	vk::UniqueDescriptorPool pool;
++	struct Sets { vk::UniqueDescriptorSet coarse, fine, draw; };
++	std::vector<Sets> perImage;
++	std::unique_ptr<FramebufferAttachment> coarse, fine;
++	bool imagesInitialised = false;
++	vk::ImageView prevView, curView;
++};
 diff --git a/core/rend/vulkan/overlay.cpp b/core/rend/vulkan/overlay.cpp
 index 483f1e8d9..4b8f115c3 100644
 --- a/core/rend/vulkan/overlay.cpp
@@ -1489,10 +1921,23 @@ index a113f3c4f..4122827b5 100644
  			graphicsPipelineCreateInfo).value;
  }
 diff --git a/core/rend/vulkan/vulkan_context.cpp b/core/rend/vulkan/vulkan_context.cpp
-index 2cb703a9c..1321ed802 100644
+index 2cb703a9c..8f5f5fb31 100644
 --- a/core/rend/vulkan/vulkan_context.cpp
 +++ b/core/rend/vulkan/vulkan_context.cpp
-@@ -27,6 +27,9 @@
+@@ -19,6 +19,12 @@
+     along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ #include "vulkan_context.h"
++#include "frame_gen.h"
++#ifdef __ORBIS__
++#include <atomic>
++extern std::atomic<u64> ps4_vblank_count;	// hw/pvr/spg.cpp
++std::atomic<u32> ps4_fg_frames;			// in-between pictures shown (the perf line)
++#endif
+ #include "vulkan_renderer.h"
+ #include "imgui.h"
+ #include "imgui_impl_vulkan.h"
+@@ -27,6 +33,9 @@
  #include <sdl/sdl.h>
  #include <SDL_vulkan.h>
  #endif
@@ -1502,7 +1947,7 @@ index 2cb703a9c..1321ed802 100644
  #include "compiler.h"
  #include "utils.h"
  #include "emulator.h"
-@@ -151,6 +154,9 @@ bool VulkanContext::InitInstance(const char** extensions, uint32_t extensions_co
+@@ -151,6 +160,9 @@ bool VulkanContext::InitInstance(const char** extensions, uint32_t extensions_co
  		vkGetInstanceProcAddr = loadVulkanDriver();
  #elif defined(__APPLE__) && defined(USE_SDL)
  		vkGetInstanceProcAddr = reinterpret_cast<PFN_vkGetInstanceProcAddr>(SDL_Vulkan_GetVkGetInstanceProcAddr());
@@ -1512,7 +1957,7 @@ index 2cb703a9c..1321ed802 100644
  #else
  		static vk::detail::DynamicLoader dl;
  		vkGetInstanceProcAddr = dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr");
-@@ -934,6 +940,8 @@ bool VulkanContext::init()
+@@ -934,6 +946,8 @@ bool VulkanContext::init()
  	extensions.push_back(vk::KHRXlibSurfaceExtensionName);
  #elif defined(VK_USE_PLATFORM_ANDROID_KHR)
  	extensions.push_back(vk::KHRAndroidSurfaceExtensionName);
@@ -1521,7 +1966,7 @@ index 2cb703a9c..1321ed802 100644
  #endif
  	if (!InitInstance(&extensions[0], extensions.size())) {
  		term();
-@@ -961,6 +969,8 @@ bool VulkanContext::init()
+@@ -961,6 +975,8 @@ bool VulkanContext::init()
  #elif defined(VK_USE_PLATFORM_METAL_EXT)
  	vk::MetalSurfaceCreateInfoEXT createInfo(vk::MetalSurfaceCreateFlagsEXT(), window);
  	surface = instance->createMetalSurfaceEXTUnique(createInfo);
@@ -1530,7 +1975,7 @@ index 2cb703a9c..1321ed802 100644
  #else
  #error "Unknown Vulkan platform"
  #endif
-@@ -991,7 +1001,13 @@ void VulkanContext::NewFrame()
+@@ -991,7 +1007,13 @@ void VulkanContext::NewFrame()
  	recreateSwapChainIfNeeded();
  	if (!IsValid())
  		throw InvalidVulkanContext();
@@ -1544,7 +1989,7 @@ index 2cb703a9c..1321ed802 100644
  	if (res != vk::Result::eSuccess)
  		throw InvalidVulkanContext();
  	try {
-@@ -1027,12 +1043,19 @@ void VulkanContext::EndFrame(vk::CommandBuffer overlayCmdBuffer)
+@@ -1027,12 +1049,19 @@ void VulkanContext::EndFrame(vk::CommandBuffer overlayCmdBuffer)
  	vk::CommandBuffer commandBuffer = *commandBuffers[currentImage];
  	commandBuffer.endRenderPass();
  	commandBuffer.end();
@@ -1564,7 +2009,7 @@ index 2cb703a9c..1321ed802 100644
  	device->resetFences(*drawFences[currentImage]);
  	graphicsQueue.submit(submitInfo, *drawFences[currentImage]);
  	assert(rendering);
-@@ -1046,7 +1069,11 @@ void VulkanContext::Present() noexcept
+@@ -1046,7 +1075,11 @@ void VulkanContext::Present() noexcept
  	{
  		try {
  			DoSwapAutomation();
@@ -1576,7 +2021,27 @@ index 2cb703a9c..1321ed802 100644
  #if defined(VK_USE_PLATFORM_METAL_EXT) || defined(__APPLE__)
  			// presentKHR lists eSuboptimalKHR as a success code so it is
  			// returned rather than thrown. Treat it as a request to
-@@ -1068,7 +1095,11 @@ void VulkanContext::Present() noexcept
+@@ -1060,6 +1093,19 @@ void VulkanContext::Present() noexcept
+ 				resized = true;
+ #endif
+ 			currentSemaphore = (currentSemaphore + 1) % renderCompleteSemaphores.size();
++#ifdef __ORBIS__
++			if (fgRealPending)
++			{
++				fgRealPending = false;
++				ps4_fg_frames++;
++				PresentFrame(vk::Image(), lastFrameView, lastFrameExtent, lastFrameAR);
++				res = presentQueue.presentKHR(vk::PresentInfoKHR(0, nullptr, 1, &(*swapChain), &currentImage));
++				currentSemaphore = (currentSemaphore + 1) % renderCompleteSemaphores.size();
++				if (res == vk::Result::eSuboptimalKHR)
++					resized = true;
++			}
++			else
++#endif
+ #ifndef SWAPPY
+ 			if (lastFrameView && IsValid() && !gui_is_open()
+ 					&& swapOnVSync && config::DupeFrames)
+@@ -1068,7 +1114,11 @@ void VulkanContext::Present() noexcept
  				for (int i = 1; i < interval; i++)
  				{
  					PresentFrame(vk::Image(), lastFrameView, lastFrameExtent, lastFrameAR);
@@ -1588,7 +2053,68 @@ index 2cb703a9c..1321ed802 100644
  					currentSemaphore = (currentSemaphore + 1) % renderCompleteSemaphores.size();
  					if (res == vk::Result::eSuboptimalKHR)
  					{
-@@ -1216,6 +1247,39 @@ void VulkanContext::PresentLastFrame()
+@@ -1134,7 +1184,9 @@ void VulkanContext::DrawFrame(vk::ImageView imageView, const vk::Extent2D& exten
+ 	vk::Viewport viewport(dx, dy, width - dx * 2, height - dy * 2);
+ 	commandBuffer.setViewport(0, viewport);
+ 	commandBuffer.setScissor(0, vk::Rect2D(vk::Offset2D(dx, dy), vk::Extent2D(width - dx * 2, height - dy * 2)));
+-	if (config::Rotate90)
++	if (fgDraw && frameGen != nullptr)
++		frameGen->Draw(commandBuffer, *renderPass);
++	else if (config::Rotate90)
+ 		quadRotateDrawer->Draw(commandBuffer, imageView, vtx, !config::LinearInterpolation);
+ 	else
+ 		quadDrawer->Draw(commandBuffer, imageView, vtx, !config::LinearInterpolation);
+@@ -1164,6 +1216,28 @@ extern Renderer *renderer;
+ 
+ void VulkanContext::PresentFrame(vk::Image image, vk::ImageView imageView, const vk::Extent2D& extent, float aspectRatio) noexcept
+ {
++	bool interpolate = false;
++	vk::ImageView prevView;
++#ifdef __ORBIS__
++	// a new frame from the renderer (repeats come without their image): every second vblank for a
++	// while means a 30 fps game. The renderer draws into two images in turn, so the one before is
++	// still whole; after a menu (settings may have rebuilt them) it isn't trusted
++	if (image && imageView)
++	{
++		const u64 vblank = ps4_vblank_count.load();
++		const u64 gap = vblank - fgLastVblank;
++		fgLastVblank = vblank;
++		fgStreak = gap == 2 ? std::min(fgStreak + 1, 8) : 0;
++		interpolate = config::FrameGeneration && swapOnVSync && !config::Rotate90 && !gui_is_open()
++				&& !settings.input.fastForwardMode && fgStreak >= 3 && fgPrevView && fgPrevView != imageView
++				&& fgPrevExtent == extent;
++		prevView = fgPrevView;
++		fgPrevView = imageView;
++		fgPrevExtent = extent;
++	}
++	if (gui_is_open())
++		fgPrevView = vk::ImageView();
++#endif
+ 	lastFrameView = imageView;
+ 	lastFrameExtent = extent;
+ 	lastFrameAR = aspectRatio;
+@@ -1193,10 +1267,20 @@ void VulkanContext::PresentFrame(vk::Image image, vk::ImageView imageView, const
+ 						barrier
+ 				);
+ 			}
++			if (interpolate)
++			{
++				if (frameGen == nullptr)
++					frameGen = new FrameGenerator();
++				frameGen->Prepare(GetCurrentCommandBuffer(), prevView, imageView);
++				fgDraw = true;
++			}
+ 			BeginRenderPass();
+ 
+ 			if (lastFrameView) // Might have been nullified if swap chain recreated
+ 				DrawFrame(imageView, extent, aspectRatio);
++			// shown now: the in-between picture; the frame itself on the next vblank (Present)
++			fgRealPending = fgDraw;
++			fgDraw = false;
+ 
+ 			DrawOverlay(settings.display.uiScale, config::FloatVMUs, true);
+ 			imguiDriver->renderDrawData(ImGui::GetDrawData(), false);
+@@ -1216,6 +1300,39 @@ void VulkanContext::PresentLastFrame()
  		DrawFrame(lastFrameView, lastFrameExtent, lastFrameAR);
  }
  
@@ -1628,9 +2154,13 @@ index 2cb703a9c..1321ed802 100644
  void VulkanContext::term()
  {
  	lastFrameView = nullptr;
-@@ -1233,20 +1297,7 @@ void VulkanContext::term()
+@@ -1232,21 +1349,11 @@ void VulkanContext::term()
+ 		}
  	}
  	inFlightObjects.clear();
++	delete frameGen;
++	frameGen = nullptr;
++	fgPrevView = vk::ImageView();
  	imguiDriver.reset();
 -	if (device && pipelineCache)
 -	{
@@ -1651,7 +2181,7 @@ index 2cb703a9c..1321ed802 100644
  	ShaderCompiler::Term();
  	swapChain.reset();
 diff --git a/core/rend/vulkan/vulkan_context.h b/core/rend/vulkan/vulkan_context.h
-index f2d8293e4..b0e00ff9b 100644
+index f2d8293e4..af8b0c1e3 100644
 --- a/core/rend/vulkan/vulkan_context.h
 +++ b/core/rend/vulkan/vulkan_context.h
 @@ -152,6 +152,8 @@ public:
@@ -1663,6 +2193,22 @@ index f2d8293e4..b0e00ff9b 100644
  	bool SupportsSamplerAnisotropy() const { return samplerAnisotropy; }
  	float GetMaxSamplerAnisotropy() const { return samplerAnisotropy ? maxSamplerAnisotropy : 1.f; }
  	bool SupportsDedicatedAllocation() const { return dedicatedAllocationSupported; }
+@@ -284,6 +286,15 @@ private:
+ 	std::string driverName;
+ 	std::string driverVersion;
+ 	int gameSwapInterval = 1;
++	// Resonance frame generation (frame_gen.h): a 30 fps game's new frame is shown after a picture
++	// between it and the one before
++	class FrameGenerator *frameGen = nullptr;
++	vk::ImageView fgPrevView;
++	vk::Extent2D fgPrevExtent;
++	u64 fgLastVblank = 0;
++	int fgStreak = 0;
++	bool fgDraw = false;
++	bool fgRealPending = false;
+ #ifdef VK_DEBUG
+ #ifndef __ANDROID__
+ 	vk::UniqueDebugUtilsMessengerEXT debugUtilsMessenger;
 diff --git a/core/ui/boxart/boxart.cpp b/core/ui/boxart/boxart.cpp
 index 36be5f1ef..7347b815c 100644
 --- a/core/ui/boxart/boxart.cpp
@@ -2330,10 +2876,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..a475f7142
+index 000000000..5ede699a9
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2622 @@
+@@ -0,0 +1,2628 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -4956,11 +5502,17 @@ index 000000000..a475f7142
 +
 +msgid "Folder added"
 +msgstr "تمت إضافة المجلد"
++
++msgid "Frame Generation"
++msgstr "توليد الإطارات"
++
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "تجريبي: في الألعاب التي تعمل بـ 30 إطارًا في الثانية، تُصنع صورة بين كل إطارين فتعرض الشاشة 60. قد تهتز الحواف المتحركة ويزيد تأخر الإدخال قليلًا"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..a0d8aeb51 100644
+index fb8203ba2..0f22350cc 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2618 @@
+@@ -1,2963 +1,2624 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -9122,14 +9674,20 @@ index fb8203ba2..a0d8aeb51 100644
 +
 +msgid "This folder can't be opened"
 +msgstr "Dieser Ordner kann nicht geöffnet werden"
- 
++
 +msgid "Folder added"
 +msgstr "Ordner hinzugefügt"
++
++msgid "Frame Generation"
++msgstr "Frame-Generierung"
+ 
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Experimentell: Bei Spielen mit 30 fps wird zwischen je zwei Bildern ein Bild erzeugt, sodass der Bildschirm 60 zeigt. Kann an bewegten Kanten wabern und erhöht die Eingabeverzögerung leicht"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..33563dfbc 100644
+index 2735f014b..b89992299 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2618 @@
+@@ -1,2964 +1,2624 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -13286,14 +13844,20 @@ index 2735f014b..33563dfbc 100644
 +
 +msgid "This folder can't be opened"
 +msgstr "No se puede abrir esta carpeta"
- 
++
 +msgid "Folder added"
 +msgstr "Carpeta añadida"
++
++msgid "Frame Generation"
++msgstr "Generación de fotogramas"
+ 
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Experimental: en juegos a 30 fps, se crea una imagen entre cada dos fotogramas para que la pantalla muestre 60. Puede ondular en bordes en movimiento y añade algo de retraso de entrada"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..1cc0dd5e5 100644
+index f3754825e..33042351d 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2618 @@
+@@ -1,2967 +1,2624 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -16760,11 +17324,17 @@ index f3754825e..1cc0dd5e5 100644
 +
 +msgid "Folder added"
 +msgstr "Dossier ajouté"
++
++msgid "Frame Generation"
++msgstr "Génération d'images"
++
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Expérimental : pour les jeux à 30 i/s, une image est créée entre chaque paire d'images, l'écran en affiche donc 60. Peut onduler autour des bords en mouvement et ajoute un léger délai de commande"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..3b8f62d38 100644
+index ee92eb28e..501d9f77f 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2618 @@
+@@ -1,2963 +1,2624 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -20926,14 +21496,20 @@ index ee92eb28e..3b8f62d38 100644
 +
 +msgid "This folder can't be opened"
 +msgstr "Impossibile aprire questa cartella"
- 
++
 +msgid "Folder added"
 +msgstr "Cartella aggiunta"
++
++msgid "Frame Generation"
++msgstr "Generazione di fotogrammi"
+ 
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Sperimentale: per i giochi a 30 fps, un'immagine creata tra ogni coppia di fotogrammi, così lo schermo ne mostra 60. Può tremolare sui bordi in movimento e aggiunge un po' di ritardo nei comandi"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..cfec1e2a7 100644
+index a79c6a14b..70bc3a2ab 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2617 @@
+@@ -1,2966 +1,2623 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -24399,11 +24975,17 @@ index a79c6a14b..cfec1e2a7 100644
 +
 +msgid "Folder added"
 +msgstr "フォルダーを追加しました"
++
++msgid "Frame Generation"
++msgstr "フレーム生成"
++
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "実験的：30fps のゲームで、2 枚のフレームの間に 1 枚を作り、画面に 60fps で表示します。動く輪郭が揺らいだり、入力遅延が少し増えたりします"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..6e02bd91d 100644
+index a5e70db54..56cd3b934 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2617 @@
+@@ -1,2962 +1,2623 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -28563,15 +29145,21 @@ index a5e70db54..6e02bd91d 100644
 +
 +msgid "This folder can't be opened"
 +msgstr "이 폴더를 열 수 없습니다"
- 
++
 +msgid "Folder added"
 +msgstr "폴더를 추가했습니다"
++
++msgid "Frame Generation"
++msgstr "프레임 생성"
+ 
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "실험적: 30fps 게임에서 두 프레임 사이에 그림을 만들어 화면에 60fps로 보여 줍니다. 움직이는 가장자리가 흔들릴 수 있고 입력 지연이 조금 늘어납니다"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..452be231a
+index 000000000..a45ea1f53
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2618 @@
+@@ -0,0 +1,2624 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -31190,11 +31778,17 @@ index 000000000..452be231a
 +
 +msgid "Folder added"
 +msgstr "Map toegevoegd"
++
++msgid "Frame Generation"
++msgstr "Framegeneratie"
++
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Experimenteel: bij spellen op 30 fps wordt tussen elke twee frames een beeld gemaakt, zodat het scherm er 60 toont. Kan bij bewegende randen golven en geeft wat extra invoervertraging"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..8af859e4b 100644
+index 548cbb44d..53bbc544c 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2619 @@
+@@ -1,2965 +1,2625 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -35360,14 +35954,20 @@ index 548cbb44d..8af859e4b 100644
 +
 +msgid "This folder can't be opened"
 +msgstr "Nie można otworzyć tego folderu"
- 
++
 +msgid "Folder added"
 +msgstr "Dodano folder"
++
++msgid "Frame Generation"
++msgstr "Generowanie klatek"
+ 
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Eksperymentalne: w grach działających w 30 kl./s między każdymi dwiema klatkami powstaje obraz, więc ekran pokazuje 60. Krawędzie w ruchu mogą falować, a opóźnienie sterowania nieco rośnie"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..6f9a8a3bb 100644
+index 6ec100a1e..8159a3e04 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2618 @@
+@@ -1,2966 +1,2624 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -38848,12 +39448,18 @@ index 6ec100a1e..6f9a8a3bb 100644
 +
 +msgid "Folder added"
 +msgstr "Pasta adicionada"
++
++msgid "Frame Generation"
++msgstr "Geração de quadros"
++
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Experimental: em jogos a 30 fps, uma imagem é criada entre cada dois quadros, e a tela mostra 60. Pode ondular nas bordas em movimento e adiciona um pouco de atraso nos comandos"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..00476aaa6
+index 000000000..a79ac2f8c
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2619 @@
+@@ -0,0 +1,2625 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -41473,11 +42079,17 @@ index 000000000..00476aaa6
 +
 +msgid "Folder added"
 +msgstr "Папка добавлена"
++
++msgid "Frame Generation"
++msgstr "Генерация кадров"
++
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Экспериментально: в играх с 30 кадрами/с между каждыми двумя кадрами создаётся изображение, и экран показывает 60. Края движущихся объектов могут дрожать, задержка управления немного растёт"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..5a2420d5b 100644
+index 8c8d8bc08..6d4267ccd 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2618 @@
+@@ -1,2965 +1,2624 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -45344,14 +45956,20 @@ index 8c8d8bc08..5a2420d5b 100644
 +
 +msgid "This folder can't be opened"
 +msgstr "Bu klasör açılamıyor"
- 
++
 +msgid "Folder added"
 +msgstr "Klasör eklendi"
++
++msgid "Frame Generation"
++msgstr "Kare üretimi"
+ 
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "Deneysel: 30 fps çalışan oyunlarda her iki kare arasına bir görüntü üretilir, ekran 60 gösterir. Hareketli kenarlarda dalgalanma olabilir ve giriş gecikmesi biraz artar"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..3e9b4de44 100644
+index 3ecabd349..8f944a1be 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2617 @@
+@@ -1,2962 +1,2623 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -49511,9 +50129,15 @@ index 3ecabd349..3e9b4de44 100644
 +
 +msgid "This folder can't be opened"
 +msgstr "无法打开此文件夹"
- 
++
 +msgid "Folder added"
 +msgstr "已添加文件夹"
++
++msgid "Frame Generation"
++msgstr "帧生成"
+ 
++msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
++msgstr "实验性：对于 30 帧的游戏，在每两帧之间生成一帧，屏幕显示 60 帧。运动物体边缘可能抖动，并会略微增加输入延迟"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -54510,10 +55134,10 @@ index 000000000..b79d8f3ea
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..e2a0299f7
+index 000000000..fbfb5f168
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,1102 @@
+@@ -0,0 +1,1105 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -54663,6 +55287,9 @@ index 000000000..e2a0299f7
 +				config::WidescreenGameHacks.set(v == 1);
 +				config::ScreenStretching.set(v == 3 ? 134 : 100);
 +			} });
++		video.items.push_back(toggle(Tnop("Frame Generation"),
++				Tnop("Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"),
++				config::FrameGeneration));
 +		video.items.push_back(toggle(Tnop("Integer Scaling"), Tnop("Scales the output by the maximum integer multiple allowed by the display resolution."), config::IntegerScale));
 +		video.items.push_back(toggle(Tnop("Linear Interpolation"), Tnop("Scales the output with linear interpolation. Will use nearest neighbor interpolation otherwise. Disable with integer scaling."), config::LinearInterpolation));
 +		video.items.push_back(toggle(Tnop("VSync"), Tnop("Synchronizes the frame rate with the screen refresh rate. Recommended"), config::VSync));
@@ -59509,10 +60136,10 @@ index 000000000..bf54e44c8
 +void ps4_arcade_reset();
 diff --git a/shell/ps4/ps4_main.cpp b/shell/ps4/ps4_main.cpp
 new file mode 100644
-index 000000000..e268b8057
+index 000000000..ed7d1b668
 --- /dev/null
 +++ b/shell/ps4/ps4_main.cpp
-@@ -0,0 +1,402 @@
+@@ -0,0 +1,414 @@
 +/*
 +	Resonance: Flycast's PS4 frontend.
 +
@@ -59570,6 +60197,8 @@ index 000000000..e268b8057
 +#include <thread>
 +#include <string>
 +#include <vector>
++
++extern std::atomic<u32> ps4_fg_frames;	// in-between pictures shown (core/rend/vulkan/vulkan_context.cpp)
 +
 +extern "C" void ps4_boot_trace(const char *line);	// port/ps4_crashlog.cpp
 +extern "C" void ps4_watch_thread(const char *name);	// port/ps4_sampler.cpp
@@ -59686,6 +60315,16 @@ index 000000000..e268b8057
 +					faults[ps4fault::Fpcb] / secs, faults[ps4fault::Rewrite] / secs, faults[ps4fault::Unhandled] / secs,
 +					faults[ps4fault::Protect] / secs, faults[ps4fault::Unprotect] / secs, faults[ps4fault::RttRender] / secs,
 +					faults[ps4fault::TaRender] / secs, faults[ps4fault::FbRender] / secs, compiles, threads);
++			{
++				static u32 lastFg;
++				const u32 fg = ps4_fg_frames.load();
++				if (fg != lastFg)
++				{
++					const size_t n = strlen(line);
++					snprintf(line + n, sizeof(line) - n, " | framegen %.0f/s", (fg - lastFg) / secs);
++				}
++				lastFg = fg;
++			}
 +			ps4_boot_trace(line);
 +			{
 +				static bool told;

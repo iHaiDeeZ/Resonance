@@ -868,3 +868,5 @@
 2161	Lugares
 2162	No se puede abrir esta carpeta
 2163	Carpeta añadida
+2164	Generación de fotogramas
+2165	Experimental: en juegos a 30 fps, se crea una imagen entre cada dos fotogramas para que la pantalla muestre 60. Puede ondular en bordes en movimiento y añade algo de retraso de entrada

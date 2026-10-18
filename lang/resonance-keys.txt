@@ -170,3 +170,5 @@ Use This Folder
 Places
 This folder can't be opened
 Folder added
+Frame Generation
+Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag

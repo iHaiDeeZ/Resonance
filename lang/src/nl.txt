@@ -868,3 +868,5 @@
 2161	Locaties
 2162	Deze map kan niet worden geopend
 2163	Map toegevoegd
+2164	Framegeneratie
+2165	Experimenteel: bij spellen op 30 fps wordt tussen elke twee frames een beeld gemaakt, zodat het scherm er 60 toont. Kan bij bewegende randen golven en geeft wat extra invoervertraging
