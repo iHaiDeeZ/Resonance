@@ -60639,10 +60639,10 @@ index 000000000..fb08d6cd5
 +void ZSTD_trace_decompress_end(unsigned long long ctx, const void *trace) {}
 diff --git a/shell/ps4/ps4_vmem.cpp b/shell/ps4/ps4_vmem.cpp
 new file mode 100644
-index 000000000..4176407c5
+index 000000000..818e114da
 --- /dev/null
 +++ b/shell/ps4/ps4_vmem.cpp
-@@ -0,0 +1,333 @@
+@@ -0,0 +1,462 @@
 +/*
 +	Resonance: virtual memory (fast memory) on the PS4.
 +
@@ -60682,6 +60682,8 @@ index 000000000..4176407c5
 +#include <cerrno>
 +#include <cstdarg>
 +#include <cstdio>
++#include <cstring>
++#include <signal.h>
 +#include <algorithm>
 +#include <vector>
 +
@@ -60698,6 +60700,10 @@ index 000000000..4176407c5
 +int32_t sceKernelMprotect(const void *address, size_t length, int32_t protection);
 +int32_t sceKernelEnableDmemAliasing();
 +int32_t sceKernelEnableDmemAliasing2();
++int32_t sceKernelMapNamedSystemFlexibleMemory(void **address, size_t length, int32_t protection, int32_t flags,
++		const char *name);
++struct SceKernelSwVersion { size_t size; char text[0x1c]; uint32_t version; };
++int32_t sceKernelGetSystemSwVersion(SceKernelSwVersion *version);
 +void ps4_boot_trace(const char *line);	// port/ps4_crashlog.cpp
 +// the system's mmap (the runtime's --wrap=mmap version moves big mappings far away)
 +void *__real_mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset);
@@ -60935,22 +60941,145 @@ index 000000000..4176407c5
 +	}
 +}
 +
++// Executable memory for the recompilers. Which memory runs generated code depends on the console:
++// regular flexible memory mapped RWX does on 12.00 / 13.52, but a jailbreak may accept the mapping
++// and still refuse to run code in it (Crema met it on a firmware 11.00 console: every game crashed
++// at its first recompiled block, SIGSEGV code 2 with rip = the block). So each kind of memory is
++// tried once with a one-instruction function (ret) before the recompilers get it; a fault there is
++// caught and the next kind is tried. (Crema's port/ps4_runtime.cpp, v01.73.)
++namespace
++{
++enum ExecSource { kExecRegular, kExecDirect, kExecSystemPool, kExecNone };
++const char *const kExecSourceNames[] = { "regular flexible memory", "direct memory", "system flexible memory", "nothing" };
++constexpr int kSigBusFreeBsd = 10, kSigSegvFreeBsd = 11, kSaSiginfoFreeBsd = 0x40;
++constexpr int kMcontextOffset = 0x40, kRipIndex = 20, kRspIndex = 23;	// as port/ps4_crashlog.cpp
++
++volatile uintptr_t probeCode;
++volatile int probeFaulted;
++struct sigaction oldSegv, oldBus;
++
++void probeHandler(int, siginfo_t *, void *context)
++{
++	auto *regs = reinterpret_cast<uint64_t *>(static_cast<char *>(context) + kMcontextOffset);
++	if (probeCode != 0 && regs[kRipIndex] == probeCode)
++	{
++		// as if the ret ran: back to the caller
++		regs[kRipIndex] = *reinterpret_cast<const uint64_t *>(regs[kRspIndex]);
++		regs[kRspIndex] += 8;
++		probeFaulted = 1;
++		return;
++	}
++	// another fault: the handlers before get it when the instruction runs again
++	sigaction(kSigSegvFreeBsd, &oldSegv, nullptr);
++	sigaction(kSigBusFreeBsd, &oldBus, nullptr);
++}
++
++// Whether code put at `code` (mapped RWX) runs
++bool runsCode(void *code)
++{
++	static_cast<volatile u8 *>(code)[0] = 0xC3;	// ret
++	struct sigaction action;
++	memset(&action, 0, sizeof(action));
++	void (*handler)(int, siginfo_t *, void *) = probeHandler;
++	memcpy(&action, &handler, sizeof(handler));	// the handler union is the first member
++	action.sa_flags = kSaSiginfoFreeBsd;
++	sigemptyset(&action.sa_mask);
++	probeFaulted = 0;
++	probeCode = reinterpret_cast<uintptr_t>(code);
++	sigaction(kSigSegvFreeBsd, &action, &oldSegv);
++	sigaction(kSigBusFreeBsd, &action, &oldBus);
++	void (*volatile function)() = reinterpret_cast<void (*)()>(code);
++	function();
++	sigaction(kSigSegvFreeBsd, &oldSegv, nullptr);
++	sigaction(kSigBusFreeBsd, &oldBus, nullptr);
++	probeCode = 0;
++	return !probeFaulted;
++}
++
++// size bytes RWX of one kind, at or above the hint (nullptr when not possible)
++void *mapExecutable(ExecSource source, uintptr_t hint, size_t size)
++{
++	switch (source)
++	{
++	case kExecRegular:
++	{
++		void *p = __real_mmap((void *)hint, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANON, -1, 0);
++		return p == MAP_FAILED ? nullptr : p;
++	}
++	case kExecDirect:
++	{
++		// direct memory isn't given back by munmap: the code blocks are kept for the whole run anyway
++		off_t phys = 0;
++		if (sceKernelAllocateDirectMemory(0, sceKernelGetDirectMemorySize(), size, kPage, kWbOnion, &phys) != 0)
++			return nullptr;
++		void *p = (void *)hint;
++		if (sceKernelMapDirectMemory(&p, size, kProtRWX, 0, phys, kPage) != 0)
++		{
++			sceKernelReleaseDirectMemory(phys, size);
++			return nullptr;
++		}
++		return p;
++	}
++	case kExecSystemPool:
++	{
++		void *p = (void *)hint;
++		return sceKernelMapNamedSystemFlexibleMemory(&p, size, kProtRWX, 0, "resonance jit") == 0 ? p : nullptr;
++	}
++	default:
++		return nullptr;
++	}
++}
++
++ExecSource chooseExecSource()
++{
++	SceKernelSwVersion version;
++	memset(&version, 0, sizeof(version));
++	version.size = sizeof(version);
++	if (sceKernelGetSystemSwVersion(&version) == 0)
++	{
++		version.text[sizeof(version.text) - 1] = 0;
++		trace("vmem: firmware %s (0x%08x)", version.text, version.version);
++	}
++	const uintptr_t hint = alignUp((uintptr_t)__text_start + 64_MB, kReserveAlign);
++	for (ExecSource source : { kExecRegular, kExecDirect, kExecSystemPool })
++	{
++		void *code = mapExecutable(source, hint, kPage);
++		if (code == nullptr)
++		{
++			trace("vmem: executable memory: %s can't be mapped RWX", kExecSourceNames[source]);
++			continue;
++		}
++		const bool ok = runsCode(code);
++		if (source != kExecDirect)
++			munmap(code, kPage);
++		trace("vmem: executable memory: %s %s", kExecSourceNames[source], ok ? "runs code" : "does not run code");
++		if (ok)
++			return source;
++	}
++	trace("vmem: executable memory: NONE runs code - this console's jailbreak doesn't let homebrew run generated code");
++	return kExecNone;
++}
++} // namespace
++
 +// RWX memory close to the eboot's code: the x64 dynarecs call into it, and it calls back, with
-+// 32-bit displacements.
++// 32-bit displacements. Of the kind that runs code on this console.
 +bool prepare_jit_block(void *code_area, size_t size, void **code_area_rwx)
 +{
++	static const ExecSource source = chooseExecSource();
 +	const uintptr_t text = (uintptr_t)__text_start;
 +	size = alignUp(size, kPage);
++	if (source == kExecNone)
++		return false;
 +	// FreeBSD looks for free space from the hint upwards
 +	for (uintptr_t hint = alignUp(text + 64_MB, kReserveAlign); hint < text + 1536_MB; hint += 64_MB)
 +	{
-+		void *p = __real_mmap((void *)hint, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANON, -1, 0);
-+		if (p == MAP_FAILED)
++		void *p = mapExecutable(source, hint, size);
++		if (p == nullptr)
 +			continue;
 +		const intptr_t distance = (intptr_t)p - (intptr_t)text;
 +		if (distance > -(intptr_t)1800_MB && distance < (intptr_t)1800_MB)
 +		{
-+			trace("vmem: %zu KiB of JIT code at %p (text at %p)", size >> 10, p, __text_start);
++			trace("vmem: %zu KiB of JIT code at %p from %s (text at %p)", size >> 10, p, kExecSourceNames[source], __text_start);
 +			*code_area_rwx = p;
 +			return true;
 +		}
