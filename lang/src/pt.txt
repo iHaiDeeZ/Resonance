@@ -180,3 +180,4 @@
 2163	Pasta adicionada
 2164	Geração de quadros
 2165	Experimental: em jogos a 30 fps, uma imagem é criada entre cada dois quadros, e a tela mostra 60. Pode ondular nas bordas em movimento e adiciona um pouco de atraso nos comandos
+2166	Por triângulo: rápido, pode mostrar falhas. Por faixa: mais lento, menos falhas. Por pixel: o mais preciso, usa mais tempo de GPU

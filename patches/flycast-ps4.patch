@@ -2876,10 +2876,10 @@ index 8f3b8733e..b98e14d43 100644
  	// Determine the preview text
 diff --git a/resources/i18n/ar.po b/resources/i18n/ar.po
 new file mode 100644
-index 000000000..5ede699a9
+index 000000000..81107c5a9
 --- /dev/null
 +++ b/resources/i18n/ar.po
-@@ -0,0 +1,2628 @@
+@@ -0,0 +1,2631 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -5508,11 +5508,14 @@ index 000000000..5ede699a9
 +
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "تجريبي: في الألعاب التي تعمل بـ 30 إطارًا في الثانية، تُصنع صورة بين كل إطارين فتعرض الشاشة 60. قد تهتز الحواف المتحركة ويزيد تأخر الإدخال قليلًا"
++
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "لكل مثلث: سريع وقد تظهر أخطاء. لكل شريط: أبطأ وأخطاء أقل. لكل بكسل: الأدق ويستهلك أكثر وقت للمعالج الرسومي"
 diff --git a/resources/i18n/de.po b/resources/i18n/de.po
-index fb8203ba2..0f22350cc 100644
+index fb8203ba2..83d53665b 100644
 --- a/resources/i18n/de.po
 +++ b/resources/i18n/de.po
-@@ -1,2963 +1,2624 @@
+@@ -1,2963 +1,2627 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -9680,14 +9683,17 @@ index fb8203ba2..0f22350cc 100644
 +
 +msgid "Frame Generation"
 +msgstr "Frame-Generierung"
- 
++
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Experimentell: Bei Spielen mit 30 fps wird zwischen je zwei Bildern ein Bild erzeugt, sodass der Bildschirm 60 zeigt. Kann an bewegten Kanten wabern und erhöht die Eingabeverzögerung leicht"
+ 
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Pro Dreieck: schnell, kann Fehler zeigen. Pro Streifen: langsamer, weniger Fehler. Pro Pixel: am genauesten, braucht die meiste GPU-Zeit"
 diff --git a/resources/i18n/es.po b/resources/i18n/es.po
-index 2735f014b..b89992299 100644
+index 2735f014b..6796e62bb 100644
 --- a/resources/i18n/es.po
 +++ b/resources/i18n/es.po
-@@ -1,2964 +1,2624 @@
+@@ -1,2964 +1,2627 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -13850,14 +13856,17 @@ index 2735f014b..b89992299 100644
 +
 +msgid "Frame Generation"
 +msgstr "Generación de fotogramas"
- 
++
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Experimental: en juegos a 30 fps, se crea una imagen entre cada dos fotogramas para que la pantalla muestre 60. Puede ondular en bordes en movimiento y añade algo de retraso de entrada"
+ 
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Por triángulo: rápido, puede mostrar fallos. Por tira: más lento, menos fallos. Por píxel: el más preciso, usa más tiempo de GPU"
 diff --git a/resources/i18n/fr.po b/resources/i18n/fr.po
-index f3754825e..33042351d 100644
+index f3754825e..c16dd1cf1 100644
 --- a/resources/i18n/fr.po
 +++ b/resources/i18n/fr.po
-@@ -1,2967 +1,2624 @@
+@@ -1,2967 +1,2627 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -17330,11 +17339,14 @@ index f3754825e..33042351d 100644
 +
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Expérimental : pour les jeux à 30 i/s, une image est créée entre chaque paire d'images, l'écran en affiche donc 60. Peut onduler autour des bords en mouvement et ajoute un léger délai de commande"
++
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Par triangle : rapide, peut montrer des défauts. Par bande : plus lent, moins de défauts. Par pixel : le plus précis, demande le plus de temps GPU"
 diff --git a/resources/i18n/it.po b/resources/i18n/it.po
-index ee92eb28e..501d9f77f 100644
+index ee92eb28e..47e6cc63c 100644
 --- a/resources/i18n/it.po
 +++ b/resources/i18n/it.po
-@@ -1,2963 +1,2624 @@
+@@ -1,2963 +1,2627 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -21502,14 +21514,17 @@ index ee92eb28e..501d9f77f 100644
 +
 +msgid "Frame Generation"
 +msgstr "Generazione di fotogrammi"
- 
++
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Sperimentale: per i giochi a 30 fps, un'immagine creata tra ogni coppia di fotogrammi, così lo schermo ne mostra 60. Può tremolare sui bordi in movimento e aggiunge un po' di ritardo nei comandi"
+ 
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Per triangolo: veloce, può mostrare difetti. Per striscia: più lento, meno difetti. Per pixel: il più preciso, usa più tempo della GPU"
 diff --git a/resources/i18n/ja.po b/resources/i18n/ja.po
-index a79c6a14b..70bc3a2ab 100644
+index a79c6a14b..ee8160408 100644
 --- a/resources/i18n/ja.po
 +++ b/resources/i18n/ja.po
-@@ -1,2966 +1,2623 @@
+@@ -1,2966 +1,2626 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -24981,11 +24996,14 @@ index a79c6a14b..70bc3a2ab 100644
 +
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "実験的：30fps のゲームで、2 枚のフレームの間に 1 枚を作り、画面に 60fps で表示します。動く輪郭が揺らいだり、入力遅延が少し増えたりします"
++
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "トライアングル単位：高速だが不具合が出ることがある。ストリップ単位：遅めで不具合が少ない。ピクセル単位：最も正確で GPU を最も使う"
 diff --git a/resources/i18n/ko.po b/resources/i18n/ko.po
-index a5e70db54..56cd3b934 100644
+index a5e70db54..d434f1ace 100644
 --- a/resources/i18n/ko.po
 +++ b/resources/i18n/ko.po
-@@ -1,2962 +1,2623 @@
+@@ -1,2962 +1,2626 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -29151,15 +29169,18 @@ index a5e70db54..56cd3b934 100644
 +
 +msgid "Frame Generation"
 +msgstr "프레임 생성"
- 
++
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "실험적: 30fps 게임에서 두 프레임 사이에 그림을 만들어 화면에 60fps로 보여 줍니다. 움직이는 가장자리가 흔들릴 수 있고 입력 지연이 조금 늘어납니다"
+ 
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "삼각형 단위: 빠르지만 오류가 보일 수 있음. 스트립 단위: 느리지만 오류가 적음. 픽셀 단위: 가장 정확하며 GPU를 가장 많이 사용"
 diff --git a/resources/i18n/nl.po b/resources/i18n/nl.po
 new file mode 100644
-index 000000000..a45ea1f53
+index 000000000..32271904e
 --- /dev/null
 +++ b/resources/i18n/nl.po
-@@ -0,0 +1,2624 @@
+@@ -0,0 +1,2627 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -31784,11 +31805,14 @@ index 000000000..a45ea1f53
 +
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Experimenteel: bij spellen op 30 fps wordt tussen elke twee frames een beeld gemaakt, zodat het scherm er 60 toont. Kan bij bewegende randen golven en geeft wat extra invoervertraging"
++
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Per driehoek: snel, kan fouten tonen. Per strip: trager, minder fouten. Per pixel: het nauwkeurigst, kost de meeste GPU-tijd"
 diff --git a/resources/i18n/pl.po b/resources/i18n/pl.po
-index 548cbb44d..53bbc544c 100644
+index 548cbb44d..dcfc03bc4 100644
 --- a/resources/i18n/pl.po
 +++ b/resources/i18n/pl.po
-@@ -1,2965 +1,2625 @@
+@@ -1,2965 +1,2628 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -35960,14 +35984,17 @@ index 548cbb44d..53bbc544c 100644
 +
 +msgid "Frame Generation"
 +msgstr "Generowanie klatek"
- 
++
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Eksperymentalne: w grach działających w 30 kl./s między każdymi dwiema klatkami powstaje obraz, więc ekran pokazuje 60. Krawędzie w ruchu mogą falować, a opóźnienie sterowania nieco rośnie"
+ 
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Na trójkąt: szybko, mogą być błędy. Na pasek: wolniej, mniej błędów. Na piksel: najdokładniej, najwięcej czasu GPU"
 diff --git a/resources/i18n/pt_BR.po b/resources/i18n/pt_BR.po
-index 6ec100a1e..8159a3e04 100644
+index 6ec100a1e..56144b228 100644
 --- a/resources/i18n/pt_BR.po
 +++ b/resources/i18n/pt_BR.po
-@@ -1,2966 +1,2624 @@
+@@ -1,2966 +1,2627 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -39454,12 +39481,15 @@ index 6ec100a1e..8159a3e04 100644
 +
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Experimental: em jogos a 30 fps, uma imagem é criada entre cada dois quadros, e a tela mostra 60. Pode ondular nas bordas em movimento e adiciona um pouco de atraso nos comandos"
++
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Por triângulo: rápido, pode mostrar falhas. Por faixa: mais lento, menos falhas. Por pixel: o mais preciso, usa mais tempo de GPU"
 diff --git a/resources/i18n/ru.po b/resources/i18n/ru.po
 new file mode 100644
-index 000000000..a79ac2f8c
+index 000000000..3514b977b
 --- /dev/null
 +++ b/resources/i18n/ru.po
-@@ -0,0 +1,2625 @@
+@@ -0,0 +1,2628 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: flycast\n"
@@ -42085,11 +42115,14 @@ index 000000000..a79ac2f8c
 +
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Экспериментально: в играх с 30 кадрами/с между каждыми двумя кадрами создаётся изображение, и экран показывает 60. Края движущихся объектов могут дрожать, задержка управления немного растёт"
++
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "По треугольникам: быстро, возможны артефакты. По полосам: медленнее, меньше артефактов. По пикселям: точнее всего, больше всего нагружает GPU"
 diff --git a/resources/i18n/tr.po b/resources/i18n/tr.po
-index 8c8d8bc08..6d4267ccd 100644
+index 8c8d8bc08..25edc1561 100644
 --- a/resources/i18n/tr.po
 +++ b/resources/i18n/tr.po
-@@ -1,2965 +1,2624 @@
+@@ -1,2965 +1,2627 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -45962,14 +45995,17 @@ index 8c8d8bc08..6d4267ccd 100644
 +
 +msgid "Frame Generation"
 +msgstr "Kare üretimi"
- 
++
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "Deneysel: 30 fps çalışan oyunlarda her iki kare arasına bir görüntü üretilir, ekran 60 gösterir. Hareketli kenarlarda dalgalanma olabilir ve giriş gecikmesi biraz artar"
+ 
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "Üçgen başına: hızlı, hatalar görülebilir. Şerit başına: daha yavaş, daha az hata. Piksel başına: en doğru, GPU'yu en çok kullanır"
 diff --git a/resources/i18n/zh_CN.po b/resources/i18n/zh_CN.po
-index 3ecabd349..8f944a1be 100644
+index 3ecabd349..36379ca08 100644
 --- a/resources/i18n/zh_CN.po
 +++ b/resources/i18n/zh_CN.po
-@@ -1,2962 +1,2623 @@
+@@ -1,2962 +1,2626 @@
  msgid ""
  msgstr ""
  "Project-Id-Version: flycast\n"
@@ -50135,9 +50171,12 @@ index 3ecabd349..8f944a1be 100644
 +
 +msgid "Frame Generation"
 +msgstr "帧生成"
- 
++
 +msgid "Experimental: for games that run at 30 fps, a picture made between each two frames, so the screen shows 60. Can wobble around moving edges and adds a little input lag"
 +msgstr "实验性：对于 30 帧的游戏，在每两帧之间生成一帧，屏幕显示 60 帧。运动物体边缘可能抖动，并会略微增加输入延迟"
+ 
++msgid "Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"
++msgstr "按三角形：快，可能出现错误。按条带：较慢，错误较少。按像素：最准确，最耗 GPU"
 diff --git a/resources/resources.cmake b/resources/resources.cmake
 index 9bf4830a7..1ed162421 100644
 --- a/resources/resources.cmake
@@ -55134,10 +55173,10 @@ index 000000000..b79d8f3ea
 +}
 diff --git a/shell/ps4/launcher/settings_menu.cpp b/shell/ps4/launcher/settings_menu.cpp
 new file mode 100644
-index 000000000..fbfb5f168
+index 000000000..41a3fc711
 --- /dev/null
 +++ b/shell/ps4/launcher/settings_menu.cpp
-@@ -0,0 +1,1105 @@
+@@ -0,0 +1,1120 @@
 +/*
 +	Resonance's settings, PS3 style, in place of Flycast's settings window: five groups (Video,
 +	Audio, Controllers, System, Home Screen); a group lists its options with the current value on the
@@ -55161,6 +55200,7 @@ index 000000000..fbfb5f168
 +    along with Flycast.  If not, see <https://www.gnu.org/licenses/>.
 + */
 +#include "launcher_internal.h"
++#include "wsi/context.h"
 +#include "../netfs.h"
 +#include <sys/stat.h>
 +#include <dirent.h>
@@ -55300,8 +55340,22 @@ index 000000000..fbfb5f168
 +				{ { T("Default"), 0 }, { T("Force Nearest-Neighbor"), 1 }, { T("Force Linear"), 2 } }));
 +		video.items.push_back(pick(Tnop("Anisotropic Filtering"), Tnop("Higher values make textures viewed at oblique angles look sharper, but are more demanding on the GPU. This option only has a visible impact on mipmapped textures."),
 +				config::AnisotropicFiltering, { { T("Off"), 1 }, { "2x", 2 }, { "4x", 4 }, { "8x", 8 }, { "16x", 16 } }));
-+		video.items.push_back(pick(Tnop("Transparent Sorting"), Tnop("Sort transparent polygons per triangle. Fast but may produce graphical glitches"), config::PerStripSorting,
-+				{ { T("Per Triangle"), 0 }, { T("Per Strip"), 1 } }));
++		// Per Pixel is Flycast's other Vulkan renderer (order-independent transparency), offered when
++		// the GPU can do it, as in Flycast's own menu
++		{
++			std::vector<Choice> sorting = { { T("Per Triangle"), 0 }, { T("Per Strip"), 1 } };
++			if (GraphicsContext::Instance() != nullptr && GraphicsContext::Instance()->hasPerPixel())
++				sorting.push_back({ T("Per Pixel"), 2 });
++			video.items.push_back(Setting { T("Transparent Sorting"),
++				T("Per Triangle: fast, may show glitches. Per Strip: slower, fewer glitches. Per Pixel: the most accurate, uses the most GPU time"),
++				sorting,
++				[] { return config::RendererType == RenderType::Vulkan_OIT ? 2 : config::PerStripSorting ? 1 : 0; },
++				[](int v) {
++					config::RendererType = v == 2 ? RenderType::Vulkan_OIT : RenderType::Vulkan;
++					if (v != 2)
++						config::PerStripSorting.set(v == 1);
++				} });
++		}
 +		video.items.push_back(toggle(Tnop("Shadows"), Tnop("Enable modifier volumes, usually used for shadows"), config::ModifierVolumes));
 +		video.items.push_back(toggle(Tnop("Fog"), Tnop("Enable fog effects"), config::Fog));
 +		video.items.push_back(toggle(Tnop("Delay Frame Swapping"), Tnop("Useful to avoid flashing screen or glitchy videos. Not recommended on slow platforms"), config::DelayFrameSwapping));

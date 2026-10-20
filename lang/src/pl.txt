@@ -870,3 +870,4 @@
 2163	Dodano folder
 2164	Generowanie klatek
 2165	Eksperymentalne: w grach działających w 30 kl./s między każdymi dwiema klatkami powstaje obraz, więc ekran pokazuje 60. Krawędzie w ruchu mogą falować, a opóźnienie sterowania nieco rośnie
+2166	Na trójkąt: szybko, mogą być błędy. Na pasek: wolniej, mniej błędów. Na piksel: najdokładniej, najwięcej czasu GPU

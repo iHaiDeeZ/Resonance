@@ -871,3 +871,4 @@
 2163	Klasör eklendi
 2164	Kare üretimi
 2165	Deneysel: 30 fps çalışan oyunlarda her iki kare arasına bir görüntü üretilir, ekran 60 gösterir. Hareketli kenarlarda dalgalanma olabilir ve giriş gecikmesi biraz artar
+2166	Üçgen başına: hızlı, hatalar görülebilir. Şerit başına: daha yavaş, daha az hata. Piksel başına: en doğru, GPU'yu en çok kullanır

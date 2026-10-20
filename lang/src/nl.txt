@@ -870,3 +870,4 @@
 2163	Map toegevoegd
 2164	Framegeneratie
 2165	Experimenteel: bij spellen op 30 fps wordt tussen elke twee frames een beeld gemaakt, zodat het scherm er 60 toont. Kan bij bewegende randen golven en geeft wat extra invoervertraging
+2166	Per driehoek: snel, kan fouten tonen. Per strip: trager, minder fouten. Per pixel: het nauwkeurigst, kost de meeste GPU-tijd

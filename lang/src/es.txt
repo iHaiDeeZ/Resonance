@@ -870,3 +870,4 @@
 2163	Carpeta añadida
 2164	Generación de fotogramas
 2165	Experimental: en juegos a 30 fps, se crea una imagen entre cada dos fotogramas para que la pantalla muestre 60. Puede ondular en bordes en movimiento y añade algo de retraso de entrada
+2166	Por triángulo: rápido, puede mostrar fallos. Por tira: más lento, menos fallos. Por píxel: el más preciso, usa más tiempo de GPU

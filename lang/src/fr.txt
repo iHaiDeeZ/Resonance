@@ -165,3 +165,4 @@
 2163	Dossier ajouté
 2164	Génération d'images
 2165	Expérimental : pour les jeux à 30 i/s, une image est créée entre chaque paire d'images, l'écran en affiche donc 60. Peut onduler autour des bords en mouvement et ajoute un léger délai de commande
+2166	Par triangle : rapide, peut montrer des défauts. Par bande : plus lent, moins de défauts. Par pixel : le plus précis, demande le plus de temps GPU

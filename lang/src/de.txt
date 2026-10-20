@@ -870,3 +870,4 @@
 2163	Ordner hinzugefügt
 2164	Frame-Generierung
 2165	Experimentell: Bei Spielen mit 30 fps wird zwischen je zwei Bildern ein Bild erzeugt, sodass der Bildschirm 60 zeigt. Kann an bewegten Kanten wabern und erhöht die Eingabeverzögerung leicht
+2166	Pro Dreieck: schnell, kann Fehler zeigen. Pro Streifen: langsamer, weniger Fehler. Pro Pixel: am genauesten, braucht die meiste GPU-Zeit
